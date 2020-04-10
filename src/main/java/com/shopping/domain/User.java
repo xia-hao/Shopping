@@ -15,7 +15,7 @@ public class User extends BaseEntity {
 
     private Integer sex;
 
-    private Float balance;
+    private Long balance;
 
     private String identitytype;
 
@@ -75,11 +75,11 @@ public class User extends BaseEntity {
         this.sex = sex;
     }
 
-    public Float getBalance() {
+    public Long getBalance() {
         return balance;
     }
 
-    public void setBalance(Float balance) {
+    public void setBalance(Long balance) {
         this.balance = balance;
     }
 

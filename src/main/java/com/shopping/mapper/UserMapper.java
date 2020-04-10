@@ -6,9 +6,9 @@ import org.apache.ibatis.annotations.Param;
 public interface UserMapper {
     int deleteByPrimaryKey(Integer userid);
 
-    int insert(User record);
+    int insert(User user);
 
-    int insertSelective(User record);
+    int insertSelective(User user);
 
     User selectByPrimaryKey(Integer userid);
 
@@ -18,7 +18,7 @@ public interface UserMapper {
 
     int updateUserFreezing();
 
-    int updateUserPwdByMobile(@Param("mobile")String mobile,@Param("password")String password);
+    int updateUserPwdByMobile(@Param("mobile")String mobile, @Param("password")String password);
 
     int updateLoginNameByMobile(@Param("loginname")String loginname,@Param("mobile")String mobile);
 
@@ -26,7 +26,7 @@ public interface UserMapper {
 
     int updateUserPwdErrorCountByLoginNameOrMobile(String loginName);
 
-    int updateByPrimaryKeySelective(User record);
+    int updateByPrimaryKeySelective(User user);
 
-    int updateByPrimaryKey(User record);
+    int updateByPrimaryKey(User user);
 }
