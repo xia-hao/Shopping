@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9dd71b3d-a528-4b6c-8fd2-ba04abc7a2d4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
+=======
+      <change beforePath="$PROJECT_DIR$/src/api/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/page/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/page/Login.vue" afterDir="false" />
+>>>>>>> 431328c486e82f4afddb3c9f8eac004224f9d5b2
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="Vue Single File Component" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1YnJUCSyUGugz5ysp2q0lB3x7qZ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../shop/shop/shop-ui" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="E:\Y2\WebStorm\Shopping\shopping-ui\node_modules\prettier" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Y2\WebStorm\Shopping\shopping-ui\src\components\fonts" />
+      <recent name="E:\Y2\WebStorm\Shopping\shopping-ui\src\assets" />
+      <recent name="E:\Y2\WebStorm\Shopping\shopping-ui\src\components" />
+      <recent name="E:\Y2\WebStorm\Shopping\shopping-ui\src\page\login" />
+      <recent name="E:\Y2\WebStorm\Shopping\shopping-ui\src\page\home" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Y2\WebStorm\Shopping\shopping-ui\static\images" />
+      <recent name="E:\Y2\WebStorm\Shopping\shopping-ui\static" />
+      <recent name="E:\Y2\WebStorm\Shopping\shopping-ui\static\files" />
+      <recent name="E:\Y2\WebStorm\Shopping\shopping-ui\src\components" />
+      <recent name="E:\Y2\WebStorm\Shopping\shopping-ui\src\components\static" />
+    </key>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9dd71b3d-a528-4b6c-8fd2-ba04abc7a2d4" name="Default Changelist" comment="" />
+      <created>1583572438235</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1583572438235</updated>
+      <workItem from="1583572445224" duration="7183000" />
+      <workItem from="1583717362146" duration="1352000" />
+      <workItem from="1583734351913" duration="645000" />
+      <workItem from="1583914150027" duration="14439000" />
+      <workItem from="1583934670023" duration="3535000" />
+      <workItem from="1583982414977" duration="6557000" />
+      <workItem from="1583989335664" duration="9251000" />
+      <workItem from="1584000490290" duration="967000" />
+      <workItem from="1584001471745" duration="2000" />
+      <workItem from="1584067350212" duration="9778000" />
+      <workItem from="1584090601887" duration="1545000" />
+      <workItem from="1584096601619" duration="9702000" />
+      <workItem from="1584162284870" duration="9553000" />
+      <workItem from="1584177063115" duration="14779000" />
+      <workItem from="1584234596759" duration="31176000" />
+      <workItem from="1584271600155" duration="1696000" />
+      <workItem from="1584321025658" duration="30426000" />
+      <workItem from="1584424071746" duration="634000" />
+<<<<<<< HEAD
+      <workItem from="1584426744218" duration="8634000" />
+      <workItem from="1584491131472" duration="733000" />
+      <workItem from="1584674953320" duration="10585000" />
+=======
+      <workItem from="1584434078137" duration="10182000" />
+>>>>>>> 431328c486e82f4afddb3c9f8eac004224f9d5b2
+    </task>
+    <task id="LOCAL-00001" summary="初步搭建前段，测试sessionId一致，可以跨域携带Cookie">
+      <created>1583579486370</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1583579486370</updated>
+    </task>
+    <task id="LOCAL-00002" summary="创建首页">
+      <created>1584001280811</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1584001280811</updated>
+    </task>
+    <task id="LOCAL-00003" summary="分类列表">
+      <created>1584194610813</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1584194610813</updated>
+    </task>
+    <task id="LOCAL-00004" summary="分类列表">
+      <created>1584194780988</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1584194780988</updated>
+    </task>
+    <task id="LOCAL-00005" summary="分类列表">
+      <created>1584195498083</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1584195498083</updated>
+    </task>
+    <task id="LOCAL-00006" summary="分类列表">
+      <created>1584195644724</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1584195644725</updated>
+    </task>
+    <task id="LOCAL-00007" summary="更新数据">
+      <created>1584238512815</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1584238512815</updated>
+    </task>
+    <task id="LOCAL-00008" summary="更新数据">
+      <created>1584238667743</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1584238667743</updated>
+    </task>
+    <task id="LOCAL-00009" summary="商品楼层，分页显示，商品列表，搜索，导航条">
+      <created>1584267243559</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1584267243559</updated>
+    </task>
+    <task id="LOCAL-00010" summary="没有商品时显示暂无商品">
+      <created>1584268576399</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1584268576399</updated>
+    </task>
+    <task id="LOCAL-00011" summary="更改样式">
+      <created>1584271102949</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1584271102949</updated>
+    </task>
+    <task id="LOCAL-00012" summary="商品详情，价格区间">
+      <created>1584357128006</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1584357128007</updated>
+    </task>
+<<<<<<< HEAD
+    <task id="LOCAL-00013" summary="商品公告">
+      <created>1584703927985</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1584703927985</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
+=======
+    <option name="localTasksCounter" value="13" />
+>>>>>>> 431328c486e82f4afddb3c9f8eac004224f9d5b2
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="初步搭建前段，测试sessionId一致，可以跨域携带Cookie" />
+    <MESSAGE value="创建首页" />
+    <MESSAGE value="分类查询" />
+    <MESSAGE value="分类列表" />
+    <MESSAGE value="更新数据" />
+    <MESSAGE value="商品楼层，分页显示，商品列表，搜索，导航条" />
+    <MESSAGE value="没有商品时显示暂无商品" />
+    <MESSAGE value="更改样式" />
+    <MESSAGE value="商品详情，价格区间" />
+<<<<<<< HEAD
+    <MESSAGE value="商品公告" />
+    <option name="LAST_COMMIT_MESSAGE" value="商品公告" />
+=======
+    <option name="LAST_COMMIT_MESSAGE" value="商品详情，价格区间" />
+>>>>>>> 431328c486e82f4afddb3c9f8eac004224f9d5b2
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="413" y="112" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1583916762665">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="413" y="112" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1583916762665" />
+<<<<<<< HEAD
+    <state x="261" y="0" key="CommitChangelistDialog2" timestamp="1584704116396">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="261" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1584704116396" />
+    <state x="463" y="121" key="FileChooserDialogImpl" timestamp="1584434785540">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="463" y="121" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1584434785540" />
+=======
+    <state x="261" y="0" key="CommitChangelistDialog2" timestamp="1584357120724">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="261" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1584357120724" />
+    <state x="521" y="137" key="FileChooserDialogImpl" timestamp="1584444143656">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="463" y="121" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1584342338832" />
+    <state x="521" y="137" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1584444143656" />
+>>>>>>> 431328c486e82f4afddb3c9f8eac004224f9d5b2
+    <state x="275" y="99" key="Vcs.Push.Dialog.v2" timestamp="1584357183132">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="99" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1584357183132" />
+    <state x="335" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1584248094111">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="335" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1366.728@0.0.1366.728" timestamp="1584248094111" />
+    <state x="370" y="124" width="759" height="538" key="find.popup" timestamp="1584350284187">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="370" y="124" width="759" height="538" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1584350284187" />
+<<<<<<< HEAD
+    <state x="379" y="165" key="git4idea.merge.GitPullDialog" timestamp="1584704077289">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="379" y="165" key="git4idea.merge.GitPullDialog/0.0.1366.728@0.0.1366.728" timestamp="1584704077289" />
+    <state x="339" y="157" key="run.anything.popup" timestamp="1584693181240">
+=======
+    <state x="426" y="187" key="git4idea.merge.GitPullDialog" timestamp="1584533389056">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="379" y="165" key="git4idea.merge.GitPullDialog/0.0.1366.728@0.0.1366.728" timestamp="1584357145541" />
+    <state x="426" y="187" key="git4idea.merge.GitPullDialog/0.0.1536.824@0.0.1536.824" timestamp="1584533389056" />
+    <state x="339" y="157" key="run.anything.popup" timestamp="1584248064292">
+>>>>>>> 431328c486e82f4afddb3c9f8eac004224f9d5b2
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="339" y="157" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1584693181240" />
+    <state x="347" y="48" width="672" height="678" key="search.everywhere.popup" timestamp="1584694641969">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="347" y="48" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1584694641969" />
+  </component>
+</project>
