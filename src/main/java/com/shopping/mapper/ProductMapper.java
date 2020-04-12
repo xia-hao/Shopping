@@ -8,9 +8,9 @@ import java.util.List;
 public interface ProductMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Product product);
+    int insert(Product record);
 
-    int insertSelective(Product product);
+    int insertSelective(Product record);
 
     Product selectByPrimaryKey(Integer id);
 
@@ -20,7 +20,7 @@ public interface ProductMapper {
     int getProductCount(@Param("name")String name,@Param("categoryId")Integer categoryId,
                         @Param("price1")Float price1,@Param("price2")Float price2);
 
-    int updateByPrimaryKeySelective(Product product);
+    int updateByPrimaryKeySelective(Product record);
 
-    int updateByPrimaryKey(Product product);
+    int updateByPrimaryKey(Product record);
 }

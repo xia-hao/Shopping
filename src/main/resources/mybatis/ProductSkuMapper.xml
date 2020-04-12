@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shopping.mapper.ProductSkuMapper">
+  <resultMap id="BaseResultMap" type="com.shopping.domain.ProductSku">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="productId" jdbcType="INTEGER" property="productid" />
+    <result column="productSpecs" jdbcType="VARCHAR" property="productspecs" />
+    <result column="productStock" jdbcType="INTEGER" property="productstock" />
+    <result column="productPrice" jdbcType="DECIMAL" property="productprice" />
+    <result column="imgArray" jdbcType="VARCHAR" property="imgarray" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, productId, productSpecs, productStock, productPrice, imgArray, createTime, updateTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from product_sku
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getProductSkuBySpecsAndPid" parameterType="com.shopping.domain.ProductSku" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from product_sku
+    where productId = #{productid,jdbcType=INTEGER} and  productSpecs = #{productspecs,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from product_sku
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.shopping.domain.ProductSku">
+    insert into product_sku (id, productId, productSpecs, 
+      productStock, productPrice, imgArray, 
+      createTime, updateTime)
+    values (#{id,jdbcType=INTEGER}, #{productid,jdbcType=INTEGER}, #{productspecs,jdbcType=VARCHAR}, 
+      #{productstock,jdbcType=INTEGER}, #{productprice,jdbcType=DECIMAL}, #{imgarray,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shopping.domain.ProductSku">
+    insert into product_sku
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="productid != null">
+        productId,
+      </if>
+      <if test="productspecs != null">
+        productSpecs,
+      </if>
+      <if test="productstock != null">
+        productStock,
+      </if>
+      <if test="productprice != null">
+        productPrice,
+      </if>
+      <if test="imgarray != null">
+        imgArray,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="updatetime != null">
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="productid != null">
+        #{productid,jdbcType=INTEGER},
+      </if>
+      <if test="productspecs != null">
+        #{productspecs,jdbcType=VARCHAR},
+      </if>
+      <if test="productstock != null">
+        #{productstock,jdbcType=INTEGER},
+      </if>
+      <if test="productprice != null">
+        #{productprice,jdbcType=DECIMAL},
+      </if>
+      <if test="imgarray != null">
+        #{imgarray,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shopping.domain.ProductSku">
+    update product_sku
+    <set>
+      <if test="productid != null">
+        productId = #{productid,jdbcType=INTEGER},
+      </if>
+      <if test="productspecs != null">
+        productSpecs = #{productspecs,jdbcType=VARCHAR},
+      </if>
+      <if test="productstock != null">
+        productStock = #{productstock,jdbcType=INTEGER},
+      </if>
+      <if test="productprice != null">
+        productPrice = #{productprice,jdbcType=DECIMAL},
+      </if>
+      <if test="imgarray != null">
+        imgArray = #{imgarray,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shopping.domain.ProductSku">
+    update product_sku
+    set productId = #{productid,jdbcType=INTEGER},
+      productSpecs = #{productspecs,jdbcType=VARCHAR},
+      productStock = #{productstock,jdbcType=INTEGER},
+      productPrice = #{productprice,jdbcType=DECIMAL},
+      imgArray = #{imgarray,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

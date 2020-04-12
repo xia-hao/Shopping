@@ -2,7 +2,6 @@ package com.shopping.domain;
 
 import com.shopping.utils.BaseEntity;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class Product extends BaseEntity {
@@ -12,7 +11,7 @@ public class Product extends BaseEntity {
 
     private String description;
 
-    private BigDecimal price;
+    private Float price;
 
     private Integer stock;
 
@@ -23,6 +22,10 @@ public class Product extends BaseEntity {
     private Integer categorylevel3id;
 
     private String filename;
+
+    private String attributelist;
+
+    private String defaultspecs;
 
     private Integer isdelete;
 
@@ -52,11 +55,11 @@ public class Product extends BaseEntity {
         this.description = description == null ? null : description.trim();
     }
 
-    public BigDecimal getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
@@ -98,6 +101,22 @@ public class Product extends BaseEntity {
 
     public void setFilename(String filename) {
         this.filename = filename == null ? null : filename.trim();
+    }
+
+    public String getAttributelist() {
+        return attributelist;
+    }
+
+    public void setAttributelist(String attributelist) {
+        this.attributelist = attributelist == null ? null : attributelist.trim();
+    }
+
+    public String getDefaultspecs() {
+        return defaultspecs;
+    }
+
+    public void setDefaultspecs(String defaultspecs) {
+        this.defaultspecs = defaultspecs == null ? null : defaultspecs.trim();
     }
 
     public Integer getIsdelete() {
