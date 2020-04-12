@@ -23,7 +23,7 @@
     </ul>
      <el-pagination
        background
-       :hide-on-single-page="discussCount==0"
+       :hide-on-single-page="true"
        @size-change="getDiscussList"
        @current-change="getDiscussList"
        :current-page.sync="discuss.pageNo"

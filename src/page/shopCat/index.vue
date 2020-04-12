@@ -48,7 +48,7 @@
         </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <el-button size="mini" @click="delShopCat(scope.row)">删除</el-button>
+            <el-button size="mini" @click="delShopCat(scope.row)"> 删除</el-button>
             <el-button size="mini" @click="collectShop(scope.row)">收藏</el-button>
           </template>
         </el-table-column>

@@ -25,10 +25,6 @@ export default new Router({
           component: () => import("@/page/product/productDeatil"),
           children: [
             {
-              path: '/',
-              redirect: '/productDeatilImage'
-            },
-            {
               path: '/productDiscuss',
               name: 'productDiscuss',
               component: () => import("@/page/product/productDiscuss")
@@ -75,6 +71,11 @@ export default new Router({
       path: '/newsDeatil',
       name: 'newsDeatil',
       component: () => import("@/page/news/newsDeatil")
+    },
+    {
+      path: '/pay',
+      name: '/pay',
+      component: () => import("@/page/pay/index")
     },
     {
       path: '/shopCat',

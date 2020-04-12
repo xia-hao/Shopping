@@ -2,7 +2,14 @@
   <div>
     <div class="content">
       <div id="tsShopContainer">
-        <el-carousel height="380px">
+
+        <el-carousel height="380px" v-if="productSku.imgarray">
+          <el-carousel-item v-for="(img,index) in productSku.imgarray.img" :key="index">
+            <img :src="urlimg+img"/>
+          </el-carousel-item>
+        </el-carousel>
+
+        <el-carousel height="380px" v-else>
           <el-carousel-item v-for="(slideShow,index) in slideShowList" :key="index">
             <img :src="urlimg+slideShow.picurl"/>
           </el-carousel-item>
@@ -14,17 +21,27 @@
           “开业巨惠，北京专柜直供”，不光低价，“真”才靠谱！
           {{product.filename}}
         </div>
-        <div class="des_price">
-          本店价格：<b>￥{{product.price}}</b><br/>
+        <div v-if="productSku.productprice&&productSku.productstock">
+          <div class="des_price" >
+            本店价格：<b>￥{{productSku.productprice}}</b><br/>
+          </div>
+          <div class="des_price">
+            库存：<b>{{productSku.productstock}}</b><br/>
+          </div>
         </div>
-        <div class="des_price">
-          库存：<b>{{product.stock}}</b><br/>
+        <div v-else>
+          <div class="des_price" >
+            本店价格：<b>￥{{product.price}}</b><br/>
+          </div>
+          <div class="des_price">
+            库存：<b>{{product.stock}}</b><br/>
+          </div>
         </div>
-        <div class="des_choice" v-for="(item1,index) in skuList" :key="index">
+        <div class="des_choice" v-for="(item1,index) in this.product.attributelist" :key="index">
           <span class="fl">{{item1.title}}：</span>
           <ul>
-            <li :class="{checked:sel[index] == ind}" v-for="(item2,ind) in item1.items" :key="ind" @click="clickClass(index,ind)">
-              {{item2.name}}
+            <li :class="{checked:sel[index] == ind}" v-for="(item2,ind) in item1.items" :key="ind" @click="clickClass(index,ind,item1)">
+              {{item2}}
               <div class="ch_img"></div>
             </li>
           </ul>
@@ -56,7 +73,8 @@
           <div class="des_tit">
             <ul>
               <li class="current">
-                <router-link :to="{path: '/productDeatilImage',query:{id:id}}">详情</router-link>
+               <router-link v-if="productSku.id != undefined" :to="{path: '/productDeatilImage',query:{id: id,skuid: productSku.id}}">详情</router-link>
+                <router-link v-else :to="{path: '/productDeatilImage',query:{id:id}}">详情</router-link>
               </li>
               <li class="current">
                 <router-link :to="{path: '/productDiscuss',query:{id:id}}">评论</router-link>
@@ -73,6 +91,7 @@
 <script>
   import {productById} from "@/api/product";
   import {slideShowlist} from "../../api/slideShow";
+  import {BySpecsAndPid} from "../../api/productSku";
 
   export default {
     name: "productDeatil",
@@ -80,36 +99,75 @@
       return{
         quantity: 1,
         id: this.$route.query.id,
-        product: undefined,
+        product: [],
         slideShowList: undefined,
         slideShow: {
           pid: this.$route.query.id,
           type: 'product'
         },
-        skuList:[
-          {title: '型号选择', items: [{id:1,name:'30ml'},{id:2,name:'50ml'},{id:3,name:'100ml'}]},
-          {title: '颜色选择', items: [{id:1,name:'红色'},{id:2,name:'白色'},{id:3,name:'黑色'}]}
-          ],
-        sel: []
+        productSpecsArray:[],
+        sel: [],
+        productSku : {
+          productid: undefined,
+          productspecs:''
+        },
+        productSkuParams : {
+          productid: undefined,
+          productspecs:''
+        }
       }
     },
     methods: {
       getProductById(){
         productById(this.id).then(response => {
           this.product = response.getproduct
+          if(response.getproduct.attributelist != ''){
+            this.product.attributelist = JSON.parse(response.getproduct.attributelist)
+            this.product.defaultspecs = JSON.parse(response.getproduct.defaultspecs)
+            this.defaultSpecs()
+          }else{
+            this.product.attributelist = [
+              {title: "容量", items: ["128GB","265GB","512GB"]},
+              {title: "颜色", items: ["红色","黑色","蓝色"]}
+            ]
+          }
         }).catch(error => {
           this.msgError("异常："+error)
         })
       },
-      clickClass(index,ind){
+      clickClass(index,ind,value){
         this.sel[index] = ind; //让数组sel的第index+1的元素的值等于ind
         this.sel = this.sel.concat([]); //因为数组是引用类型，对其中一个变量直接赋值不会影响到另一个变量（并未操作引用的对象），使用concat（操作了应用对象）
+        this.productSpecsArray[index] = '"'+value.title +'":"'+value.items[ind]+'"'
+        this.productSkuParams.productspecs = '{'
+        this.productSpecsArray.forEach(item => {
+          this.productSkuParams.productspecs += item+','
+        })
+        this.productSkuParams.productspecs=this.productSkuParams.productspecs.substring(0, this.productSkuParams.productspecs.lastIndexOf(','))
+        this.productSkuParams.productspecs += '}'
+        this.productSkuParams.productid = this.product.id
+        this.$router.push({path: '/productDiscuss',query:{id: this.id}})
+        BySpecsAndPid(this.productSkuParams).then(response => {
+          if(response.code == "1000"){
+            this.productSku = response.productSku
+            this.productSku.imgarray = JSON.parse(response.productSku.imgarray)
+            this.$router.push({path: '/productDeatilImage',query:{id: this.id,skuid: this.productSku.id}})
+          }
+        })
       },
       onaddcart(){
-        this.msgSuccess("添加购物车成功")
+        if(this.product.attributelist.length ==  this.productSpecsArray.length){
+          this.msgSuccess("添加购物车成功")
+        }else{
+          this.msgError('请选择规模！')
+        }
       },
       buy(){
-        this.msgSuccess("购买成功");
+        if(this.product.attributelist.length ==  this.productSpecsArray.length){
+          this.msgSuccess("购买成功");
+        }else{
+          this.msgError('请选择规模！')
+        }
       },
       collect(){
         this.msgSuccess("收藏成功");
@@ -118,9 +176,15 @@
         slideShowlist(this.slideShow).then(response => {
           this.slideShowList = response.slideShowList
         })
+      },
+      defaultSpecs(){
+        this.product.defaultspecs.forEach(item => {
+          this.clickClass(item.titleIndex,item.itemsIndex,this.product.attributelist[item.titleIndex])
+        })
       }
     },
     created() {
+      this.$router.push({path: '/productDeatilImage',query: {id:this.id}})
       this.getProductById();
       this.getSlideShow();
     }

@@ -74,7 +74,10 @@
         </div>
       </div>
       <div style="text-align: right;margin-top: 10px">
-        <el-button style="background-color: #e14145;color: white;width: 130px;margin-right: 20px" @click="$router.go(-1)">
+        <a href="javaScript:0;" style="float: left;margin-left: 750px;margin-top: 10px" @click="$router.push({path: '/shopCat'})">
+          返回购物车
+        </a>
+        <el-button style="background-color: #e14145;color: white;width: 130px;margin-right: 20px" @click="$router.push({path: '/pay'})">
           提交订单
         </el-button>
       </div>
@@ -188,7 +191,7 @@ export default {
       },
       wayList:[
         {title: '配送方式', items: [{id:1,name:'快递送货(全国范围)'},{id:2,name:'物流送货(全国范围)'},{id:3,name:'自行上门提货'}]},
-        {title: '支付方式', items: [{id:1,name:'支付宝'},{id:2,name:'微信'}]}
+        {title: '支付方式', items: [{id:1,name:'货到付款'},{id:2,name:'在线支付'}]}
       ]
     }
   },
