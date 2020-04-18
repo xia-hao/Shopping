@@ -1,6 +1,5 @@
 package com.shopping.service.impl;
 
-import com.github.pagehelper.PageHelper;
 import com.shopping.domain.Product;
 import com.shopping.mapper.ProductMapper;
 import com.shopping.service.ProductService;

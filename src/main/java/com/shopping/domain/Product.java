@@ -15,6 +15,8 @@ public class Product extends BaseEntity {
 
     private Integer stock;
 
+    private Integer salesVolume;
+
     private Integer categorylevel1id;
 
     private Integer categorylevel2id;
@@ -69,6 +71,14 @@ public class Product extends BaseEntity {
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public Integer getSalesVolume() {
+        return salesVolume;
+    }
+
+    public void setSalesVolume(Integer salesVolume) {
+        this.salesVolume = salesVolume;
     }
 
     public Integer getCategorylevel1id() {

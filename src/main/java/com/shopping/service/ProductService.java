@@ -1,7 +1,6 @@
 package com.shopping.service;
 
 import com.shopping.domain.Product;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

@@ -7,6 +7,7 @@
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="price" jdbcType="REAL" property="price" />
     <result column="stock" jdbcType="INTEGER" property="stock" />
+    <result column="sales_volume" jdbcType="INTEGER" property="salesVolume" />
     <result column="categoryLevel1Id" jdbcType="INTEGER" property="categorylevel1id" />
     <result column="categoryLevel2Id" jdbcType="INTEGER" property="categorylevel2id" />
     <result column="categoryLevel3Id" jdbcType="INTEGER" property="categorylevel3id" />
@@ -17,8 +18,8 @@
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, description, price, stock, categoryLevel1Id, categoryLevel2Id, categoryLevel3Id, 
-    fileName, attributeList, defaultSpecs, isDelete, createTime
+    id, name, description, price, stock, sales_volume, categoryLevel1Id, categoryLevel2Id, 
+    categoryLevel3Id, fileName, attributeList, defaultSpecs, isDelete, createTime
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -26,21 +27,61 @@
     from product
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectProductlist" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from product
+    <where>
+      <if test="price1 !=null">
+        and price <![CDATA[ >= ]]> #{price1}
+      </if>
+      <if test="price2 !=null">
+        and price <![CDATA[ <= ]]> #{price2}
+      </if>
+      <if test="name !=null and name != ''">
+        and name like CONCAT('%',#{name},'%')
+      </if>
+      <if test="categoryId !=null">
+        and categoryLevel1Id = #{categoryId} or categoryLevel2Id = #{categoryId} or categoryLevel3Id = #{categoryId}
+      </if>
+    </where>
+    ORDER BY sales_volume DESC
+  </select>
+  <select id="getProductCount" resultType="int">
+    select
+    count(1)
+    from product
+    <where>
+      <if test="price1 !=null">
+        and price <![CDATA[ >= ]]> #{price1}
+      </if>
+      <if test="price2 !=null">
+        and price <![CDATA[ <= ]]> #{price2}
+      </if>
+      <if test="name !=null and name != ''">
+        and name like CONCAT('%',#{name},'%')
+      </if>
+      <if test="categoryId !=null">
+        and categoryLevel1Id = #{categoryId} or categoryLevel2Id = #{categoryId} or categoryLevel3Id = #{categoryId}
+      </if>
+    </where>
+    ORDER BY sales_volume DESC
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from product
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.shopping.domain.Product">
     insert into product (id, name, description, 
-      price, stock, categoryLevel1Id, 
-      categoryLevel2Id, categoryLevel3Id, fileName, 
-      attributeList, defaultSpecs, isDelete, 
-      createTime)
+      price, stock, sales_volume, 
+      categoryLevel1Id, categoryLevel2Id, categoryLevel3Id, 
+      fileName, attributeList, defaultSpecs, 
+      isDelete, createTime)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{price,jdbcType=REAL}, #{stock,jdbcType=INTEGER}, #{categorylevel1id,jdbcType=INTEGER}, 
-      #{categorylevel2id,jdbcType=INTEGER}, #{categorylevel3id,jdbcType=INTEGER}, #{filename,jdbcType=VARCHAR}, 
-      #{attributelist,jdbcType=VARCHAR}, #{defaultspecs,jdbcType=VARCHAR}, #{isdelete,jdbcType=INTEGER}, 
-      #{createtime,jdbcType=TIMESTAMP})
+      #{price,jdbcType=REAL}, #{stock,jdbcType=INTEGER}, #{salesVolume,jdbcType=INTEGER}, 
+      #{categorylevel1id,jdbcType=INTEGER}, #{categorylevel2id,jdbcType=INTEGER}, #{categorylevel3id,jdbcType=INTEGER}, 
+      #{filename,jdbcType=VARCHAR}, #{attributelist,jdbcType=VARCHAR}, #{defaultspecs,jdbcType=VARCHAR}, 
+      #{isdelete,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.shopping.domain.Product">
     insert into product
@@ -59,6 +100,9 @@
       </if>
       <if test="stock != null">
         stock,
+      </if>
+      <if test="salesVolume != null">
+        sales_volume,
       </if>
       <if test="categorylevel1id != null">
         categoryLevel1Id,
@@ -101,6 +145,9 @@
       <if test="stock != null">
         #{stock,jdbcType=INTEGER},
       </if>
+      <if test="salesVolume != null">
+        #{salesVolume,jdbcType=INTEGER},
+      </if>
       <if test="categorylevel1id != null">
         #{categorylevel1id,jdbcType=INTEGER},
       </if>
@@ -142,6 +189,9 @@
       <if test="stock != null">
         stock = #{stock,jdbcType=INTEGER},
       </if>
+      <if test="salesVolume != null">
+        sales_volume = #{salesVolume,jdbcType=INTEGER},
+      </if>
       <if test="categorylevel1id != null">
         categoryLevel1Id = #{categorylevel1id,jdbcType=INTEGER},
       </if>
@@ -175,6 +225,7 @@
       description = #{description,jdbcType=VARCHAR},
       price = #{price,jdbcType=REAL},
       stock = #{stock,jdbcType=INTEGER},
+      sales_volume = #{salesVolume,jdbcType=INTEGER},
       categoryLevel1Id = #{categorylevel1id,jdbcType=INTEGER},
       categoryLevel2Id = #{categorylevel2id,jdbcType=INTEGER},
       categoryLevel3Id = #{categorylevel3id,jdbcType=INTEGER},
@@ -185,42 +236,4 @@
       createTime = #{createtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectProductlist" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from product
-    <where>
-        <if test="price1 !=null">
-          and price <![CDATA[ >= ]]> #{price1}
-        </if>
-        <if test="price2 !=null">
-          and price <![CDATA[ <= ]]> #{price2}
-        </if>
-        <if test="name !=null and name != ''">
-          and name like CONCAT('%',#{name},'%')
-        </if>
-      <if test="categoryId !=null">
-        and categoryLevel1Id = #{categoryId} or categoryLevel2Id = #{categoryId} or categoryLevel3Id = #{categoryId}
-      </if>
-    </where>
-  </select>
-  <select id="getProductCount" resultType="int">
-    select
-    count(1)
-    from product
-    <where>
-        <if test="price1 !=null">
-          and price <![CDATA[ >= ]]> #{price1}
-        </if>
-        <if test="price2 !=null">
-          and price <![CDATA[ <= ]]> #{price2}
-        </if>
-        <if test="name !=null and name != ''">
-          and name like CONCAT('%',#{name},'%')
-        </if>
-      <if test="categoryId !=null">
-        and categoryLevel1Id = #{categoryId} or categoryLevel2Id = #{categoryId} or categoryLevel3Id = #{categoryId}
-      </if>
-    </where>
-  </select>
 </mapper>

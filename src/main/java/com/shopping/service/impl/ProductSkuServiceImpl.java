@@ -1,6 +1,5 @@
 package com.shopping.service.impl;
 
-import com.shopping.domain.Product;
 import com.shopping.domain.ProductSku;
 import com.shopping.mapper.ProductSkuMapper;
 import com.shopping.service.ProductSkuService;
