@@ -2,8 +2,6 @@ package com.shopping.domain;
 
 import com.shopping.utils.BaseEntity;
 
-import java.util.Date;
-
 public class Product extends BaseEntity {
     private Integer id;
 
@@ -31,7 +29,33 @@ public class Product extends BaseEntity {
 
     private Integer isdelete;
 
-    private Date createtime;
+    private Integer categoryId;     //分类Id
+    private Float price1;           //商品列表中价格区间1
+    private Float price2;           //商品列表中价格区间2
+
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public Float getPrice1() {
+        return price1;
+    }
+
+    public void setPrice1(Float price1) {
+        this.price1 = price1;
+    }
+
+    public Float getPrice2() {
+        return price2;
+    }
+
+    public void setPrice2(Float price2) {
+        this.price2 = price2;
+    }
 
     public Integer getId() {
         return id;
@@ -137,11 +161,4 @@ public class Product extends BaseEntity {
         this.isdelete = isdelete;
     }
 
-    public Date getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
-    }
 }

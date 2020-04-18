@@ -1,8 +1,8 @@
 package com.shopping.domain;
 
-import java.util.Date;
+import com.shopping.utils.BaseEntity;
 
-public class SlideShow {
+public class SlideShow extends BaseEntity {
     private Integer id;
 
     private Integer pid;
@@ -12,8 +12,6 @@ public class SlideShow {
     private String picurl;
 
     private String picurlTo;
-
-    private Date createtime;
 
     public Integer getId() {
         return id;
@@ -55,11 +53,4 @@ public class SlideShow {
         this.picurlTo = picurlTo == null ? null : picurlTo.trim();
     }
 
-    public Date getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
-    }
 }

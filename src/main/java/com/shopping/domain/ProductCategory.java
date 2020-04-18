@@ -1,8 +1,9 @@
 package com.shopping.domain;
 
-import java.util.Date;
+import com.shopping.utils.BaseEntity;
 
-public class ProductCategory {
+
+public class ProductCategory extends BaseEntity {
     private Integer id;
 
     private String name;
@@ -14,8 +15,6 @@ public class ProductCategory {
     private String iconclass;
 
     private String isdelete;
-
-    private Date createtime;
 
     public Integer getId() {
         return id;
@@ -65,11 +64,4 @@ public class ProductCategory {
         this.isdelete = isdelete == null ? null : isdelete.trim();
     }
 
-    public Date getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
-    }
 }

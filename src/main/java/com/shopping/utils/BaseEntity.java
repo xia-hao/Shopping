@@ -1,5 +1,6 @@
 package com.shopping.utils;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.shopping.domain.User;
 import com.shopping.service.UserService;
 import com.shopping.utils.shiro.UserRealm;
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -26,69 +28,26 @@ import java.util.Map;
 public class BaseEntity {
     private Integer pageNo=1;       //当前页
     private Integer pageSize=4;     //每页显示条数
-    private Integer categoryId;     //分类Id
-    private Float price1;           //商品列表中价格区间1
-    private Float price2;           //商品列表中价格区间2
-    private String code;            //验证码
-    private String noteCode;        //短信验证码
-    private String provinceName;   //省份名称
-    private String cityName;       //城市名称
-    private String districtName;   //地区名称
 
-    public String getProvinceName() {
-        return provinceName;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createtime;
+
+    private Date updatetime;
+
+    public Date getUpdatetime() {
+        return updatetime;
     }
 
-    public void setProvinceName(String provinceName) {
-        this.provinceName = provinceName;
+    public void setUpdatetime(Date updatetime) {
+        this.updatetime = updatetime;
     }
 
-    public String getCityName() {
-        return cityName;
+    public Date getCreatetime() {
+        return createtime;
     }
 
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
-
-    public String getDistrictName() {
-        return districtName;
-    }
-
-    public void setDistrictName(String districtName) {
-        this.districtName = districtName;
-    }
-
-    public String getNoteCode() {
-        return noteCode;
-    }
-
-    public void setNoteCode(String noteCode) {
-        this.noteCode = noteCode;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Float getPrice1() {
-        return price1;
-    }
-
-    public void setPrice1(Float price1) {
-        this.price1 = price1;
-    }
-
-    public Float getPrice2() {
-        return price2;
-    }
-
-    public void setPrice2(Float price2) {
-        this.price2 = price2;
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
     }
 
     public Integer getPageNo() {
@@ -106,15 +65,5 @@ public class BaseEntity {
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
     }
-
-    public Integer getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
-
-
 
 }

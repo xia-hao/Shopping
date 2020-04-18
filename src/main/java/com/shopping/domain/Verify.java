@@ -1,8 +1,10 @@
 package com.shopping.domain;
 
+import com.shopping.utils.BaseEntity;
+
 import java.util.Date;
 
-public class Verify {
+public class Verify extends BaseEntity {
     private Integer id;
 
     private String mobile;
@@ -14,8 +16,6 @@ public class Verify {
     private String statu;
 
     private String describes;
-
-    private Date createtime;
 
     private Integer validtime;
 
@@ -65,14 +65,6 @@ public class Verify {
 
     public void setDescribes(String describes) {
         this.describes = describes == null ? null : describes.trim();
-    }
-
-    public Date getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
     }
 
     public Integer getValidtime() {

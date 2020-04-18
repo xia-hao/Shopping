@@ -1,8 +1,8 @@
 package com.shopping.domain;
 
-import java.util.Date;
+import com.shopping.utils.BaseEntity;
 
-public class ShopCart {
+public class ShopCart extends BaseEntity {
     private Integer id;
 
     private Integer userid;
@@ -21,7 +21,16 @@ public class ShopCart {
 
     private Boolean isselected;
 
-    private Date createtime;
+
+    private Product product;
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 
     public Integer getId() {
         return id;
@@ -93,13 +102,5 @@ public class ShopCart {
 
     public void setIsselected(Boolean isselected) {
         this.isselected = isselected;
-    }
-
-    public Date getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
     }
 }

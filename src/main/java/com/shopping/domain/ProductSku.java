@@ -1,9 +1,10 @@
 package com.shopping.domain;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import com.shopping.utils.BaseEntity;
 
-public class ProductSku {
+import java.math.BigDecimal;
+
+public class ProductSku extends BaseEntity {
     private Integer id;
 
     private Integer productid;
@@ -15,10 +16,6 @@ public class ProductSku {
     private BigDecimal productprice;
 
     private String imgarray;
-
-    private Date createtime;
-
-    private Date updatetime;
 
     public Integer getId() {
         return id;
@@ -68,19 +65,4 @@ public class ProductSku {
         this.imgarray = imgarray == null ? null : imgarray.trim();
     }
 
-    public Date getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
-    }
-
-    public Date getUpdatetime() {
-        return updatetime;
-    }
-
-    public void setUpdatetime(Date updatetime) {
-        this.updatetime = updatetime;
-    }
 }

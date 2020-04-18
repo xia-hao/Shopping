@@ -33,7 +33,25 @@ public class User extends BaseEntity {
 
     private Date freezingtime;
 
-    private Date createtime;
+
+    private String code;            //验证码
+    private String noteCode;        //短信验证码
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getNoteCode() {
+        return noteCode;
+    }
+
+    public void setNoteCode(String noteCode) {
+        this.noteCode = noteCode;
+    }
 
     public Integer getUserid() {
         return userid;
@@ -147,11 +165,4 @@ public class User extends BaseEntity {
         this.freezingtime = freezingtime;
     }
 
-    public Date getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
-    }
 }

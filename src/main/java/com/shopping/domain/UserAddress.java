@@ -2,8 +2,6 @@ package com.shopping.domain;
 
 import com.shopping.utils.BaseEntity;
 
-import java.util.Date;
-
 public class UserAddress extends BaseEntity {
     private Integer id;
 
@@ -23,7 +21,35 @@ public class UserAddress extends BaseEntity {
 
     private String mobile;
 
-    private Date createtime;
+
+
+    private String provinceName;   //省份名称
+    private String cityName;       //城市名称
+    private String districtName;   //地区名称
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getDistrictName() {
+        return districtName;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
+    }
 
     public Integer getId() {
         return id;
@@ -97,11 +123,4 @@ public class UserAddress extends BaseEntity {
         this.mobile = mobile == null ? null : mobile.trim();
     }
 
-    public Date getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
-    }
 }

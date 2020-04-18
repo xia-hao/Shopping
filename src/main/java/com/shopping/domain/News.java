@@ -1,9 +1,6 @@
 package com.shopping.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.shopping.utils.BaseEntity;
-
-import java.util.Date;
 
 public class News extends BaseEntity {
     private Integer id;
@@ -13,9 +10,6 @@ public class News extends BaseEntity {
     private String title;
 
     private String content;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createtime;
 
     public Integer getId() {
         return id;
@@ -49,11 +43,4 @@ public class News extends BaseEntity {
         this.content = content == null ? null : content.trim();
     }
 
-    public Date getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
-    }
 }
