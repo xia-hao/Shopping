@@ -24,6 +24,7 @@ public class ProductSkuController {
 
     @GetMapping("/BySpecsAndPid")
     public Map BySpecsAndPid(ProductSku productSku){
+        productSku.setProductspecs("["+productSku.getProductspecs()+"]");
         return productSkuService.getProductSkuBySpecsAndPid(productSku);
     }
 
