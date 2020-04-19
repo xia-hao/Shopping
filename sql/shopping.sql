@@ -16,18 +16,6 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`shopping` /*!40100 DEFAULT CHARACTER SE
 
 USE `shopping`;
 
-/*Table structure for table `collectible` */
-
-DROP TABLE IF EXISTS `collectible`;
-
-CREATE TABLE `collectible` (
-  `userId` int(10) NOT NULL COMMENT '用户ID',
-  `loginName` varchar(225) NOT NULL COMMENT '账号名',
-  `productId` int(10) NOT NULL COMMENT '商品ID'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `collectible` */
-
 /*Table structure for table `coupon` */
 
 DROP TABLE IF EXISTS `coupon`;
@@ -36,9 +24,9 @@ CREATE TABLE `coupon` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '优惠卷ID',
   `productId` int(10) NOT NULL COMMENT '商品id',
   `title` varchar(10) NOT NULL COMMENT '优惠卷标题',
-  `RMB` float(10,2) NOT NULL COMMENT '优惠卷金额',
+  `RMB` decimal(10,2) NOT NULL COMMENT '优惠卷金额',
   `number` int(10) NOT NULL COMMENT '优惠卷数量',
-  `reach` float(20,2) NOT NULL COMMENT '优惠卷额度',
+  `reach` decimal(20,2) NOT NULL COMMENT '优惠卷额度',
   `deadline` int(10) NOT NULL COMMENT '优惠卷使用期限',
   `createTime` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
@@ -46,24 +34,7 @@ CREATE TABLE `coupon` (
 
 /*Data for the table `coupon` */
 
-insert  into `coupon`(`id`,`productId`,`title`,`RMB`,`number`,`reach`,`deadline`,`createTime`) values (1,0,'',2.00,0,10.00,7,'2020-03-08 10:04:37');
-
-/*Table structure for table `dealrecord` */
-
-DROP TABLE IF EXISTS `dealrecord`;
-
-CREATE TABLE `dealrecord` (
-  `userId` int(10) NOT NULL COMMENT '用户ID',
-  `productName` varchar(225) NOT NULL COMMENT '商品名称',
-  `number` int(10) NOT NULL COMMENT '数量',
-  `price` float(10,2) NOT NULL COMMENT '价格',
-  `userPrice` float(10,2) NOT NULL COMMENT '用户余额',
-  `createTime` datetime NOT NULL COMMENT '支付时间'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `dealrecord` */
-
-insert  into `dealrecord`(`userId`,`productName`,`number`,`price`,`userPrice`,`createTime`) values (1,'啫喱水',1,152.00,9848.00,'2020-03-09 15:04:37');
+insert  into `coupon`(`id`,`productId`,`title`,`RMB`,`number`,`reach`,`deadline`,`createTime`) values (1,0,'','2.00',0,'10.00',7,'2020-03-08 10:04:37');
 
 /*Table structure for table `dictionary` */
 
@@ -93,11 +64,11 @@ CREATE TABLE `discuss` (
   `content` varchar(225) NOT NULL COMMENT '评论内容',
   `createTime` datetime NOT NULL COMMENT '评论时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 /*Data for the table `discuss` */
 
-insert  into `discuss`(`id`,`userID`,`productID`,`content`,`createTime`) values (1,2,734,'非常好用','2020-04-07 17:26:49'),(2,2,734,'真的可以，好用的不得了','2020-04-07 17:33:06'),(3,1,734,'感谢楼上！的确好用！','2020-04-07 18:30:52'),(4,2,734,'简直是biu得佛','2020-04-07 18:46:22'),(5,2,755,'沙发非常柔软，坐着也挺舒服的','2020-04-07 18:49:45'),(6,2,745,'便宜又好用！','2020-04-08 14:14:38'),(7,2,744,'手机很好用！','2020-04-11 18:25:27');
+insert  into `discuss`(`id`,`userID`,`productID`,`content`,`createTime`) values (1,2,734,'非常好用','2020-04-07 17:26:49'),(2,2,734,'真的可以，好用的不得了','2020-04-07 17:33:06'),(3,1,734,'感谢楼上！的确好用！','2020-04-07 18:30:52'),(4,2,734,'简直是biu得佛','2020-04-07 18:46:22'),(5,2,755,'沙发非常柔软，坐着也挺舒服的','2020-04-07 18:49:45'),(6,2,745,'便宜又好用！','2020-04-08 14:14:38'),(7,2,744,'手机很好用！','2020-04-11 18:25:27'),(8,1,744,'手机非常好用！','2020-04-18 20:10:52');
 
 /*Table structure for table `district` */
 
@@ -171,15 +142,15 @@ CREATE TABLE `order_detail` (
   `productId` int(10) NOT NULL COMMENT '商品主键',
   `skuId` int(10) NOT NULL COMMENT 'SKU主键',
   `quantity` int(10) NOT NULL COMMENT '数量',
-  `price` float(10,2) NOT NULL COMMENT '单价',
-  `cost` float(10,2) NOT NULL COMMENT '共消费',
+  `price` decimal(10,2) NOT NULL COMMENT '单价',
+  `cost` decimal(10,2) NOT NULL COMMENT '共消费',
   `is_refund` char(22) NOT NULL DEFAULT '1' COMMENT '是否退款(1.未退款 2.已退款)',
   `createTime` datetime NOT NULL COMMENT '订单创建时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `order_detail` */
 
-insert  into `order_detail`(`orderNo`,`productId`,`skuId`,`quantity`,`price`,`cost`,`is_refund`,`createTime`) values ('34218726C1274CC59504AB4E6FD64AHG',735,4,1,152.00,152.00,'1','2020-03-09 15:04:37');
+insert  into `order_detail`(`orderNo`,`productId`,`skuId`,`quantity`,`price`,`cost`,`is_refund`,`createTime`) values ('34218726C1274CC59504AB4E6FD64AHG',735,4,1,'152.00','152.00','1','2020-03-09 15:04:37');
 
 /*Table structure for table `order_info` */
 
@@ -211,8 +182,8 @@ CREATE TABLE `payment` (
   `loginName` varchar(225) NOT NULL COMMENT '账户名',
   `serialNumber` varchar(225) NOT NULL COMMENT '订单号',
   `number` int(10) NOT NULL COMMENT '数量',
-  `price` float(10,2) NOT NULL COMMENT '单价',
-  `cost` float(10,2) NOT NULL COMMENT '共消费',
+  `price` decimal(10,2) NOT NULL COMMENT '单价',
+  `cost` decimal(10,2) NOT NULL COMMENT '共消费',
   `payStatu` int(10) NOT NULL COMMENT '支付状态(1.支付中 2.支付成功 3.支付失败)',
   `payType` char(2) NOT NULL COMMENT '支付类型(1.微信 2.支付宝)',
   `payTime` datetime NOT NULL COMMENT '支付时间'
@@ -220,7 +191,7 @@ CREATE TABLE `payment` (
 
 /*Data for the table `payment` */
 
-insert  into `payment`(`userId`,`loginName`,`serialNumber`,`number`,`price`,`cost`,`payStatu`,`payType`,`payTime`) values (1,'admin','34218726C1274CC59504AB4E6FD64AHG',1,152.00,152.00,2,'','2020-03-09 15:04:37');
+insert  into `payment`(`userId`,`loginName`,`serialNumber`,`number`,`price`,`cost`,`payStatu`,`payType`,`payTime`) values (1,'admin','34218726C1274CC59504AB4E6FD64AHG',1,'152.00','152.00',2,'','2020-03-09 15:04:37');
 
 /*Table structure for table `product` */
 
@@ -230,7 +201,7 @@ CREATE TABLE `product` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` varchar(20) NOT NULL COMMENT '名称',
   `description` varchar(1024) DEFAULT NULL COMMENT '描述',
-  `price` float NOT NULL COMMENT '价格',
+  `price` decimal(10,0) NOT NULL COMMENT '价格',
   `stock` int(10) NOT NULL COMMENT '库存',
   `sales_volume` int(10) NOT NULL COMMENT '销量',
   `categoryLevel1Id` int(10) DEFAULT NULL COMMENT '分类1',
@@ -247,7 +218,7 @@ CREATE TABLE `product` (
 
 /*Data for the table `product` */
 
-insert  into `product`(`id`,`name`,`description`,`price`,`stock`,`sales_volume`,`categoryLevel1Id`,`categoryLevel2Id`,`categoryLevel3Id`,`fileName`,`attributeList`,`defaultSpecs`,`isDelete`,`createTime`) values (733,'香奈尔','',152,1000,523,548,654,655,'27A1789ED5764D82A5506DF3DC3933F9.jpg','','',0,'2020-04-10 00:00:00'),(734,'洗面奶','',152,1000,400,548,654,655,'D6C9BD438C5643D6B1A6C52E5426FE22.jpg','','',0,'2020-04-10 00:00:00'),(735,'啫喱水','',152,1000,350,548,654,655,'1A836D2B3A3348DDAB19807E6CEA8028.jpg','','',0,'2020-04-10 00:00:00'),(736,'香水5852','',152,1000,290,548,654,655,'4D9499BAD92A42D291094E797BA2EA3F.jpg','','',0,'2020-04-10 00:00:00'),(737,'香水','',152,1000,462,548,654,655,'A9924F9DB68B4DF99FDBF05902075AF0.jpg','','',0,'2020-04-10 00:00:00'),(738,'润肤露','',45,1000,310,548,654,655,'3B059EDB5237407980458CE9EA9D3204.jpg','','',0,'2020-04-10 00:00:00'),(739,'洁面装','',156,1000,210,548,654,655,'A62C6DF55116440CA3DE9DB37901ED4F.jpg','','',0,'2020-04-10 00:00:00'),(740,'电饭锅','',158,1000,164,628,656,659,'40C3B76BA31246618E3CFC8723D33517.jpg','','',0,'2020-04-10 00:00:00'),(741,'婴儿喂奶装','',569,1000,50,632,637,653,'401004B3D47C4C6FB1BC5EF19C21FC77.jpg','','',0,'2020-04-10 00:00:00'),(742,'坚果套餐','',158,1000,300,660,661,662,'E03D74145A034F6D909879829CB99D80.jpg','','',0,'2020-04-10 00:00:00'),(743,'超甜蜜崭','',589,1000,320,660,661,663,'7121E55099FC477680B1229205CE3D29.jpg','','',0,'2020-04-10 00:00:00'),(744,'华为2566','',896,1000,504,670,671,672,'F24B4140A2284B3788A38F3B5AD1809A.jpg','[{\"title\":\"容量\", \"items\": [\"128GB\",\"265GB\",\"512GB\"]},{\"title\": \"颜色\", \"items\": [\"红色\",\"白色\",\"蓝色\"]}]','[{\"titleIndex\":0, \"itemsIndex\": 0},{\"titleIndex\": 1, \"itemsIndex\": 1}]',0,'2020-04-10 00:00:00'),(745,'荣耀3C','',589,1000,405,670,671,672,'F3921E12552A4D0AA3F75467B146A959.jpg','','',0,'2020-04-10 00:00:00'),(746,'小米手环','',963,1000,204,670,674,675,'72F75A371B0B4C26A7F72FAAEF96FC68.jpg','','',0,'2020-04-10 00:00:00'),(747,'华为2265','',896,1000,360,670,671,673,'161F355A8A8549BA8F7F4CE3B4F07E40.jpg','','',0,'2020-04-10 00:00:00'),(748,'越南坚果','',520,1000,460,660,661,662,'CBC98D3C9E544830821632F5C313D93E.jpg','','',0,'2020-04-10 00:00:00'),(749,'日本进口马桶','',5866,1000,20,628,657,0,'A5AF40825E6940B2A59A040100E181A8.jpg','','',0,'2020-04-10 00:00:00'),(750,'联想Y系列','',569,1000,100,670,690,691,'956DB0BEC41B41B8A06C05C950130E23.jpg','','',0,'2020-04-10 00:00:00'),(751,'脑白金1号','',589,1000,40,676,677,680,'66E96AF9E9714A5C9EA901811173D662.jpg','','',0,'2020-04-10 00:00:00'),(752,'莫里斯按','',589,1000,60,676,678,0,'A7436BC607E74C81B392DCFE69D4AEAB.jpg','','',0,'2020-04-10 00:00:00'),(753,'三鹿好奶粉','',859,1000,50,676,679,698,'3C465E7B8A324A8DA2A2EEE202E36166.jpg','','',0,'2020-04-10 00:00:00'),(754,'儿童牛奶','',5896,1000,70,676,679,0,'D1AC9AE71ED348FA8D880FD4279D3422.jpg','','',0,'2020-04-10 00:00:00'),(755,'软沙发','',8596,1000,120,628,696,0,'ED7921DE40FC47E18365754709A21194.jpg','','',0,'2020-04-10 00:00:00'),(756,'收纳盒','',5966,1000,210,628,696,0,'DB86CA25CA4F4B4AA906F46BE542C6A6.jpg','','',0,'2020-04-10 00:00:00'),(757,'洗衣液','',58,1000,320,628,696,0,'E6CCDC343ACC471C908E9748776C6421.jpg','','',0,'2020-04-10 00:00:00'),(758,'红短沙发','',596,1000,40,628,696,0,'BD5C77465DC2466BBCE7F95FB9764392.jpg','','',0,'2020-04-10 00:00:00'),(759,'新西兰奶粉','',5896,1000,46,676,679,0,'9ED375098D42497B8FC33167E06D0EE8.jpg','','',0,'2020-04-10 00:00:00'),(760,'婴儿车','',11000,1000,56,681,682,687,'1DBC0930641D43C29D74A9E1B40FEEBB.jpg','','',0,'2020-04-10 00:00:00'),(761,'夏款婴儿车','',963,1000,65,681,682,688,'16290C4DBEAC4F00A636667019621468.jpg','','',0,'2020-04-10 00:00:00'),(762,'抗压旅行箱','',569,1000,100,681,683,685,'272CC434BE7A4469AB0E7882BD1A85FF.jpg','','',0,'2020-04-10 00:00:00'),(763,'透明手提箱','',8596,1000,66,681,683,684,'EAA8E66259BF4239B4A2237B62520EF1.jpg','','',0,'2020-04-10 00:00:00'),(764,'婴儿果粉','',5896,1000,44,660,661,662,'08BE30BF7B5F4930B0093D8CC4056057.jpg','','',0,'2020-04-10 00:00:00'),(765,'椰子粉','',5963,1000,55,660,661,662,'9C006B8BD1AD45398F474A8471ADC50B.jpg','','',0,'2020-04-10 00:00:00'),(766,'坚果蛋糕','',200,1000,77,660,661,663,'2E5A16E21E0640E0BAE03E9B995DCD28.jpg','','',0,'2020-04-10 00:00:00'),(767,'编制手提箱','',5896,1000,22,681,682,688,'2E1D2A5E65A94FEEA17C72E47C530057.jpg','','',0,'2020-04-10 00:00:00'),(768,'纸箱','',5896,1000,11,681,682,687,'443E5A4122064209AFE89250179A2FF0.jpg','','',0,'2020-04-10 00:00:00'),(769,'健胃液','',152,1000,121,676,679,0,'30B5547CD7384DAA8A2F4F4D8C0BBF89.jpg','','',0,'2020-04-10 00:00:00'),(770,'联想NTC','',8596,1000,322,670,671,673,'48BC371A85A548B7A7589E3F542D911D.jpg','','',0,'2020-04-10 00:00:00');
+insert  into `product`(`id`,`name`,`description`,`price`,`stock`,`sales_volume`,`categoryLevel1Id`,`categoryLevel2Id`,`categoryLevel3Id`,`fileName`,`attributeList`,`defaultSpecs`,`isDelete`,`createTime`) values (733,'香奈尔','','152',1000,523,548,654,655,'27A1789ED5764D82A5506DF3DC3933F9.jpg','','',0,'2020-04-10 00:00:00'),(734,'洗面奶','','152',1000,400,548,654,655,'D6C9BD438C5643D6B1A6C52E5426FE22.jpg','','',0,'2020-04-10 00:00:00'),(735,'啫喱水','','152',1000,350,548,654,655,'1A836D2B3A3348DDAB19807E6CEA8028.jpg','','',0,'2020-04-10 00:00:00'),(736,'香水5852','','152',1000,290,548,654,655,'4D9499BAD92A42D291094E797BA2EA3F.jpg','','',0,'2020-04-10 00:00:00'),(737,'香水','','152',1000,462,548,654,655,'A9924F9DB68B4DF99FDBF05902075AF0.jpg','','',0,'2020-04-10 00:00:00'),(738,'润肤露','','45',1000,310,548,654,655,'3B059EDB5237407980458CE9EA9D3204.jpg','','',0,'2020-04-10 00:00:00'),(739,'洁面装','','156',1000,210,548,654,655,'A62C6DF55116440CA3DE9DB37901ED4F.jpg','','',0,'2020-04-10 00:00:00'),(740,'电饭锅','','158',1000,164,628,656,659,'40C3B76BA31246618E3CFC8723D33517.jpg','','',0,'2020-04-10 00:00:00'),(741,'婴儿喂奶装','','569',1000,50,632,637,653,'401004B3D47C4C6FB1BC5EF19C21FC77.jpg','','',0,'2020-04-10 00:00:00'),(742,'坚果套餐','','158',1000,300,660,661,662,'E03D74145A034F6D909879829CB99D80.jpg','','',0,'2020-04-10 00:00:00'),(743,'超甜蜜崭','','589',1000,320,660,661,663,'7121E55099FC477680B1229205CE3D29.jpg','','',0,'2020-04-10 00:00:00'),(744,'华为2566','','896',1000,504,670,671,672,'F24B4140A2284B3788A38F3B5AD1809A.jpg','[{\"title\":\"容量\", \"items\": [\"128GB\",\"265GB\",\"512GB\"]},{\"title\": \"颜色\", \"items\": [\"红色\",\"白色\",\"蓝色\"]}]','[{\"titleIndex\":0, \"itemsIndex\": 0},{\"titleIndex\": 1, \"itemsIndex\": 1}]',0,'2020-04-10 00:00:00'),(745,'荣耀3C','','589',1000,405,670,671,672,'F3921E12552A4D0AA3F75467B146A959.jpg','','',0,'2020-04-10 00:00:00'),(746,'小米手环','','963',1000,204,670,674,675,'72F75A371B0B4C26A7F72FAAEF96FC68.jpg','','',0,'2020-04-10 00:00:00'),(747,'华为2265','','896',1000,360,670,671,673,'161F355A8A8549BA8F7F4CE3B4F07E40.jpg','','',0,'2020-04-10 00:00:00'),(748,'越南坚果','','520',1000,460,660,661,662,'CBC98D3C9E544830821632F5C313D93E.jpg','','',0,'2020-04-10 00:00:00'),(749,'日本进口马桶','','5866',1000,20,628,657,0,'A5AF40825E6940B2A59A040100E181A8.jpg','','',0,'2020-04-10 00:00:00'),(750,'联想Y系列','','569',1000,100,670,690,691,'956DB0BEC41B41B8A06C05C950130E23.jpg','','',0,'2020-04-10 00:00:00'),(751,'脑白金1号','','589',1000,40,676,677,680,'66E96AF9E9714A5C9EA901811173D662.jpg','','',0,'2020-04-10 00:00:00'),(752,'莫里斯按','','589',1000,60,676,678,0,'A7436BC607E74C81B392DCFE69D4AEAB.jpg','','',0,'2020-04-10 00:00:00'),(753,'三鹿好奶粉','','859',1000,50,676,679,698,'3C465E7B8A324A8DA2A2EEE202E36166.jpg','','',0,'2020-04-10 00:00:00'),(754,'儿童牛奶','','5896',1000,70,676,679,0,'D1AC9AE71ED348FA8D880FD4279D3422.jpg','','',0,'2020-04-10 00:00:00'),(755,'软沙发','','8596',1000,120,628,696,0,'ED7921DE40FC47E18365754709A21194.jpg','','',0,'2020-04-10 00:00:00'),(756,'收纳盒','','5966',1000,210,628,696,0,'DB86CA25CA4F4B4AA906F46BE542C6A6.jpg','','',0,'2020-04-10 00:00:00'),(757,'洗衣液','','58',1000,320,628,696,0,'E6CCDC343ACC471C908E9748776C6421.jpg','','',0,'2020-04-10 00:00:00'),(758,'红短沙发','','596',1000,40,628,696,0,'BD5C77465DC2466BBCE7F95FB9764392.jpg','','',0,'2020-04-10 00:00:00'),(759,'新西兰奶粉','','5896',1000,46,676,679,0,'9ED375098D42497B8FC33167E06D0EE8.jpg','','',0,'2020-04-10 00:00:00'),(760,'婴儿车','','11000',1000,56,681,682,687,'1DBC0930641D43C29D74A9E1B40FEEBB.jpg','','',0,'2020-04-10 00:00:00'),(761,'夏款婴儿车','','963',1000,65,681,682,688,'16290C4DBEAC4F00A636667019621468.jpg','','',0,'2020-04-10 00:00:00'),(762,'抗压旅行箱','','569',1000,100,681,683,685,'272CC434BE7A4469AB0E7882BD1A85FF.jpg','','',0,'2020-04-10 00:00:00'),(763,'透明手提箱','','8596',1000,66,681,683,684,'EAA8E66259BF4239B4A2237B62520EF1.jpg','','',0,'2020-04-10 00:00:00'),(764,'婴儿果粉','','5896',1000,44,660,661,662,'08BE30BF7B5F4930B0093D8CC4056057.jpg','','',0,'2020-04-10 00:00:00'),(765,'椰子粉','','5963',1000,55,660,661,662,'9C006B8BD1AD45398F474A8471ADC50B.jpg','','',0,'2020-04-10 00:00:00'),(766,'坚果蛋糕','','200',1000,77,660,661,663,'2E5A16E21E0640E0BAE03E9B995DCD28.jpg','','',0,'2020-04-10 00:00:00'),(767,'编制手提箱','','5896',1000,22,681,682,688,'2E1D2A5E65A94FEEA17C72E47C530057.jpg','','',0,'2020-04-10 00:00:00'),(768,'纸箱','','5896',1000,11,681,682,687,'443E5A4122064209AFE89250179A2FF0.jpg','','',0,'2020-04-10 00:00:00'),(769,'健胃液','','152',1000,121,676,679,0,'30B5547CD7384DAA8A2F4F4D8C0BBF89.jpg','','',0,'2020-04-10 00:00:00'),(770,'联想NTC','','8596',1000,322,670,671,673,'48BC371A85A548B7A7589E3F542D911D.jpg','','',0,'2020-04-10 00:00:00');
 
 /*Table structure for table `product_category` */
 
@@ -289,7 +260,7 @@ CREATE TABLE `product_sku` (
 
 /*Data for the table `product_sku` */
 
-insert  into `product_sku`(`id`,`productId`,`productSpecs`,`productStock`,`productPrice`,`imgArray`,`createTime`,`updateTime`) values (1,744,'{\"容量\":\"128GB\",\"颜色\":\"红色\"}',1000,'896.00','{\"img\" : [\"HUAWEI-red1.jpg\",\"HUAWEI-red2.jpg\",\"HUAWEI-red3.jpg\",\"HUAWEI-red4.jpg\",\"HUAWEI-red5.jpg\"]}','2020-04-10 00:00:00','2020-04-10 00:00:00'),(2,744,'{\"容量\":\"265GB\",\"颜色\":\"红色\"}',700,'950.00','{\"img\" : [\"HUAWEI-red1.jpg\",\"HUAWEI-red2.jpg\",\"HUAWEI-red3.jpg\",\"HUAWEI-red4.jpg\",\"HUAWEI-red5.jpg\"]}','2020-04-10 00:00:00','2020-04-10 00:00:00'),(3,744,'{\"容量\":\"512GB\",\"颜色\":\"红色\"}',500,'1200.00','{\"img\" : [\"HUAWEI-red1.jpg\",\"HUAWEI-red2.jpg\",\"HUAWEI-red3.jpg\",\"HUAWEI-red4.jpg\",\"HUAWEI-red5.jpg\"]}','2020-04-10 00:00:00','2020-04-10 00:00:00'),(4,744,'{\"容量\":\"128GB\",\"颜色\":\"白色\"}',1000,'896.00','{\"img\" : [\"HUAWEI-white1.jpg\",\"HUAWEI-white2.jpg\",\"HUAWEI-white3.jpg\",\"HUAWEI-white4.jpg\",\"HUAWEI-white5.jpg\"]}\r\n','2020-04-10 00:00:00','2020-04-10 00:00:00'),(5,744,'{\"容量\":\"265GB\",\"颜色\":\"白色\"}',700,'950.00','{\"img\" : [\"HUAWEI-white1.jpg\",\"HUAWEI-white2.jpg\",\"HUAWEI-white3.jpg\",\"HUAWEI-white4.jpg\",\"HUAWEI-white5.jpg\"]}\r\n','2020-04-10 00:00:00','2020-04-10 00:00:00'),(6,744,'{\"容量\":\"512GB\",\"颜色\":\"白色\"}',500,'1200.00','{\"img\" : [\"HUAWEI-white1.jpg\",\"HUAWEI-white2.jpg\",\"HUAWEI-white3.jpg\",\"HUAWEI-white4.jpg\",\"HUAWEI-white5.jpg\"]}\r\n','2020-04-10 00:00:00','2020-04-10 00:00:00'),(7,744,'{\"容量\":\"128GB\",\"颜色\":\"蓝色\"}',1000,'896.00','{\"img\" : [\"HUAWEI-blue1.jpg\",\"HUAWEI-blue2.jpg\",\"HUAWEI-blue3.jpg\",\"HUAWEI-blue4.jpg\",\"HUAWEI-blue5.jpg\"]}','2020-04-10 00:00:00','2020-04-10 00:00:00'),(8,744,'{\"容量\":\"265GB\",\"颜色\":\"蓝色\"}',700,'950.00','{\"img\" : [\"HUAWEI-blue1.jpg\",\"HUAWEI-blue2.jpg\",\"HUAWEI-blue3.jpg\",\"HUAWEI-blue4.jpg\",\"HUAWEI-blue5.jpg\"]}','2020-04-10 00:00:00','2020-04-10 00:00:00'),(9,744,'{\"容量\":\"512GB\",\"颜色\":\"蓝色\"}',500,'1200.00','{\"img\" : [\"HUAWEI-blue1.jpg\",\"HUAWEI-blue2.jpg\",\"HUAWEI-blue3.jpg\",\"HUAWEI-blue4.jpg\",\"HUAWEI-blue5.jpg\"]}','2020-04-10 00:00:00','2020-04-10 00:00:00');
+insert  into `product_sku`(`id`,`productId`,`productSpecs`,`productStock`,`productPrice`,`imgArray`,`createTime`,`updateTime`) values (1,744,'[{\"title\":\"容量\",\"items\":\"128GB\"},{\"title\":\"颜色\",\"items\":\"红色\"}]',1000,'896.00','{\"img\" : [\"HUAWEI-red1.jpg\",\"HUAWEI-red2.jpg\",\"HUAWEI-red3.jpg\",\"HUAWEI-red4.jpg\",\"HUAWEI-red5.jpg\"]}','2020-04-10 00:00:00','2020-04-10 00:00:00'),(2,744,'[{\"title\":\"容量\",\"items\":\"265GB\"},{\"title\":\"颜色\",\"items\":\"红色\"}]',700,'950.00','{\"img\" : [\"HUAWEI-red1.jpg\",\"HUAWEI-red2.jpg\",\"HUAWEI-red3.jpg\",\"HUAWEI-red4.jpg\",\"HUAWEI-red5.jpg\"]}','2020-04-10 00:00:00','2020-04-10 00:00:00'),(3,744,'[{\"title\":\"容量\",\"items\":\"512GB\"},{\"title\":\"颜色\",\"items\":\"红色\"}]',500,'1200.00','{\"img\" : [\"HUAWEI-red1.jpg\",\"HUAWEI-red2.jpg\",\"HUAWEI-red3.jpg\",\"HUAWEI-red4.jpg\",\"HUAWEI-red5.jpg\"]}','2020-04-10 00:00:00','2020-04-10 00:00:00'),(4,744,'[{\"title\":\"容量\",\"items\":\"128GB\"},{\"title\":\"颜色\",\"items\":\"白色\"}]',1000,'896.00','{\"img\" : [\"HUAWEI-white1.jpg\",\"HUAWEI-white2.jpg\",\"HUAWEI-white3.jpg\",\"HUAWEI-white4.jpg\",\"HUAWEI-white5.jpg\"]}\r\n','2020-04-10 00:00:00','2020-04-10 00:00:00'),(5,744,'[{\"title\":\"容量\",\"items\":\"265GB\"},{\"title\":\"颜色\",\"items\":\"白色\"}]',700,'950.00','{\"img\" : [\"HUAWEI-white1.jpg\",\"HUAWEI-white2.jpg\",\"HUAWEI-white3.jpg\",\"HUAWEI-white4.jpg\",\"HUAWEI-white5.jpg\"]}\r\n','2020-04-10 00:00:00','2020-04-10 00:00:00'),(6,744,'[{\"title\":\"容量\",\"items\":\"512GB\"},{\"title\":\"颜色\",\"items\":\"白色\"}]',500,'1200.00','{\"img\" : [\"HUAWEI-white1.jpg\",\"HUAWEI-white2.jpg\",\"HUAWEI-white3.jpg\",\"HUAWEI-white4.jpg\",\"HUAWEI-white5.jpg\"]}\r\n','2020-04-10 00:00:00','2020-04-10 00:00:00'),(7,744,'[{\"title\":\"容量\",\"items\":\"128GB\"},{\"title\":\"颜色\",\"items\":\"蓝色\"}]',1000,'896.00','{\"img\" : [\"HUAWEI-blue1.jpg\",\"HUAWEI-blue2.jpg\",\"HUAWEI-blue3.jpg\",\"HUAWEI-blue4.jpg\",\"HUAWEI-blue5.jpg\"]}','2020-04-10 00:00:00','2020-04-10 00:00:00'),(8,744,'[{\"title\":\"容量\",\"items\":\"265GB\"},{\"title\":\"颜色\",\"items\":\"蓝色\"}]',700,'950.00','{\"img\" : [\"HUAWEI-blue1.jpg\",\"HUAWEI-blue2.jpg\",\"HUAWEI-blue3.jpg\",\"HUAWEI-blue4.jpg\",\"HUAWEI-blue5.jpg\"]}','2020-04-10 00:00:00','2020-04-10 00:00:00'),(9,744,'[{\"title\":\"容量\",\"items\":\"512GB\"},{\"title\":\"颜色\",\"items\":\"蓝色\"}]',500,'1200.00','{\"img\" : [\"HUAWEI-blue1.jpg\",\"HUAWEI-blue2.jpg\",\"HUAWEI-blue3.jpg\",\"HUAWEI-blue4.jpg\",\"HUAWEI-blue5.jpg\"]}','2020-04-10 00:00:00','2020-04-10 00:00:00');
 
 /*Table structure for table `refund` */
 
@@ -318,16 +289,18 @@ CREATE TABLE `shop_cart` (
   `userId` int(10) NOT NULL COMMENT '用户ID',
   `productId` int(10) NOT NULL COMMENT '商品ID',
   `skuId` int(10) NOT NULL COMMENT 'SKU主键',
-  `price` float(10,2) NOT NULL COMMENT '商品单价',
+  `price` decimal(10,2) NOT NULL COMMENT '商品单价',
   `number` int(10) NOT NULL COMMENT '购物车商品数量',
-  `cost` float(10,2) NOT NULL COMMENT '购物车计费',
+  `cost` decimal(10,2) NOT NULL COMMENT '购物车计费',
   `statu` char(22) NOT NULL DEFAULT '1' COMMENT '购物车状态(1.正常 2.已下架)',
   `isSelected` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否前往结算(1代表TRUE,0代表FALSE)',
   `createTime` datetime NOT NULL COMMENT '购物车时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `shop_cart` */
+
+insert  into `shop_cart`(`id`,`userId`,`productId`,`skuId`,`price`,`number`,`cost`,`statu`,`isSelected`,`createTime`) values (67,1,744,1,'896.00',1,'896.00','1',1,'2020-04-18 19:37:20'),(68,1,744,7,'896.00',1,'896.00','1',1,'2020-04-18 19:37:21');
 
 /*Table structure for table `slideshow` */
 
@@ -357,7 +330,7 @@ CREATE TABLE `user` (
   `userName` varchar(255) NOT NULL COMMENT '用户名',
   `password` varchar(255) NOT NULL COMMENT '密码',
   `sex` int(2) NOT NULL DEFAULT '1' COMMENT '性别(1:男 0：女)',
-  `balance` float NOT NULL DEFAULT '10000' COMMENT '余额',
+  `balance` decimal(10,0) NOT NULL DEFAULT '10000' COMMENT '余额',
   `identityType` varchar(225) DEFAULT NULL COMMENT '证件类型',
   `identityCode` varchar(60) DEFAULT NULL COMMENT '证件号码',
   `mobile` varchar(11) NOT NULL COMMENT '手机',
@@ -373,7 +346,7 @@ CREATE TABLE `user` (
 
 /*Data for the table `user` */
 
-insert  into `user`(`userId`,`loginName`,`userName`,`password`,`sex`,`balance`,`identityType`,`identityCode`,`mobile`,`type`,`pwdErrorCount`,`statu`,`freezelimit`,`freezingTime`,`createTime`) values (1,'admin','系统管理员','UUKHSDDI5KPA43A8VL06V0TU2',1,9848,'中国居民身份证','130406198302141869','13311232332',1,5,'1',30,NULL,'2020-03-24 00:00:00'),(2,'lb','李白','UUKHSDDI5KPA43A8VL06V0TU2',1,10000,NULL,NULL,'13389775956',0,5,'1',30,NULL,'2020-03-26 18:25:33');
+insert  into `user`(`userId`,`loginName`,`userName`,`password`,`sex`,`balance`,`identityType`,`identityCode`,`mobile`,`type`,`pwdErrorCount`,`statu`,`freezelimit`,`freezingTime`,`createTime`) values (1,'admin','系统管理员','UUKHSDDI5KPA43A8VL06V0TU2',1,'9848','中国居民身份证','130406198302141869','13311232332',1,5,'1',30,NULL,'2020-03-24 00:00:00'),(2,'lb','李白','UUKHSDDI5KPA43A8VL06V0TU2',1,'10000',NULL,NULL,'13389775956',0,5,'1',30,NULL,'2020-03-26 18:25:33');
 
 /*Table structure for table `user_address` */
 
@@ -406,8 +379,8 @@ CREATE TABLE `user_coupon` (
   `productId` int(10) NOT NULL COMMENT '商品ID',
   `couponId` int(10) NOT NULL COMMENT '优惠卷ID',
   `title` varchar(10) NOT NULL COMMENT '优惠卷标题',
-  `RMB` float(10,2) NOT NULL COMMENT '优惠金额(元)',
-  `reach` float(10,2) NOT NULL COMMENT '额度，达到这个金额可以用优惠卷',
+  `RMB` decimal(10,2) NOT NULL COMMENT '优惠金额(元)',
+  `reach` decimal(10,2) NOT NULL COMMENT '额度，达到这个金额可以用优惠卷',
   `statu` char(22) NOT NULL DEFAULT '1' COMMENT '优惠卷状态(1.未使用 2.已使用 3.未过期 4.已过期)',
   `deadline` int(10) NOT NULL COMMENT '使用期限',
   `createTime` datetime NOT NULL COMMENT '优惠卷获取时间'
@@ -415,7 +388,7 @@ CREATE TABLE `user_coupon` (
 
 /*Data for the table `user_coupon` */
 
-insert  into `user_coupon`(`userId`,`productId`,`couponId`,`title`,`RMB`,`reach`,`statu`,`deadline`,`createTime`) values (1,0,1,'',2.00,10.00,'1',7,'2020-03-08 10:04:37');
+insert  into `user_coupon`(`userId`,`productId`,`couponId`,`title`,`RMB`,`reach`,`statu`,`deadline`,`createTime`) values (1,0,1,'','2.00','10.00','1',7,'2020-03-08 10:04:37');
 
 /*Table structure for table `user_dealrecord` */
 
@@ -425,14 +398,14 @@ CREATE TABLE `user_dealrecord` (
   `userId` int(10) NOT NULL COMMENT '用户ID',
   `productName` varchar(225) NOT NULL COMMENT '商品名称',
   `number` int(10) NOT NULL COMMENT '数量',
-  `price` float(10,2) NOT NULL COMMENT '价格',
-  `userPrice` float(10,2) NOT NULL COMMENT '用户余额',
+  `price` decimal(10,2) NOT NULL COMMENT '价格',
+  `userPrice` decimal(10,2) NOT NULL COMMENT '用户余额',
   `createTime` datetime NOT NULL COMMENT '支付时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `user_dealrecord` */
 
-insert  into `user_dealrecord`(`userId`,`productName`,`number`,`price`,`userPrice`,`createTime`) values (1,'啫喱水',1,-152.00,9848.00,'2020-03-09 15:04:37');
+insert  into `user_dealrecord`(`userId`,`productName`,`number`,`price`,`userPrice`,`createTime`) values (1,'啫喱水',1,'-152.00','9848.00','2020-03-09 15:04:37');
 
 /*Table structure for table `user_product_collectible` */
 
