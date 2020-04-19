@@ -12,6 +12,12 @@
     <result column="statu" jdbcType="CHAR" property="statu" />
     <result column="isSelected" jdbcType="BIT" property="isselected" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <association property="product" javaType="com.shopping.domain.Product"
+                 select="com.shopping.mapper.ProductMapper.selectByPrimaryKey"
+                  column="productId"/>
+    <association property="productSku" javaType="com.shopping.domain.ProductSku"
+                 select="com.shopping.mapper.ProductSkuMapper.selectByPrimaryKey"
+                  column="skuId"/>
   </resultMap>
   <sql id="Base_Column_List">
     id, userId, productId, skuId, price, number, cost, statu, isSelected, createTime
@@ -21,6 +27,31 @@
     <include refid="Base_Column_List" />
     from shop_cart
     where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectShopCartByUid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from shop_cart
+    where userId = #{userid,jdbcType=INTEGER}
+  </select>
+  <select id="selectShopCartByIsSelected" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from shop_cart
+    where userId = #{userid,jdbcType=INTEGER} AND isSelected = true
+  </select>
+  <select id="getShopCartCount" parameterType="java.lang.Integer" resultType="int">
+    select
+    count(1)
+    from shop_cart
+    where userId = #{userid,jdbcType=INTEGER}
+  </select>
+  <select id="getShopCartByUidAndPidAndSkuid" parameterType="com.shopping.domain.ShopCart" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from shop_cart
+    where userId = #{userid,jdbcType=INTEGER}
+    and productId = #{productid,jdbcType=INTEGER} and skuId = #{skuid,jdbcType=INTEGER} and statu = 1
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from shop_cart

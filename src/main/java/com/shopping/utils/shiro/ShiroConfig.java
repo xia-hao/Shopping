@@ -77,8 +77,10 @@ public class ShiroConfig {
         filterMap.put("/register","anon");
         filterMap.put("/loginOut","anon");
         filterMap.put("/discuss/list","anon");
+        filterMap.put("/shopCart/getCount","anon");
         filterMap.put("/discuss/**","authc");
         filterMap.put("/district/**","authc");
+        filterMap.put("/shopCart/**","authc");
         filterMap.put("/userAddress/**","authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
         return shiroFilterFactoryBean;
