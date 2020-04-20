@@ -2,6 +2,8 @@ package com.shopping.domain;
 
 import com.shopping.utils.BaseEntity;
 
+import java.math.BigDecimal;
+
 public class ShopCart extends BaseEntity {
     private Integer id;
 
@@ -11,35 +13,15 @@ public class ShopCart extends BaseEntity {
 
     private Integer skuid;
 
-    private Float price;
+    private BigDecimal price;
 
     private Integer number;
 
-    private Float cost;
+    private BigDecimal cost;
 
     private String statu;
 
     private Boolean isselected;
-
-    private Product product;
-
-    private ProductSku productSku;
-
-    public ProductSku getProductSku() {
-        return productSku;
-    }
-
-    public void setProductSku(ProductSku productSku) {
-        this.productSku = productSku;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
 
     public Integer getId() {
         return id;
@@ -73,11 +55,11 @@ public class ShopCart extends BaseEntity {
         this.skuid = skuid;
     }
 
-    public Float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -89,11 +71,11 @@ public class ShopCart extends BaseEntity {
         this.number = number;
     }
 
-    public Float getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
 
-    public void setCost(Float cost) {
+    public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
 

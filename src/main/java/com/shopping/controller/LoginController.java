@@ -6,7 +6,7 @@ import com.shopping.domain.Verify;
 import com.shopping.service.UserService;
 import com.shopping.service.VerifyService;
 import com.shopping.utils.Constant;
-import com.shopping.utils.MD5Utils;
+import com.shopping.utils.utils.MD5Utils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

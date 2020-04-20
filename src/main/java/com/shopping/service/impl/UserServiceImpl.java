@@ -4,7 +4,7 @@ import com.shopping.domain.User;
 import com.shopping.mapper.UserMapper;
 import com.shopping.service.UserService;
 import com.shopping.utils.Constant;
-import com.shopping.utils.MD5Utils;
+import com.shopping.utils.utils.MD5Utils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;

@@ -1,4 +1,4 @@
-package com.shopping.utils;
+package com.shopping.utils.utils;
 
 import java.util.List;
 

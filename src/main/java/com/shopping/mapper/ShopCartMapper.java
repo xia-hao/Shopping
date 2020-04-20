@@ -1,10 +1,8 @@
 package com.shopping.mapper;
 
 import com.shopping.domain.ShopCart;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 public interface ShopCartMapper {
     int deleteByPrimaryKey(Integer id);

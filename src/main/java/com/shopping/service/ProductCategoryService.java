@@ -1,7 +1,7 @@
 package com.shopping.service;
 
 import com.shopping.domain.ProductCategory;
-import com.shopping.utils.ProductCategoryVo;
+import com.shopping.utils.utils.ProductCategoryVo;
 
 import java.util.List;
 

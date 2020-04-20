@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +39,8 @@ public class ShopCartServiceImpl implements ShopCartService {
         map.put("code","901");
         if(null != result){ // 判断是不是同一个商品，如果商品相同则叠加数量
             result.setNumber(shopCart.getNumber()+result.getNumber());
-            result.setCost(result.getNumber()*result.getPrice());
+            BigDecimal bigDecimal = new BigDecimal(result.getNumber());
+            result.setCost(bigDecimal.multiply(result.getPrice()));
             if(updateShopCart(result)>0){
                 map.put("code","1000");
             }

@@ -1,8 +1,7 @@
 package com.shopping.controller;
 
-import com.shopping.domain.District;
 import com.shopping.service.DistrictService;
-import com.shopping.utils.DistrictVo;
+import com.shopping.utils.utils.DistrictVo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

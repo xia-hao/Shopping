@@ -3,7 +3,7 @@ package com.shopping.controller;
 import com.shopping.domain.Product;
 import com.shopping.service.ProductCategoryService;
 import com.shopping.service.ProductService;
-import com.shopping.utils.ProductCategoryVo;
+import com.shopping.utils.utils.ProductCategoryVo;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

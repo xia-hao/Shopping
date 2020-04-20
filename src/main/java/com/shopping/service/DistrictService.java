@@ -1,7 +1,7 @@
 package com.shopping.service;
 
 import com.shopping.domain.District;
-import com.shopping.utils.DistrictVo;
+import com.shopping.utils.utils.DistrictVo;
 
 import java.util.List;
 

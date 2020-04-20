@@ -2,6 +2,7 @@ package com.shopping.domain;
 
 import com.shopping.utils.BaseEntity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class User extends BaseEntity {
@@ -15,7 +16,7 @@ public class User extends BaseEntity {
 
     private Integer sex;
 
-    private Long balance;
+    private BigDecimal balance;
 
     private String identitytype;
 
@@ -33,9 +34,9 @@ public class User extends BaseEntity {
 
     private Date freezingtime;
 
-
     private String code;            //验证码
     private String noteCode;        //短信验证码
+
 
     public String getCode() {
         return code;
@@ -93,11 +94,11 @@ public class User extends BaseEntity {
         this.sex = sex;
     }
 
-    public Long getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(Long balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 
@@ -164,5 +165,4 @@ public class User extends BaseEntity {
     public void setFreezingtime(Date freezingtime) {
         this.freezingtime = freezingtime;
     }
-
 }

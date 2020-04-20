@@ -1,14 +1,11 @@
 package com.shopping.controller;
 
-import com.shopping.domain.ProductCategory;
 import com.shopping.service.ProductCategoryService;
-import com.shopping.utils.ProductCategoryVo;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

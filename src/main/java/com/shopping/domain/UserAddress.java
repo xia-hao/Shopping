@@ -21,8 +21,6 @@ public class UserAddress extends BaseEntity {
 
     private String mobile;
 
-
-
     private String provinceName;   //省份名称
     private String cityName;       //城市名称
     private String districtName;   //地区名称

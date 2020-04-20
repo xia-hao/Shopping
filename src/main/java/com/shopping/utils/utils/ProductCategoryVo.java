@@ -1,4 +1,4 @@
-package com.shopping.utils;
+package com.shopping.utils.utils;
 
 import com.shopping.domain.Product;
 import com.shopping.domain.ProductCategory;

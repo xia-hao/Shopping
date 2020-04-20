@@ -6,18 +6,12 @@
     <result column="userId" jdbcType="INTEGER" property="userid" />
     <result column="productId" jdbcType="INTEGER" property="productid" />
     <result column="skuId" jdbcType="INTEGER" property="skuid" />
-    <result column="price" jdbcType="REAL" property="price" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
     <result column="number" jdbcType="INTEGER" property="number" />
-    <result column="cost" jdbcType="REAL" property="cost" />
+    <result column="cost" jdbcType="DECIMAL" property="cost" />
     <result column="statu" jdbcType="CHAR" property="statu" />
     <result column="isSelected" jdbcType="BIT" property="isselected" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
-    <association property="product" javaType="com.shopping.domain.Product"
-                 select="com.shopping.mapper.ProductMapper.selectByPrimaryKey"
-                  column="productId"/>
-    <association property="productSku" javaType="com.shopping.domain.ProductSku"
-                 select="com.shopping.mapper.ProductSkuMapper.selectByPrimaryKey"
-                  column="skuId"/>
   </resultMap>
   <sql id="Base_Column_List">
     id, userId, productId, skuId, price, number, cost, statu, isSelected, createTime
@@ -27,31 +21,6 @@
     <include refid="Base_Column_List" />
     from shop_cart
     where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectShopCartByUid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from shop_cart
-    where userId = #{userid,jdbcType=INTEGER}
-  </select>
-  <select id="selectShopCartByIsSelected" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from shop_cart
-    where userId = #{userid,jdbcType=INTEGER} AND isSelected = true
-  </select>
-  <select id="getShopCartCount" parameterType="java.lang.Integer" resultType="int">
-    select
-    count(1)
-    from shop_cart
-    where userId = #{userid,jdbcType=INTEGER}
-  </select>
-  <select id="getShopCartByUidAndPidAndSkuid" parameterType="com.shopping.domain.ShopCart" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from shop_cart
-    where userId = #{userid,jdbcType=INTEGER}
-    and productId = #{productid,jdbcType=INTEGER} and skuId = #{skuid,jdbcType=INTEGER} and statu = 1
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from shop_cart
@@ -63,8 +32,8 @@
       cost, statu, isSelected, createTime
       )
     values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{productid,jdbcType=INTEGER}, 
-      #{skuid,jdbcType=INTEGER}, #{price,jdbcType=REAL}, #{number,jdbcType=INTEGER}, 
-      #{cost,jdbcType=REAL}, #{statu,jdbcType=CHAR}, #{isselected,jdbcType=BIT}, #{createtime,jdbcType=TIMESTAMP}
+      #{skuid,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{number,jdbcType=INTEGER}, 
+      #{cost,jdbcType=DECIMAL}, #{statu,jdbcType=CHAR}, #{isselected,jdbcType=BIT}, #{createtime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.shopping.domain.ShopCart">
@@ -115,13 +84,13 @@
         #{skuid,jdbcType=INTEGER},
       </if>
       <if test="price != null">
-        #{price,jdbcType=REAL},
+        #{price,jdbcType=DECIMAL},
       </if>
       <if test="number != null">
         #{number,jdbcType=INTEGER},
       </if>
       <if test="cost != null">
-        #{cost,jdbcType=REAL},
+        #{cost,jdbcType=DECIMAL},
       </if>
       <if test="statu != null">
         #{statu,jdbcType=CHAR},
@@ -147,13 +116,13 @@
         skuId = #{skuid,jdbcType=INTEGER},
       </if>
       <if test="price != null">
-        price = #{price,jdbcType=REAL},
+        price = #{price,jdbcType=DECIMAL},
       </if>
       <if test="number != null">
         number = #{number,jdbcType=INTEGER},
       </if>
       <if test="cost != null">
-        cost = #{cost,jdbcType=REAL},
+        cost = #{cost,jdbcType=DECIMAL},
       </if>
       <if test="statu != null">
         statu = #{statu,jdbcType=CHAR},
@@ -172,12 +141,37 @@
     set userId = #{userid,jdbcType=INTEGER},
       productId = #{productid,jdbcType=INTEGER},
       skuId = #{skuid,jdbcType=INTEGER},
-      price = #{price,jdbcType=REAL},
+      price = #{price,jdbcType=DECIMAL},
       number = #{number,jdbcType=INTEGER},
-      cost = #{cost,jdbcType=REAL},
+      cost = #{cost,jdbcType=DECIMAL},
       statu = #{statu,jdbcType=CHAR},
       isSelected = #{isselected,jdbcType=BIT},
       createTime = #{createtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectShopCartByUid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from shop_cart
+    where userId = #{userid,jdbcType=INTEGER}
+  </select>
+  <select id="selectShopCartByIsSelected" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from shop_cart
+    where userId = #{userid,jdbcType=INTEGER} AND isSelected = true
+  </select>
+  <select id="getShopCartCount" parameterType="java.lang.Integer" resultType="int">
+    select
+    count(1)
+    from shop_cart
+    where userId = #{userid,jdbcType=INTEGER}
+  </select>
+  <select id="getShopCartByUidAndPidAndSkuid" parameterType="com.shopping.domain.ShopCart" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from shop_cart
+    where userId = #{userid,jdbcType=INTEGER}
+    and productId = #{productid,jdbcType=INTEGER} and skuId = #{skuid,jdbcType=INTEGER} and statu = 1
+  </select>
 </mapper>

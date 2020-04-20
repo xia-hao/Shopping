@@ -3,7 +3,7 @@ package com.shopping.service.impl;
 import com.shopping.domain.ProductCategory;
 import com.shopping.mapper.ProductCategoryMapper;
 import com.shopping.service.ProductCategoryService;
-import com.shopping.utils.ProductCategoryVo;
+import com.shopping.utils.utils.ProductCategoryVo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

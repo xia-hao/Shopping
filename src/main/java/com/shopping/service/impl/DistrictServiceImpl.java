@@ -3,7 +3,7 @@ package com.shopping.service.impl;
 import com.shopping.domain.District;
 import com.shopping.mapper.DistrictMapper;
 import com.shopping.service.DistrictService;
-import com.shopping.utils.DistrictVo;
+import com.shopping.utils.utils.DistrictVo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
