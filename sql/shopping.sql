@@ -296,11 +296,11 @@ CREATE TABLE `shop_cart` (
   `isSelected` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否前往结算(1代表TRUE,0代表FALSE)',
   `createTime` datetime NOT NULL COMMENT '购物车时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `shop_cart` */
 
-insert  into `shop_cart`(`id`,`userId`,`productId`,`skuId`,`price`,`number`,`cost`,`statu`,`isSelected`,`createTime`) values (67,1,744,1,'896.00',1,'896.00','1',1,'2020-04-18 19:37:20'),(68,1,744,7,'896.00',1,'896.00','1',1,'2020-04-18 19:37:21');
+insert  into `shop_cart`(`id`,`userId`,`productId`,`skuId`,`price`,`number`,`cost`,`statu`,`isSelected`,`createTime`) values (1,1,744,1,'896.00',1,'896.00','1',1,'2020-04-18 19:37:20'),(2,1,744,7,'896.00',1,'896.00','1',1,'2020-04-18 19:37:21'),(3,1,744,4,'896.00',3,'2688.00','1',1,'2020-04-20 14:37:58');
 
 /*Table structure for table `slideshow` */
 
