@@ -33,6 +33,8 @@
 <script>
 import {userinfo} from "../api/user";
 import {loginout} from "../api/login";
+import {getCount, selectShopCart} from "../api/shopCart";
+import PubSub from 'pubsub-js'
 
 export default {
   name: "homeheader",
@@ -50,12 +52,22 @@ export default {
     },
     onLoginOut(){
       loginout();
+      this.user = undefined
+      this.cartlength = 0
       this.msgSuccess("退出登录！")
-      this.$router.go(0)
     }
+  },
+  mounted () {
+    // 订阅消息
+    PubSub.subscribe('getShopCatCount', (msg, index) => {
+      this.cartlength = index
+    })
   },
   created() {
     this.getuserinfo()
+    getCount().then(result => {
+      this.cartlength = result
+    })
   }
 }
 </script>

@@ -10,23 +10,32 @@
       <el-table
         ref="shopCat"
         v-loading="false"
-        :data="shopCatList"
+        :data="shopCartList"
         row-key="id"
       >
-        <el-table-column width="80px" prop="isSelected">
+        <el-table-column width="80px" prop="isselected">
           <template slot="header" slot-scope="scope">
             <el-checkbox v-model="allchecked" @change="handleSelectionChange"/> 全选
           </template>
           <template slot-scope="scope">
-            <el-checkbox v-model="scope.row.isSelected" @change="changeChecked(scope.row)"/>
+            <el-checkbox v-model="scope.row.isselected" @change="changeChecked(scope.row)"/>
           </template>
         </el-table-column>
-        <el-table-column label="商品" prop="name" align="center">
+        <el-table-column label="商品" align="center">
           <template slot-scope="scope">
             <div>
-              <img :src="urlimg+scope.row.filename"/>
+              <img :src="urlimg+JSON.parse(scope.row.productSku.imgarray).img[0]" width="100px" height="100px"/>
               <div>
-                <router-link :to="{path: '/productDeatil',query:{id : scope.row.id}}">{{scope.row.name}}</router-link>
+                <router-link :to="{path: '/productDeatil',query:{id : scope.row.product.id}}">{{scope.row.product.name}}</router-link>
+              </div>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="商品属性" align="left" width="120px">
+          <template slot-scope="scope">
+            <div v-for="(item,index) in JSON.parse(scope.row.productSku.productspecs)" :key="index">
+              <div>
+                {{item.title}} ： {{item.items}}
               </div>
             </div>
           </template>
@@ -38,7 +47,7 @@
         </el-table-column>
         <el-table-column label="数量" prop="number" align="center">
           <template slot-scope="scope">
-            <el-input-number v-model="scope.row.number" :min="1" :max="200" @change="changeNumber(scope.row)"/>
+            <el-input-number v-model="scope.row.number" :min="1" :max="200" @change="changeNumber(scope.row)" style="width: 150px"/>
           </template>
         </el-table-column>
         <el-table-column label="小计" prop="cost" align="center">
@@ -48,7 +57,7 @@
         </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <el-button size="mini" @click="delShopCat(scope.row)"> 删除</el-button>
+            <el-button size="mini" @click="delShopCat(scope.row)"> 移除</el-button>
             <el-button size="mini" @click="collectShop(scope.row)">收藏</el-button>
           </template>
         </el-table-column>
@@ -57,7 +66,7 @@
         <div class="group-div1">
           已选择 <span style="color: #FF4E00">{{shopCatNumber}}</span> 件商品
           <span style="margin-left: 20px">
-            <el-link :underline="false" :class="{'a':shopCatNumber!=0}" @click="batchDel" :disabled="shopCatNumber==0">批量删除</el-link>
+            <el-link :underline="false" :class="{'a':shopCatNumber!=0}" @click="batchDel" :disabled="shopCatNumber==0">批量移除</el-link>
             <el-link :underline="false" :class="{'a':shopCatNumber!=0}" @click="batchCollect" :disabled="shopCatNumber==0">收藏</el-link>
           </span>
         </div>
@@ -65,66 +74,51 @@
           总价格：<span style="color: #FF4E00">￥{{shopCatPrice}}</span>
         </div>
         <div class="group-div3">
-          <el-button @click="$router.push({path: '/fillOrderInfo',query:{shopCatList:shopCatList,shopCatNumber:shopCatNumber}})" :class="{'btn':shopCatNumber!=0,'button-disabled':shopCatNumber==0,}" :disabled="shopCatNumber==0">
+          <el-button @click="$router.push({path: '/fillOrderInfo'})" :class="{'btn':shopCatNumber!=0,'button-disabled':shopCatNumber==0,}" :disabled="shopCatNumber==0">
             结算
           </el-button>
         </div>
       </div>
-      <el-pagination style="text-align: center;margin-bottom: 50px"
+      <!--<el-pagination style="text-align: center;margin-bottom: 50px"
                      background
                      :hide-on-single-page="true"
                      :current-page.sync="shopCat.pageNo"
                      :page-sizes="[2,4,6,8]"
                      :page-size.sync="shopCat.pageSize"
                      layout="total, sizes, prev, pager, next, jumper"
-                     :total="shopCatCount"/>
+                     :total="shopCatCount"
+                     @size-change="getselectShopCart"
+                     @current-change="getselectShopCart"/>-->
     </div>
   </div>
 </template>
 
 <script>
+  import {delShopCart, selectShopCart, updateShopCart} from "../../api/shopCart";
+
   export default {
     name: "index",
     data() {
       return {
-        shopCatCount:3,
+        shopCatCount: 0,
         shopCatNumber: 0,
-        allchecked:undefined,
-        shopCat:{
-          pageNo:1,
-          pageSize:2
-        },
-        shopCatList: [{
-          id:752,
-          filename: 'A7436BC607E74C81B392DCFE69D4AEAB.jpg',
-          name: '莫里斯按',
-          price: 58,
-          number: 2,
-          isSelected: true,
-          cost: 58
-        }, {
-          id:753,
-          filename: '3C465E7B8A324A8DA2A2EEE202E36166.jpg',
-          name: '三鹿奶粉',
-          price: 58,
-          number: 1,
-          isSelected: true,
-          cost: 58
-        }]
+        allchecked:false,
+        shopCat:{},
+        shopCartList: []
       }
     },
     computed:{
       shopCatPrice:function () {
         var cost = 0;
         var number = 0
-        for (let i = 0; i < this.shopCatList.length; i++) {
-          if(this.shopCatList[i].isSelected){
-            cost += this.shopCatList[i].price * this.shopCatList[i].number
+        for (let i = 0; i < this.shopCartList.length; i++) {
+          if(this.shopCartList[i].isselected){
+            cost += this.shopCartList[i].price * this.shopCartList[i].number
             number +=1
           }
         }
         this.shopCatNumber= number
-        if(this.shopCatNumber==this.shopCatList.length){
+        if(this.shopCatNumber==this.shopCartList.length && this.shopCartList != ''){
           this.allchecked = true
         }else{
           this.allchecked = false
@@ -133,38 +127,62 @@
       }
     },
     methods:{
+      reset(){
+        this.shopCat = {
+          id: undefined,
+          number: undefined,
+          isselected: undefined,
+          cost: undefined
+        }
+      },
       handleSelectionChange() {
-          this.shopCatList.forEach(shopCat => {
-            shopCat.isSelected = this.allchecked
-            alert(shopCat.isSelected+"，"+shopCat.id)
+          this.shopCartList.forEach(shopCat => {
+            shopCat.isselected = this.allchecked
+            this.reset()
+            this.shopCat.id = shopCat.id
+            this.shopCat.isselected = shopCat.isselected
+            updateShopCart(this.shopCat)
           })
       },
       changeChecked(row){
-        alert("id："+row.id+"，是否前往结算："+row.isSelected)
+        this.reset()
+        this.shopCat.id = row.id
+        this.shopCat.isselected = row.isselected
+        updateShopCart(this.shopCat)
       },
       delShopCat(value){
-        this.msgSuccess("已将商品 ‘"+value.name+"’ 移除购物车"+value.id)
+        delShopCart(value.id).then(result => {
+          if(result.code == "1000"){
+            this.msgSuccess('移除购物车成功！')
+            this.getselectShopCart()
+          }else{
+            this.msgError("移除购物车失败！")
+          }
+        })
+        console.info(this.shopCartList)
       },
       collectShop(value){
         this.msgSuccess("已收藏 ‘"+value.name+"’"+value.id)
       },
       batchDel(){
         var i = 0
-        this.shopCatList.forEach(shopCat => {
-          if(shopCat.isSelected == true){
+        this.shopCartList.forEach(shopCat => {
+          if(shopCat.isselected == true){
+            delShopCart(shopCat.id)
             i++;
           }
         })
         if(i>0){
-          this.msgSuccess("已移除购物车")
+          this.msgSuccess("批量移除成功！")
+          this.getselectShopCart()
         }else{
-          this.msgSuccess("移除商品失败！")
+          this.msgSuccess("批量移除失败！")
         }
       },
       batchCollect(){
         var i = 0
-        this.shopCatList.forEach(shopCat => {
-          if(shopCat.isSelected == true){
+        this.shopCartList.forEach(shopCat => {
+          if(shopCat.isselected == true){
             i++;
           }
         })
@@ -175,11 +193,21 @@
         }
       },
       changeNumber(row){
-        this.msgSuccess('数量更改后价格，购物车信息更改前往数据库‘ 购物车表 ’更新数据：'+row.number*row.price)
+        this.reset()
+        this.shopCat.id = row.id
+        this.shopCat.number = row.number
+        this.shopCat.cost = row.number*row.price
+        updateShopCart(this.shopCat)
+      },
+      getselectShopCart(){
+        selectShopCart().then(result => {
+          this.shopCartList = result.shopCartList
+          this.shopCatCount = result.shopCatCount
+        })
       }
     },
     created() {
-
+     this.getselectShopCart()
     }
   }
 </script>

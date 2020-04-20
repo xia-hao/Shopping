@@ -11,7 +11,7 @@
         <el-button disabled v-else>请{{countTime}}s后重试</el-button>
       </el-form-item>
       <el-form-item label="用户账号" prop="loginname">
-        <el-input type="text" v-model="form.loginname" placeholder="请输入用户账号"></el-input>
+        <el-input type="text" v-model="form.loginname" placeholder="请输入新账号"></el-input>
       </el-form-item>
       <el-form-item label="验证码" prop="code">
         <el-input type="text" v-model="form.code" style="width: 150px"  placeholder="请输入验证码"></el-input>

@@ -36,7 +36,7 @@
           </ul>
         </div>
         <div style="line-height: 25px;margin-top: 20px">
-          <el-button style="background-color: #e14145;color: white;width: 200px;height: 50px">
+          <el-button style="background-color: #FF4E00;color: white;width: 200px;height: 50px">
             立即支付
           </el-button>
         </div>
@@ -67,7 +67,7 @@ export default {
       var date = new Date();
       var now = date.getTime();
       //设置截止时间
-      var endDate = new Date("2020-04-11 16:02:00");
+      var endDate = new Date("2020-04-19 16:02:00");
       var end = endDate.getTime();
       //时间差
       var leftTime = end -now  ;

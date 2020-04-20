@@ -3,18 +3,18 @@
     <el-form :model="form" status-icon :rules="rules" ref="form" label-width="100px" class="register-form">
       <h2 style="text-align: center">商城购物系统注册</h2>
       <el-form-item label="手机号码" prop="mobile">
-        <el-input type="text" v-model="form.mobile" placeholder="请输入手机号"></el-input>
+        <el-input type="text" v-model="form.mobile" placeholder="请输入手机号" clearable></el-input>
       </el-form-item>
       <el-form-item label="短信验证码" prop="noteCode">
-        <el-input type="text" v-model="form.noteCode" style="width: 150px" placeholder="请输入短信验证码"></el-input>&nbsp;&nbsp;&nbsp;&nbsp;
+        <el-input type="text" v-model="form.noteCode" style="width: 160px" placeholder="请输入短信验证码" clearable></el-input>&nbsp;&nbsp;&nbsp;&nbsp;
         <el-button @click="getVerify" v-if="isShow" :disabled="disabled">获取验证码</el-button>
         <el-button disabled v-else>请{{countTime}}s后重试</el-button>
       </el-form-item>
       <el-form-item label="用户账号" prop="loginname">
-        <el-input type="text" v-model="form.loginname" placeholder="请输入用户账号"></el-input>
+        <el-input type="text" v-model="form.loginname" placeholder="请输入用户账号" clearable></el-input>
       </el-form-item>
       <el-form-item label="用户名称" prop="username">
-        <el-input type="text" v-model="form.username" placeholder="请输入用户名称"></el-input>
+        <el-input type="text" v-model="form.username" placeholder="请输入用户名称" clearable></el-input>
       </el-form-item>
       <el-form-item label="设置密码" prop="password">
         <el-input type="password" v-model="form.password" placeholder="请输入密码" show-password></el-input>

@@ -53,13 +53,8 @@
           <div id="fl">
             <img src="static/images/j_car.png" @click="onaddcart"/>
             <span class="btn">
-              <el-button @click="buy">立即购买</el-button>
-            </span>
-          </div>
-          <div style="margin-top: 20px;margin-right: 50px">
-            <span>
-              <el-button @click="collect" size="mini">收藏</el-button>
-              <el-button @click="collect" size="mini">分享</el-button>
+                <el-button @click="collect" size="mini">收藏</el-button>
+                <el-button @click="collect" size="mini">分享</el-button>
             </span>
           </div>
         </div>
@@ -92,6 +87,8 @@
   import {productById} from "@/api/product";
   import {slideShowlist} from "../../api/slideShow";
   import {BySpecsAndPid} from "../../api/productSku";
+  import {addShopCart, getCount} from "../../api/shopCart";
+  import PubSub from 'pubsub-js'
 
   export default {
     name: "productDeatil",
@@ -114,7 +111,8 @@
         productSkuParams : {
           productid: undefined,
           productspecs:''
-        }
+        },
+        shopCat:{}
       }
     },
     methods: {
@@ -138,13 +136,12 @@
       clickClass(index,ind,value){
         this.sel[index] = ind; //让数组sel的第index+1的元素的值等于ind
         this.sel = this.sel.concat([]); //因为数组是引用类型，对其中一个变量直接赋值不会影响到另一个变量（并未操作引用的对象），使用concat（操作了应用对象）
-        this.productSpecsArray[index] = '"'+value.title +'":"'+value.items[ind]+'"'
-        this.productSkuParams.productspecs = '{'
+        this.productSpecsArray[index] = '{"title":'+'"'+value.title +'","items":'+'"'+value.items[ind]+'"}'
+        this.productSkuParams.productspecs = ''
         this.productSpecsArray.forEach(item => {
           this.productSkuParams.productspecs += item+','
         })
         this.productSkuParams.productspecs=this.productSkuParams.productspecs.substring(0, this.productSkuParams.productspecs.lastIndexOf(','))
-        this.productSkuParams.productspecs += '}'
         this.productSkuParams.productid = this.product.id
         this.$router.push({path: '/productDiscuss',query:{id: this.id}})
         BySpecsAndPid(this.productSkuParams).then(response => {
@@ -157,14 +154,22 @@
       },
       onaddcart(){
         if(this.product.attributelist.length ==  this.productSpecsArray.length){
-          this.msgSuccess("添加购物车成功")
-        }else{
-          this.msgError('请选择规模！')
-        }
-      },
-      buy(){
-        if(this.product.attributelist.length ==  this.productSpecsArray.length){
-          this.msgSuccess("购买成功");
+          this.shopCat.productid = this.product.id
+          this.shopCat.skuid = this.productSku.id
+          this.shopCat.price = this.productSku.productprice
+          this.shopCat.number = this.quantity
+          this.shopCat.cost = this.quantity*this.productSku.productprice
+          addShopCart(this.shopCat).then(result => {
+            if(result.code == "1000"){
+              this.msgSuccess("添加购物车成功！")
+              getCount().then(result => {
+                PubSub.publish('getShopCatCount', result) // 发布消息
+              })
+            }else{
+              this.msgError("添加购物车失败！")
+            }
+          })
+          console.info(this.shopCat)
         }else{
           this.msgError('请选择规模！')
         }
@@ -312,13 +317,12 @@
     width: 400px;
   }
   .btn{
-    margin-top: 2px;
+    margin-top: 10px;
     float: right;
-    margin-right: 100px;
+    margin-right: 80px;
   }
   .btn button{
-    margin-left: 0px;
-    margin-right: 0px;
+    margin: auto;
   }
   .l_list {
     width: 972px;

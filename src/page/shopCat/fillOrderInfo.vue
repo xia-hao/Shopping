@@ -34,15 +34,24 @@
       <div>
         <el-table
           ref="shopCat"
-          :data="shopCatList"
+          :data="shopCartList"
           row-key="id"
         >
           <el-table-column label="商品" prop="name" align="center" >
             <template slot-scope="scope">
               <div>
-                <img :src="urlimg+scope.row.filename"/>
+                <img :src="urlimg+JSON.parse(scope.row.productSku.imgarray).img[0]" width="100px" height="100px"/>
                 <div>
-                  <router-link :to="{path: '/productDeatil',query:{id : scope.row.id}}">{{scope.row.name}}</router-link>
+                  <router-link :to="{path: '/productDeatil',query:{id : scope.row.product.id}}">{{scope.row.product.name}}</router-link>
+                </div>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="商品属性" align="left" width="120px">
+            <template slot-scope="scope">
+              <div v-for="(item,index) in JSON.parse(scope.row.productSku.productspecs)" :key="index">
+                <div>
+                  {{item.title}} ： {{item.items}}
                 </div>
               </div>
             </template>
@@ -55,7 +64,7 @@
           <el-table-column label="数量" prop="number" align="center"/>
           <el-table-column label="小计" prop="cost" align="center">
             <template slot-scope="scope">
-              <span style="color: #FF4E00">￥{{scope.row.number*scope.row.price}}</span>
+              <span style="color: #FF4E00">￥{{scope.row.cost}}</span>
             </template>
           </el-table-column>
         </el-table>
@@ -64,7 +73,7 @@
         <div style="margin-right: 20px;margin-top: 25px;">
           <div>
             <span style="font-size: 14px;color: #404040">应付总金额：</span>
-            <span style="color: red;"><b>￥{{countPrice}}</b></span>
+            <span style="color: red;"><b>￥{{orderInfo.orderprice}}</b></span>
           </div>
           <div>
             <span style="font-size: 13px;color: #848484">
@@ -77,7 +86,7 @@
         <a href="javaScript:0;" style="float: left;margin-left: 750px;margin-top: 10px" @click="$router.push({path: '/shopCat'})">
           返回购物车
         </a>
-        <el-button style="background-color: #e14145;color: white;width: 130px;margin-right: 20px" @click="$router.push({path: '/pay'})">
+        <el-button style="background-color: #FF4E00;color: white;width: 130px;margin-right: 20px" @click="submitOrder">
           提交订单
         </el-button>
       </div>
@@ -132,6 +141,8 @@
   import {updateUserAddressIsDefault, userAddressList} from "../../api/userAddress";
   import {district} from "../../api/district";
   import {addUserAddress,getUserAddress,updateUserAddress} from "../../api/userAddress";
+  import {listByIsSelected, selectShopCart} from "../../api/shopCart";
+  import {addOrder} from "../../api/order";
 
 export default {
   name: "fillOrderInfo",
@@ -155,9 +166,6 @@ export default {
       }
     };
     return {
-      shopCatList: this.$route.query.shopCatList,
-      shopCatNumber: this.$route.query.shopCatNumber,
-      countPrice: 0,
       border: undefined,
       btn: undefined,
       sel: [],
@@ -184,25 +192,43 @@ export default {
           { validator: phone, trigger: 'blur' }
         ]
       },
-      order: {
-        useraddressid:undefined,
+      shopCartList: [],
+      orderInfo: {
+        userAddressId:undefined,
         distribution: undefined,
-        payType: undefined
+        payway: undefined,
+        orderprice: 0,
+        orderDetailsList: []
       },
       wayList:[
-        {title: '配送方式', items: [{id:1,name:'快递送货(全国范围)'},{id:2,name:'物流送货(全国范围)'},{id:3,name:'自行上门提货'}]},
-        {title: '支付方式', items: [{id:1,name:'货到付款'},{id:2,name:'在线支付'}]}
+        {title: '配送方式', items: [{id:1,name:'快递送货(全国范围)',isdefault:true},{id:2,name:'物流送货(全国范围)',isdefault:false},{id:3,name:'自行上门提货',isdefault:false}]},
+        {title: '支付方式', items: [{id:1,name:'货到付款',isdefault:false},{id:2,name:'在线支付',isdefault:true}]}
       ]
     }
   },
   methods: {
+    submitOrder(){
+      var i = 0;
+        this.shopCartList.forEach(item => {
+          var shopCart  = {
+            productid:item.productid,
+            skuid:item.skuid,
+            number:item.number,
+            price:item.price,
+            cost:item.cost
+          }
+          this.orderInfo.orderDetailsList[i] = shopCart
+          i++
+        })
+      addOrder(this.orderInfo)
+    },
     clickClass(index,ind,id){
       this.sel[index] = ind; //让数组sel的第index+1的元素的值等于ind
       this.sel = this.sel.concat([]); //因为数组是引用类型，对其中一个变量直接赋值不会影响到另一个变量（并未操作引用的对象），使用concat（操作了应用对象）
       if(index==0){
-        this.order.distribution = id
+        this.orderInfo.distribution = id
       }else if(index == 1){
-        this.order.payType = id
+        this.orderInfo.payway = id
       }
     },
     reset() { // 重置userAddress对象
@@ -269,7 +295,7 @@ export default {
       })
     },
     userAddressRadio (row){
-      this.order.useraddressid = row.id
+      this.orderInfo.userAddressId = row.id
       this.address = row.provinceName+" "+ row.cityName+" " + row.districtName+" "+row.detailedAddress
       this.userAddress.consignee = row.consignee
       this.userAddress.mobile = row.mobile
@@ -330,15 +356,25 @@ export default {
     }
   },
   mounted(){
-    if(this.shopCatList == '' || this.shopCatList == undefined){
+    /*if(this.shopCartList == '' || this.shopCartList == undefined){
       this.$router.push({path: '/home'})
       this.msgError("获取购物车信息失败！")
+    }*/
+    for (var i= 0; i<this.wayList.length; i++){
+      for (var j= 0; j<this.wayList[i].items.length; j++){
+        if(this.wayList[i].items[j].isdefault == true){
+          this.clickClass(i,j,this.wayList[i].items[j].id)
+        }
+      }
     }
   },
   created() {
     this.getUserAddressList();
-    this.shopCatList.forEach(shopCat => {
-      this.countPrice += shopCat.number*shopCat.price
+    listByIsSelected().then(result => {
+      this.shopCartList = result.shopCartList
+      this.shopCartList.forEach(shopCat => {
+        this.orderInfo.orderprice += shopCat.cost
+      })
     })
   }
 }
@@ -442,7 +478,7 @@ export default {
   .radio:hover .el-link{
     display: block;
     float: right;
-    margin-right: 260px;
+    margin-right: 230px;
   }
 
 </style>
