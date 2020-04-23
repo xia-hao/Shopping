@@ -16,4 +16,8 @@ public interface ProductService {
    public int getProductCount(Product product);
 
    public Product getProductById(Integer id);
+
+   public int addProductSalesVolume(Integer productId,Integer salesVolume);
+
+   public int minusProductSalesVolume(Integer productId,Integer salesVolume);
 }

@@ -1,4 +1,4 @@
-package com.shopping.utils.quartz;
+package com.shopping.utils.quartz.Job;
 
 import com.shopping.service.UserService;
 import org.quartz.Job;
@@ -19,9 +19,9 @@ public class UserJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-       /* int count = userService.updateUserFreezing();
+        int count = userService.updateUserFreezing();
         if(count>0){
             System.out.println("从冻结改为正常的账户有："+count+"个！");
-        }*/
+        }
     }
 }

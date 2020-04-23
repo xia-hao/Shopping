@@ -5,18 +5,29 @@
     <result column="orderNo" jdbcType="VARCHAR" property="orderno" />
     <result column="productId" jdbcType="INTEGER" property="productid" />
     <result column="skuId" jdbcType="INTEGER" property="skuid" />
-    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="number" jdbcType="INTEGER" property="number" />
     <result column="price" jdbcType="DECIMAL" property="price" />
     <result column="cost" jdbcType="DECIMAL" property="cost" />
     <result column="is_refund" jdbcType="CHAR" property="isRefund" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <association property="product" select="com.shopping.mapper.ProductMapper.selectByPrimaryKey" column="productId"/>
+    <association property="productSku" select="com.shopping.mapper.ProductSkuMapper.selectByPrimaryKey" column="skuId"/>
   </resultMap>
+  <sql id="Base_Column_List">
+    orderNo, productId, skuId, number, price, cost, is_refund, createTime
+  </sql>
+  <select id="selectByOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from order_detail
+    where orderNo = #{orderno,jdbcType=VARCHAR}
+  </select>
   <insert id="insert" parameterType="com.shopping.domain.OrderDetail">
     insert into order_detail (orderNo, productId, skuId, 
-      quantity, price, cost, 
+      number, price, cost, 
       is_refund, createTime)
     values (#{orderno,jdbcType=VARCHAR}, #{productid,jdbcType=INTEGER}, #{skuid,jdbcType=INTEGER}, 
-      #{quantity,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{cost,jdbcType=DECIMAL}, 
+      #{number,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{cost,jdbcType=DECIMAL}, 
       #{isRefund,jdbcType=CHAR}, #{createtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.shopping.domain.OrderDetail">
@@ -31,8 +42,8 @@
       <if test="skuid != null">
         skuId,
       </if>
-      <if test="quantity != null">
-        quantity,
+      <if test="number != null">
+        number,
       </if>
       <if test="price != null">
         price,
@@ -57,8 +68,8 @@
       <if test="skuid != null">
         #{skuid,jdbcType=INTEGER},
       </if>
-      <if test="quantity != null">
-        #{quantity,jdbcType=INTEGER},
+      <if test="number != null">
+        #{number,jdbcType=INTEGER},
       </if>
       <if test="price != null">
         #{price,jdbcType=DECIMAL},
@@ -74,4 +85,8 @@
       </if>
     </trim>
   </insert>
+  <delete id="deleteByOrderNo" parameterType="java.lang.String">
+    delete from order_detail
+    where orderNo = #{orderno,jdbcType=VARCHAR}
+  </delete>
 </mapper>

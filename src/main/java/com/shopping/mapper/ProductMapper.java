@@ -21,6 +21,10 @@ public interface ProductMapper {
     int getProductCount(@Param("name")String name, @Param("categoryId")Integer categoryId,
                         @Param("price1") BigDecimal price1, @Param("price2")BigDecimal price2);
 
+    int addProductSalesVolume(@Param("productId") Integer productId,@Param("salesVolume") Integer salesVolume);
+
+    int minusProductSalesVolume(@Param("productId") Integer productId,@Param("salesVolume") Integer salesVolume);
+
     int updateByPrimaryKeySelective(Product product);
 
     int updateByPrimaryKey(Product product);

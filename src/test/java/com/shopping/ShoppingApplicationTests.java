@@ -4,13 +4,18 @@ import com.shopping.domain.District;
 import com.shopping.domain.ProductCategory;
 import com.shopping.domain.SlideShow;
 import com.shopping.service.DistrictService;
+import com.shopping.service.OrderService;
 import com.shopping.service.ProductCategoryService;
 import com.shopping.service.SlideShowService;
+import com.sun.org.apache.xml.internal.utils.IntVector;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 class ShoppingApplicationTests {
@@ -23,6 +28,9 @@ class ShoppingApplicationTests {
 
     @Resource
     private DistrictService districtService;
+
+    @Resource
+    private OrderService orderService;
 
     @Test
     void contextLoads() {
@@ -46,5 +54,9 @@ class ShoppingApplicationTests {
         for (District district : districtsList){
             System.out.println("==========="+district.getDistrictName());
         }
+    }
+    @Test
+    void test1() {
+        //Map<String,Object> map = orderService.getOrderByOrderNo("62D85921406D440299B4AE3036B28BB8");
     }
 }

@@ -38,4 +38,16 @@ public class ProductServiceImpl implements ProductService {
     public Product getProductById(Integer id) {
         return productMapper.selectByPrimaryKey(id);
     }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public int addProductSalesVolume(Integer productId, Integer salesVolume) {
+        return productMapper.addProductSalesVolume(productId,salesVolume);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public int minusProductSalesVolume(Integer productId, Integer salesVolume) {
+        return productMapper.minusProductSalesVolume(productId,salesVolume);
+    }
 }

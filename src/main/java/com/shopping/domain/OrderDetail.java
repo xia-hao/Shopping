@@ -3,7 +3,6 @@ package com.shopping.domain;
 import com.shopping.utils.BaseEntity;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 public class OrderDetail extends BaseEntity {
     private String orderno;
@@ -12,13 +11,33 @@ public class OrderDetail extends BaseEntity {
 
     private Integer skuid;
 
-    private Integer quantity;
+    private Integer number;
 
     private BigDecimal price;
 
     private BigDecimal cost;
 
     private String isRefund;
+
+    private Product product;
+
+    private ProductSku productSku;
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public ProductSku getProductSku() {
+        return productSku;
+    }
+
+    public void setProductSku(ProductSku productSku) {
+        this.productSku = productSku;
+    }
 
     public String getOrderno() {
         return orderno;
@@ -44,12 +63,12 @@ public class OrderDetail extends BaseEntity {
         this.skuid = skuid;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getNumber() {
+        return number;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     public BigDecimal getPrice() {

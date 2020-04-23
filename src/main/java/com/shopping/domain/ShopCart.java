@@ -23,6 +23,26 @@ public class ShopCart extends BaseEntity {
 
     private Boolean isselected;
 
+    private Product product;
+
+    private ProductSku productSku;
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public ProductSku getProductSku() {
+        return productSku;
+    }
+
+    public void setProductSku(ProductSku productSku) {
+        this.productSku = productSku;
+    }
+
     public Integer getId() {
         return id;
     }

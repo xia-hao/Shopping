@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shopping.mapper.PayMentMapper">
+  <resultMap id="BaseResultMap" type="com.shopping.domain.PayMent">
+    <result column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="loginName" jdbcType="VARCHAR" property="loginname" />
+    <result column="orderNo" jdbcType="VARCHAR" property="orderno" />
+    <result column="cost" jdbcType="DECIMAL" property="cost" />
+    <result column="payStatu" jdbcType="CHAR" property="paystatu" />
+    <result column="payType" jdbcType="CHAR" property="paytype" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shopping.domain.PayMent">
+    insert into payment (userId, loginName, orderNo, 
+      cost, payStatu, payType, 
+      createTime)
+    values (#{userid,jdbcType=INTEGER}, #{loginname,jdbcType=VARCHAR}, #{orderno,jdbcType=VARCHAR}, 
+      #{cost,jdbcType=DECIMAL}, #{paystatu,jdbcType=CHAR}, #{paytype,jdbcType=CHAR}, 
+      #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shopping.domain.PayMent">
+    insert into payment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="loginname != null">
+        loginName,
+      </if>
+      <if test="orderno != null">
+        orderNo,
+      </if>
+      <if test="cost != null">
+        cost,
+      </if>
+      <if test="paystatu != null">
+        payStatu,
+      </if>
+      <if test="paytype != null">
+        payType,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="loginname != null">
+        #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="orderno != null">
+        #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="cost != null">
+        #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="paystatu != null">
+        #{paystatu,jdbcType=CHAR},
+      </if>
+      <if test="paytype != null">
+        #{paytype,jdbcType=CHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

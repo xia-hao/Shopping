@@ -131,4 +131,12 @@
       updateTime = #{updatetime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <update id="addProductSkuNumber">
+    UPDATE product_sku SET productStock =productStock + #{productStock}
+    WHERE id = #{id} AND productId = #{productId} AND #{productStock} <![CDATA[ > ]]> 0
+  </update>
+  <update id="minusProductSkuNumber">
+    UPDATE product_sku SET productStock =productStock - #{productStock}
+    WHERE id = #{id} AND productId = #{productId} AND productStock <![CDATA[ >= ]]> #{productStock}
+  </update>
 </mapper>

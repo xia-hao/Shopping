@@ -10,11 +10,15 @@
     <result column="payWay" jdbcType="CHAR" property="payway" />
     <result column="orderPrice" jdbcType="DECIMAL" property="orderprice" />
     <result column="orderStatu" jdbcType="CHAR" property="orderstatu" />
+    <result column="deadlineTime" jdbcType="TIMESTAMP" property="deadlinetime" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <association property="userAddress" select="com.shopping.mapper.UserAddressMapper.selectByIdAndUserId"
+                 javaType="com.shopping.domain.UserAddress" column="{id=user_address_id,userid=userId}"/>
+    <collection property="orderDetailList" select="com.shopping.mapper.OrderDetailMapper.selectByOrderNo" column="orderNo"/>
   </resultMap>
   <sql id="Base_Column_List">
     orderNo, userId, loginName, user_address_id, distribution, payWay, orderPrice, orderStatu, 
-    createTime
+    deadlineTime, createTime
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -22,19 +26,42 @@
     from order_info
     where orderNo = #{orderno,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <select id="selectOrderByUidAndStatu" parameterType="com.shopping.domain.OrderInfo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from order_info
+    <where>
+      and userId = #{userid}
+      <if test="orderstatu!=null and orderstatu != ''">
+        and orderStatu = #{orderstatu}
+      </if>
+    </where>
+    order by createTime desc
+  </select>
+  <select id="getOrderCount" parameterType="com.shopping.domain.OrderInfo" resultType="int">
+    select
+    count(1)
+    from order_info
+    <where>
+      and userId = #{userid}
+      <if test="orderstatu!=null and orderstatu != ''">
+        and orderStatu = #{orderstatu}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByOrderNo" parameterType="java.lang.String">
     delete from order_info
     where orderNo = #{orderno,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.shopping.domain.OrderInfo">
     insert into order_info (orderNo, userId, loginName, 
       user_address_id, distribution, payWay, 
-      orderPrice, orderStatu, createTime
-      )
+      orderPrice, orderStatu, deadlineTime, 
+      createTime)
     values (#{orderno,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, #{loginname,jdbcType=VARCHAR}, 
       #{userAddressId,jdbcType=INTEGER}, #{distribution,jdbcType=CHAR}, #{payway,jdbcType=CHAR}, 
-      #{orderprice,jdbcType=DECIMAL}, #{orderstatu,jdbcType=CHAR}, #{createtime,jdbcType=TIMESTAMP}
-      )
+      #{orderprice,jdbcType=DECIMAL}, #{orderstatu,jdbcType=CHAR}, #{deadlinetime,jdbcType=TIMESTAMP}, 
+      #{createtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.shopping.domain.OrderInfo">
     insert into order_info
@@ -62,6 +89,9 @@
       </if>
       <if test="orderstatu != null">
         orderStatu,
+      </if>
+      <if test="deadlinetime != null">
+        deadlineTime,
       </if>
       <if test="createtime != null">
         createTime,
@@ -92,6 +122,9 @@
       <if test="orderstatu != null">
         #{orderstatu,jdbcType=CHAR},
       </if>
+      <if test="deadlinetime != null">
+        #{deadlinetime,jdbcType=TIMESTAMP},
+      </if>
       <if test="createtime != null">
         #{createtime,jdbcType=TIMESTAMP},
       </if>
@@ -121,6 +154,9 @@
       <if test="orderstatu != null">
         orderStatu = #{orderstatu,jdbcType=CHAR},
       </if>
+      <if test="deadlinetime != null">
+        deadlineTime = #{deadlinetime,jdbcType=TIMESTAMP},
+      </if>
       <if test="createtime != null">
         createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
@@ -136,7 +172,17 @@
       payWay = #{payway,jdbcType=CHAR},
       orderPrice = #{orderprice,jdbcType=DECIMAL},
       orderStatu = #{orderstatu,jdbcType=CHAR},
+      deadlineTime = #{deadlinetime,jdbcType=TIMESTAMP},
       createTime = #{createtime,jdbcType=TIMESTAMP}
     where orderNo = #{orderno,jdbcType=VARCHAR}
+  </update>
+  <update id="timingCancelOrder">
+    UPDATE order_info oi
+    INNER JOIN order_detail od
+    ON oi.orderNo = od.orderNo
+    INNER JOIN product_sku pk
+    ON pk.id = od.skuId
+    SET oi.orderStatu = 3,pk.productStock = pk.productStock+od.number
+    WHERE oi.orderStatu = 1 AND TIMESTAMPDIFF(SECOND,NOW(),oi.deadlineTime)<![CDATA[ <= ]]>0
   </update>
 </mapper>

@@ -196,6 +196,14 @@
       createTime = #{createtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <update id="addProductSalesVolume">
+    update product set sales_volume =sales_volume + #{salesVolume,jdbcType=INTEGER}
+    where id = #{productId,jdbcType=INTEGER} and #{salesVolume,jdbcType=INTEGER} <![CDATA[ > ]]> 0
+  </update>
+  <update id="minusProductSalesVolume">
+    update product set sales_volume =sales_volume - #{salesVolume,jdbcType=INTEGER}
+    where id = #{productId,jdbcType=INTEGER} and sales_volume <![CDATA[ >= ]]> #{salesVolume,jdbcType=INTEGER}
+  </update>
   <select id="selectProductlist" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

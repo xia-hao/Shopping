@@ -2,16 +2,25 @@ package com.shopping.mapper;
 
 import com.shopping.domain.OrderInfo;
 
+import java.util.List;
+
 public interface OrderInfoMapper {
-    int deleteByPrimaryKey(String orderno);
+    int deleteByOrderNo(String orderno);
 
-    int insert(OrderInfo record);
+    int insert(OrderInfo orderInfo);
 
-    int insertSelective(OrderInfo record);
+    int insertSelective(OrderInfo orderInfo);
 
     OrderInfo selectByPrimaryKey(String orderno);
 
-    int updateByPrimaryKeySelective(OrderInfo record);
+    List<OrderInfo> selectOrderByUidAndStatu(OrderInfo orderInfo);
 
-    int updateByPrimaryKey(OrderInfo record);
+    int getOrderCount(OrderInfo orderInfo);
+
+    int timingCancelOrder();
+
+    int updateByPrimaryKeySelective(OrderInfo orderInfo);
+
+    int updateByPrimaryKey(OrderInfo orderInfo);
+
 }

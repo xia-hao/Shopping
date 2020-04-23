@@ -51,7 +51,7 @@ CREATE TABLE `dictionary` (
 
 /*Data for the table `dictionary` */
 
-insert  into `dictionary`(`id`,`dict_label`,`dict_value`,`dict_type`,`status`) values (1,'女',0,'user_sex',0),(2,'男',1,'user_sex',0),(3,'前台',0,'user_type',0),(4,'后台',1,'user_type',0),(5,'支付中',1,'pay_statu',0),(6,'支付成功',2,'pay_statu',0),(7,'支付失败',3,'pay_statu',0),(8,'待支付',1,'order_statu',0),(9,'已支付',2,'order_statu',0),(10,'已取消',3,'order_statu',0),(11,'已发货',4,'order_statu',0),(12,'已收货',5,'order_statu',0),(13,'快递送货(全国范围)',1,'order_dispatching',0),(14,'物流送货(全国范围)',2,'order_dispatching',0),(15,'自行上门提货',3,'order_dispatching',0),(16,'未使用',1,'coupon_statu',0),(17,'已使用',2,'coupon_statu',0),(18,'未过期',3,'coupon_statu',0),(19,'已过期',4,'coupon_statu',0),(20,'正常',1,'user_statu',0),(21,'冻结',2,'user_statu',0),(22,'微信',1,'payType',0),(23,'支付宝',2,'payType',0),(24,'注册',1,'verify_describe',0),(25,'找回密码',2,'verify_describe',0),(26,'找回用户名',3,'verify_describe',0),(27,'退款中',1,'refund_status',0),(28,'退款成功',2,'refund_status',0),(29,'退款失败',3,'refund_status',0),(30,'未验证',1,'verify_statu',0),(31,'已验证',2,'verify_statu',0),(32,'已过期',3,'verify_statu',0),(33,'货到付款',1,'order_payWay',0),(34,'线上支付',2,'order_payWay',0);
+insert  into `dictionary`(`id`,`dict_label`,`dict_value`,`dict_type`,`status`) values (1,'女',0,'user_sex',0),(2,'男',1,'user_sex',0),(3,'前台',0,'user_type',0),(4,'后台',1,'user_type',0),(5,'支付中',1,'pay_statu',0),(6,'支付成功',2,'pay_statu',0),(7,'支付失败',3,'pay_statu',0),(8,'待支付',1,'order_statu',0),(9,'已支付',2,'order_statu',0),(10,'已取消',3,'order_statu',0),(11,'已发货',4,'order_statu',0),(12,'已收货',5,'order_statu',0),(13,'已退款',6,'order_statu',0),(14,'快递送货(全国范围)',1,'order_dispatching',0),(15,'物流送货(全国范围)',2,'order_dispatching',0),(16,'自行上门提货',3,'order_dispatching',0),(17,'未使用',1,'coupon_statu',0),(18,'已使用',2,'coupon_statu',0),(19,'未过期',3,'coupon_statu',0),(20,'已过期',4,'coupon_statu',0),(21,'正常',1,'user_statu',0),(22,'冻结',2,'user_statu',0),(23,'微信',1,'payType',0),(24,'支付宝',2,'payType',0),(25,'注册',1,'verify_describe',0),(26,'找回密码',2,'verify_describe',0),(27,'找回用户名',3,'verify_describe',0),(28,'退款中',1,'refund_status',0),(29,'退款成功',2,'refund_status',0),(30,'退款失败',3,'refund_status',0),(31,'未验证',1,'verify_statu',0),(32,'已验证',2,'verify_statu',0),(33,'已过期',3,'verify_statu',0),(34,'货到付款',1,'order_payWay',0),(35,'线上支付',2,'order_payWay',0);
 
 /*Table structure for table `discuss` */
 
@@ -141,16 +141,16 @@ CREATE TABLE `order_detail` (
   `orderNo` varchar(225) NOT NULL COMMENT '订单号',
   `productId` int(10) NOT NULL COMMENT '商品主键',
   `skuId` int(10) NOT NULL COMMENT 'SKU主键',
-  `quantity` int(10) NOT NULL COMMENT '数量',
+  `number` int(10) NOT NULL COMMENT '数量',
   `price` decimal(10,2) NOT NULL COMMENT '单价',
   `cost` decimal(10,2) NOT NULL COMMENT '共消费',
   `is_refund` char(22) NOT NULL DEFAULT '1' COMMENT '是否退款(1.未退款 2.已退款)',
-  `createTime` datetime NOT NULL COMMENT '订单创建时间'
+  `createTime` datetime NOT NULL COMMENT '订单创建时间',
+  KEY `FK_order_detail` (`orderNo`),
+  CONSTRAINT `FK_order_detail` FOREIGN KEY (`orderNo`) REFERENCES `order_info` (`orderNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `order_detail` */
-
-insert  into `order_detail`(`orderNo`,`productId`,`skuId`,`quantity`,`price`,`cost`,`is_refund`,`createTime`) values ('34218726C1274CC59504AB4E6FD64AHG',735,4,1,'152.00','152.00','1','2020-03-09 15:04:37');
 
 /*Table structure for table `order_info` */
 
@@ -165,13 +165,16 @@ CREATE TABLE `order_info` (
   `payWay` char(22) NOT NULL COMMENT '支付方式(1.货到付款 2.线上支付)',
   `orderPrice` decimal(10,2) NOT NULL COMMENT '订单金额',
   `orderStatu` char(22) NOT NULL DEFAULT '1' COMMENT '订单状态(1.待支付 2.已支付 3.已取消 4.已发货 5.已收货) 6.已退款',
+  `deadlineTime` datetime NOT NULL COMMENT '过期时间',
   `createTime` datetime NOT NULL COMMENT '创建时间',
-  PRIMARY KEY (`orderNo`)
+  PRIMARY KEY (`orderNo`),
+  KEY `FK_order_info` (`user_address_id`),
+  KEY `FK_order_info2` (`userId`),
+  CONSTRAINT `FK_order_info2` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`),
+  CONSTRAINT `FK_order_info` FOREIGN KEY (`user_address_id`) REFERENCES `user_address` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `order_info` */
-
-insert  into `order_info`(`orderNo`,`userId`,`loginName`,`user_address_id`,`distribution`,`payWay`,`orderPrice`,`orderStatu`,`createTime`) values ('34218726C1274CC59504AB4E6FD64AHG',1,'admin',1,'1','1','152.00','2','2016-06-03 11:41:09');
 
 /*Table structure for table `payment` */
 
@@ -180,18 +183,14 @@ DROP TABLE IF EXISTS `payment`;
 CREATE TABLE `payment` (
   `userId` int(10) NOT NULL COMMENT '用户ID',
   `loginName` varchar(225) NOT NULL COMMENT '账户名',
-  `serialNumber` varchar(225) NOT NULL COMMENT '订单号',
-  `number` int(10) NOT NULL COMMENT '数量',
-  `price` decimal(10,2) NOT NULL COMMENT '单价',
+  `orderNo` varchar(225) NOT NULL COMMENT '订单号',
   `cost` decimal(10,2) NOT NULL COMMENT '共消费',
-  `payStatu` int(10) NOT NULL COMMENT '支付状态(1.支付中 2.支付成功 3.支付失败)',
+  `payStatu` char(2) NOT NULL DEFAULT '1' COMMENT '支付状态(1.支付中 2.支付成功 3.支付失败)',
   `payType` char(2) NOT NULL COMMENT '支付类型(1.微信 2.支付宝)',
-  `payTime` datetime NOT NULL COMMENT '支付时间'
+  `createTime` datetime NOT NULL COMMENT '支付时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `payment` */
-
-insert  into `payment`(`userId`,`loginName`,`serialNumber`,`number`,`price`,`cost`,`payStatu`,`payType`,`payTime`) values (1,'admin','34218726C1274CC59504AB4E6FD64AHG',1,'152.00','152.00',2,'','2020-03-09 15:04:37');
 
 /*Table structure for table `product` */
 
@@ -212,13 +211,12 @@ CREATE TABLE `product` (
   `defaultSpecs` varchar(225) NOT NULL COMMENT '默认商品规格',
   `isDelete` int(1) DEFAULT '0' COMMENT '是否删除(1：删除 0：未删除)',
   `createTime` datetime NOT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `PK__EASYBUY___94F6E55132E0915F` (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=771 DEFAULT CHARSET=utf8;
 
 /*Data for the table `product` */
 
-insert  into `product`(`id`,`name`,`description`,`price`,`stock`,`sales_volume`,`categoryLevel1Id`,`categoryLevel2Id`,`categoryLevel3Id`,`fileName`,`attributeList`,`defaultSpecs`,`isDelete`,`createTime`) values (733,'香奈尔','','152.00',1000,523,548,654,655,'27A1789ED5764D82A5506DF3DC3933F9.jpg','','',0,'2020-04-10 00:00:00'),(734,'洗面奶','','152.00',1000,400,548,654,655,'D6C9BD438C5643D6B1A6C52E5426FE22.jpg','','',0,'2020-04-10 00:00:00'),(735,'啫喱水','','152.00',1000,350,548,654,655,'1A836D2B3A3348DDAB19807E6CEA8028.jpg','','',0,'2020-04-10 00:00:00'),(736,'香水5852','','152.00',1000,290,548,654,655,'4D9499BAD92A42D291094E797BA2EA3F.jpg','','',0,'2020-04-10 00:00:00'),(737,'香水','','152.00',1000,462,548,654,655,'A9924F9DB68B4DF99FDBF05902075AF0.jpg','','',0,'2020-04-10 00:00:00'),(738,'润肤露','','45.00',1000,310,548,654,655,'3B059EDB5237407980458CE9EA9D3204.jpg','','',0,'2020-04-10 00:00:00'),(739,'洁面装','','156.00',1000,210,548,654,655,'A62C6DF55116440CA3DE9DB37901ED4F.jpg','','',0,'2020-04-10 00:00:00'),(740,'电饭锅','','158.00',1000,164,628,656,659,'40C3B76BA31246618E3CFC8723D33517.jpg','','',0,'2020-04-10 00:00:00'),(741,'婴儿喂奶装','','569.00',1000,50,632,637,653,'401004B3D47C4C6FB1BC5EF19C21FC77.jpg','','',0,'2020-04-10 00:00:00'),(742,'坚果套餐','','158.00',1000,300,660,661,662,'E03D74145A034F6D909879829CB99D80.jpg','','',0,'2020-04-10 00:00:00'),(743,'超甜蜜崭','','589.00',1000,320,660,661,663,'7121E55099FC477680B1229205CE3D29.jpg','','',0,'2020-04-10 00:00:00'),(744,'华为2566','','896.00',1000,504,670,671,672,'F24B4140A2284B3788A38F3B5AD1809A.jpg','[{\"title\":\"容量\", \"items\": [\"128GB\",\"265GB\",\"512GB\"]},{\"title\": \"颜色\", \"items\": [\"红色\",\"白色\",\"蓝色\"]}]','[{\"titleIndex\":0, \"itemsIndex\": 0},{\"titleIndex\": 1, \"itemsIndex\": 1}]',0,'2020-04-10 00:00:00'),(745,'荣耀3C','','589.00',1000,405,670,671,672,'F3921E12552A4D0AA3F75467B146A959.jpg','','',0,'2020-04-10 00:00:00'),(746,'小米手环','','963.00',1000,204,670,674,675,'72F75A371B0B4C26A7F72FAAEF96FC68.jpg','','',0,'2020-04-10 00:00:00'),(747,'华为2265','','896.00',1000,360,670,671,673,'161F355A8A8549BA8F7F4CE3B4F07E40.jpg','','',0,'2020-04-10 00:00:00'),(748,'越南坚果','','520.00',1000,460,660,661,662,'CBC98D3C9E544830821632F5C313D93E.jpg','','',0,'2020-04-10 00:00:00'),(749,'日本进口马桶','','5866.00',1000,20,628,657,0,'A5AF40825E6940B2A59A040100E181A8.jpg','','',0,'2020-04-10 00:00:00'),(750,'联想Y系列','','569.00',1000,100,670,690,691,'956DB0BEC41B41B8A06C05C950130E23.jpg','','',0,'2020-04-10 00:00:00'),(751,'脑白金1号','','589.00',1000,40,676,677,680,'66E96AF9E9714A5C9EA901811173D662.jpg','','',0,'2020-04-10 00:00:00'),(752,'莫里斯按','','589.00',1000,60,676,678,0,'A7436BC607E74C81B392DCFE69D4AEAB.jpg','','',0,'2020-04-10 00:00:00'),(753,'三鹿好奶粉','','859.00',1000,50,676,679,698,'3C465E7B8A324A8DA2A2EEE202E36166.jpg','','',0,'2020-04-10 00:00:00'),(754,'儿童牛奶','','5896.00',1000,70,676,679,0,'D1AC9AE71ED348FA8D880FD4279D3422.jpg','','',0,'2020-04-10 00:00:00'),(755,'软沙发','','8596.00',1000,120,628,696,0,'ED7921DE40FC47E18365754709A21194.jpg','','',0,'2020-04-10 00:00:00'),(756,'收纳盒','','5966.00',1000,210,628,696,0,'DB86CA25CA4F4B4AA906F46BE542C6A6.jpg','','',0,'2020-04-10 00:00:00'),(757,'洗衣液','','58.00',1000,320,628,696,0,'E6CCDC343ACC471C908E9748776C6421.jpg','','',0,'2020-04-10 00:00:00'),(758,'红短沙发','','596.00',1000,40,628,696,0,'BD5C77465DC2466BBCE7F95FB9764392.jpg','','',0,'2020-04-10 00:00:00'),(759,'新西兰奶粉','','5896.00',1000,46,676,679,0,'9ED375098D42497B8FC33167E06D0EE8.jpg','','',0,'2020-04-10 00:00:00'),(760,'婴儿车','','11000.00',1000,56,681,682,687,'1DBC0930641D43C29D74A9E1B40FEEBB.jpg','','',0,'2020-04-10 00:00:00'),(761,'夏款婴儿车','','963.00',1000,65,681,682,688,'16290C4DBEAC4F00A636667019621468.jpg','','',0,'2020-04-10 00:00:00'),(762,'抗压旅行箱','','569.00',1000,100,681,683,685,'272CC434BE7A4469AB0E7882BD1A85FF.jpg','','',0,'2020-04-10 00:00:00'),(763,'透明手提箱','','8596.00',1000,66,681,683,684,'EAA8E66259BF4239B4A2237B62520EF1.jpg','','',0,'2020-04-10 00:00:00'),(764,'婴儿果粉','','5896.00',1000,44,660,661,662,'08BE30BF7B5F4930B0093D8CC4056057.jpg','','',0,'2020-04-10 00:00:00'),(765,'椰子粉','','5963.00',1000,55,660,661,662,'9C006B8BD1AD45398F474A8471ADC50B.jpg','','',0,'2020-04-10 00:00:00'),(766,'坚果蛋糕','','200.00',1000,77,660,661,663,'2E5A16E21E0640E0BAE03E9B995DCD28.jpg','','',0,'2020-04-10 00:00:00'),(767,'编制手提箱','','5896.00',1000,22,681,682,688,'2E1D2A5E65A94FEEA17C72E47C530057.jpg','','',0,'2020-04-10 00:00:00'),(768,'纸箱','','5896.00',1000,11,681,682,687,'443E5A4122064209AFE89250179A2FF0.jpg','','',0,'2020-04-10 00:00:00'),(769,'健胃液','','152.00',1000,121,676,679,0,'30B5547CD7384DAA8A2F4F4D8C0BBF89.jpg','','',0,'2020-04-10 00:00:00'),(770,'联想NTC','','8596.00',1000,322,670,671,673,'48BC371A85A548B7A7589E3F542D911D.jpg','','',0,'2020-04-10 00:00:00');
+insert  into `product`(`id`,`name`,`description`,`price`,`stock`,`sales_volume`,`categoryLevel1Id`,`categoryLevel2Id`,`categoryLevel3Id`,`fileName`,`attributeList`,`defaultSpecs`,`isDelete`,`createTime`) values (733,'香奈尔','','152.00',1000,523,548,654,655,'27A1789ED5764D82A5506DF3DC3933F9.jpg','','',0,'2020-04-10 00:00:00'),(734,'洗面奶','','152.00',1000,400,548,654,655,'D6C9BD438C5643D6B1A6C52E5426FE22.jpg','','',0,'2020-04-10 00:00:00'),(735,'啫喱水','','152.00',1000,350,548,654,655,'1A836D2B3A3348DDAB19807E6CEA8028.jpg','','',0,'2020-04-10 00:00:00'),(736,'香水5852','','152.00',1000,290,548,654,655,'4D9499BAD92A42D291094E797BA2EA3F.jpg','','',0,'2020-04-10 00:00:00'),(737,'香水','','152.00',1000,462,548,654,655,'A9924F9DB68B4DF99FDBF05902075AF0.jpg','','',0,'2020-04-10 00:00:00'),(738,'润肤露','','45.00',1000,310,548,654,655,'3B059EDB5237407980458CE9EA9D3204.jpg','','',0,'2020-04-10 00:00:00'),(739,'洁面装','','156.00',1000,210,548,654,655,'A62C6DF55116440CA3DE9DB37901ED4F.jpg','','',0,'2020-04-10 00:00:00'),(740,'电饭锅','','158.00',1000,164,628,656,659,'40C3B76BA31246618E3CFC8723D33517.jpg','','',0,'2020-04-10 00:00:00'),(741,'婴儿喂奶装','','569.00',1000,50,632,637,653,'401004B3D47C4C6FB1BC5EF19C21FC77.jpg','','',0,'2020-04-10 00:00:00'),(742,'坚果套餐','','158.00',1000,300,660,661,662,'E03D74145A034F6D909879829CB99D80.jpg','','',0,'2020-04-10 00:00:00'),(743,'超甜蜜崭','','589.00',1000,320,660,661,663,'7121E55099FC477680B1229205CE3D29.jpg','','',0,'2020-04-10 00:00:00'),(744,'华为2566','','896.00',1000,500,670,671,672,'F24B4140A2284B3788A38F3B5AD1809A.jpg','[{\"title\":\"容量\", \"items\": [\"128GB\",\"265GB\",\"512GB\"]},{\"title\": \"颜色\", \"items\": [\"红色\",\"白色\",\"蓝色\"]}]','[{\"titleIndex\":0, \"itemsIndex\": 0},{\"titleIndex\": 1, \"itemsIndex\": 1}]',0,'2020-04-10 00:00:00'),(745,'荣耀3C','','589.00',1000,405,670,671,672,'F3921E12552A4D0AA3F75467B146A959.jpg','','',0,'2020-04-10 00:00:00'),(746,'小米手环','','963.00',1000,204,670,674,675,'72F75A371B0B4C26A7F72FAAEF96FC68.jpg','','',0,'2020-04-10 00:00:00'),(747,'华为2265','','896.00',1000,360,670,671,673,'161F355A8A8549BA8F7F4CE3B4F07E40.jpg','','',0,'2020-04-10 00:00:00'),(748,'越南坚果','','520.00',1000,460,660,661,662,'CBC98D3C9E544830821632F5C313D93E.jpg','','',0,'2020-04-10 00:00:00'),(749,'日本进口马桶','','5866.00',1000,20,628,657,0,'A5AF40825E6940B2A59A040100E181A8.jpg','','',0,'2020-04-10 00:00:00'),(750,'联想Y系列','','569.00',1000,100,670,690,691,'956DB0BEC41B41B8A06C05C950130E23.jpg','','',0,'2020-04-10 00:00:00'),(751,'脑白金1号','','589.00',1000,40,676,677,680,'66E96AF9E9714A5C9EA901811173D662.jpg','','',0,'2020-04-10 00:00:00'),(752,'莫里斯按','','589.00',1000,60,676,678,0,'A7436BC607E74C81B392DCFE69D4AEAB.jpg','','',0,'2020-04-10 00:00:00'),(753,'三鹿好奶粉','','859.00',1000,50,676,679,698,'3C465E7B8A324A8DA2A2EEE202E36166.jpg','','',0,'2020-04-10 00:00:00'),(754,'儿童牛奶','','5896.00',1000,70,676,679,0,'D1AC9AE71ED348FA8D880FD4279D3422.jpg','','',0,'2020-04-10 00:00:00'),(755,'软沙发','','8596.00',1000,120,628,696,0,'ED7921DE40FC47E18365754709A21194.jpg','','',0,'2020-04-10 00:00:00'),(756,'收纳盒','','5966.00',1000,210,628,696,0,'DB86CA25CA4F4B4AA906F46BE542C6A6.jpg','','',0,'2020-04-10 00:00:00'),(757,'洗衣液','','58.00',1000,320,628,696,0,'E6CCDC343ACC471C908E9748776C6421.jpg','','',0,'2020-04-10 00:00:00'),(758,'红短沙发','','596.00',1000,40,628,696,0,'BD5C77465DC2466BBCE7F95FB9764392.jpg','','',0,'2020-04-10 00:00:00'),(759,'新西兰奶粉','','5896.00',1000,46,676,679,0,'9ED375098D42497B8FC33167E06D0EE8.jpg','','',0,'2020-04-10 00:00:00'),(760,'婴儿车','','11000.00',1000,56,681,682,687,'1DBC0930641D43C29D74A9E1B40FEEBB.jpg','','',0,'2020-04-10 00:00:00'),(761,'夏款婴儿车','','963.00',1000,65,681,682,688,'16290C4DBEAC4F00A636667019621468.jpg','','',0,'2020-04-10 00:00:00'),(762,'抗压旅行箱','','569.00',1000,100,681,683,685,'272CC434BE7A4469AB0E7882BD1A85FF.jpg','','',0,'2020-04-10 00:00:00'),(763,'透明手提箱','','8596.00',1000,66,681,683,684,'EAA8E66259BF4239B4A2237B62520EF1.jpg','','',0,'2020-04-10 00:00:00'),(764,'婴儿果粉','','5896.00',1000,44,660,661,662,'08BE30BF7B5F4930B0093D8CC4056057.jpg','','',0,'2020-04-10 00:00:00'),(765,'椰子粉','','5963.00',1000,55,660,661,662,'9C006B8BD1AD45398F474A8471ADC50B.jpg','','',0,'2020-04-10 00:00:00'),(766,'坚果蛋糕','','200.00',1000,77,660,661,663,'2E5A16E21E0640E0BAE03E9B995DCD28.jpg','','',0,'2020-04-10 00:00:00'),(767,'编制手提箱','','5896.00',1000,22,681,682,688,'2E1D2A5E65A94FEEA17C72E47C530057.jpg','','',0,'2020-04-10 00:00:00'),(768,'纸箱','','5896.00',1000,11,681,682,687,'443E5A4122064209AFE89250179A2FF0.jpg','','',0,'2020-04-10 00:00:00'),(769,'健胃液','','152.00',1000,121,676,679,0,'30B5547CD7384DAA8A2F4F4D8C0BBF89.jpg','','',0,'2020-04-10 00:00:00'),(770,'联想NTC','','8596.00',1000,322,670,671,673,'48BC371A85A548B7A7589E3F542D911D.jpg','','',0,'2020-04-10 00:00:00');
 
 /*Table structure for table `product_category` */
 
@@ -267,15 +265,14 @@ insert  into `product_sku`(`id`,`productId`,`productSpecs`,`productStock`,`produ
 DROP TABLE IF EXISTS `refund`;
 
 CREATE TABLE `refund` (
-  `id` int(30) NOT NULL AUTO_INCREMENT COMMENT '退款ID',
+  `refund_No` varchar(225) NOT NULL COMMENT '退单编号',
   `user_id` int(30) NOT NULL COMMENT '用户编号',
-  `order_id` int(30) NOT NULL COMMENT '订单号',
-  `refund_No` varchar(100) NOT NULL COMMENT '退单编号',
+  `orderNo` varchar(225) NOT NULL COMMENT '订单号',
   `brefund_money` decimal(20,2) NOT NULL COMMENT '退还金额',
-  `back_notice` varchar(500) DEFAULT NULL COMMENT '退款原因',
-  `refund_status` char(1) NOT NULL COMMENT '退款状态(1.退款中 2.退款成功 3.退款失败)',
-  `refund_time` datetime NOT NULL COMMENT '退款时间',
-  PRIMARY KEY (`id`)
+  `back_notice` varchar(500) NOT NULL COMMENT '退款原因',
+  `refund_status` char(1) NOT NULL DEFAULT '1' COMMENT '退款状态(1.退款中 2.退款成功 3.退款失败)',
+  `createTime` datetime NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`refund_No`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `refund` */
@@ -296,11 +293,9 @@ CREATE TABLE `shop_cart` (
   `isSelected` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否前往结算(1代表TRUE,0代表FALSE)',
   `createTime` datetime NOT NULL COMMENT '购物车时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `shop_cart` */
-
-insert  into `shop_cart`(`id`,`userId`,`productId`,`skuId`,`price`,`number`,`cost`,`statu`,`isSelected`,`createTime`) values (1,1,744,1,'896.00',1,'896.00','1',1,'2020-04-18 19:37:20'),(2,1,744,7,'896.00',1,'896.00','1',1,'2020-04-18 19:37:21'),(3,1,744,4,'896.00',3,'2688.00','1',1,'2020-04-20 14:37:58');
 
 /*Table structure for table `slideshow` */
 
@@ -346,7 +341,7 @@ CREATE TABLE `user` (
 
 /*Data for the table `user` */
 
-insert  into `user`(`userId`,`loginName`,`userName`,`password`,`sex`,`balance`,`identityType`,`identityCode`,`mobile`,`type`,`pwdErrorCount`,`statu`,`freezelimit`,`freezingTime`,`createTime`) values (1,'admin','系统管理员','UUKHSDDI5KPA43A8VL06V0TU2',1,'9848.00','中国居民身份证','130406198302141869','13311232332',1,5,'1',30,NULL,'2020-03-24 00:00:00'),(2,'lb','李白','UUKHSDDI5KPA43A8VL06V0TU2',1,'10000.00',NULL,NULL,'13389775956',0,5,'1',30,NULL,'2020-03-26 18:25:33');
+insert  into `user`(`userId`,`loginName`,`userName`,`password`,`sex`,`balance`,`identityType`,`identityCode`,`mobile`,`type`,`pwdErrorCount`,`statu`,`freezelimit`,`freezingTime`,`createTime`) values (1,'admin','系统管理员','UUKHSDDI5KPA43A8VL06V0TU2',1,'10000.00','中国居民身份证','130406198302141869','13311232332',1,5,'1',30,NULL,'2020-03-24 00:00:00'),(2,'lb','李白','UUKHSDDI5KPA43A8VL06V0TU2',1,'10000.00',NULL,NULL,'13389775956',0,5,'1',30,NULL,'2020-03-26 18:25:33');
 
 /*Table structure for table `user_address` */
 
@@ -368,7 +363,7 @@ CREATE TABLE `user_address` (
 
 /*Data for the table `user_address` */
 
-insert  into `user_address`(`id`,`userId`,`ProvinceID`,`CityID`,`DistrictID`,`isDefault`,`detailed_address`,`consignee`,`mobile`,`createTime`) values (1,1,14,204,1712,1,'湖南省邵阳市大祥区','系统管理员','13311232332','2020-03-16 00:00:00'),(2,1,14,204,1713,0,'湖南省邵阳市大祥区','系统管理员','13356664656','2020-03-18 00:00:00'),(3,2,2,52,500,1,'北京市市辖区东城区','李白','13313113131','2020-04-06 21:34:35'),(4,2,2,52,502,0,'北京市市辖区海淀区','李白','15536665356','2020-04-06 21:37:27'),(5,2,25,321,2705,0,'上海市闵行区','李白','13356656561','2020-04-06 21:39:21');
+insert  into `user_address`(`id`,`userId`,`ProvinceID`,`CityID`,`DistrictID`,`isDefault`,`detailed_address`,`consignee`,`mobile`,`createTime`) values (1,1,14,204,1712,1,'湖南省邵阳市大祥区','系统管理员','13311232332','2020-03-16 00:00:00'),(2,1,14,204,1713,0,'湖南省邵阳市北塔区','系统管理员','13356664656','2020-03-18 00:00:00'),(3,2,2,52,500,1,'北京市市辖区东城区','李白','13313113131','2020-04-06 21:34:35'),(4,2,2,52,502,0,'北京市市辖区海淀区','李白','15536665356','2020-04-06 21:37:27'),(5,2,25,321,2705,0,'上海市闵行区','李白','13356656561','2020-04-06 21:39:21');
 
 /*Table structure for table `user_coupon` */
 
@@ -383,7 +378,11 @@ CREATE TABLE `user_coupon` (
   `reach` decimal(10,2) NOT NULL COMMENT '额度，达到这个金额可以用优惠卷',
   `statu` char(22) NOT NULL DEFAULT '1' COMMENT '优惠卷状态(1.未使用 2.已使用 3.未过期 4.已过期)',
   `deadline` int(10) NOT NULL COMMENT '使用期限',
-  `createTime` datetime NOT NULL COMMENT '优惠卷获取时间'
+  `createTime` datetime NOT NULL COMMENT '优惠卷获取时间',
+  KEY `FK_user_coupon_user` (`userId`),
+  KEY `FK_user_coupon_coupon` (`couponId`),
+  CONSTRAINT `FK_user_coupon_coupon` FOREIGN KEY (`couponId`) REFERENCES `coupon` (`id`),
+  CONSTRAINT `FK_user_coupon_user` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `user_coupon` */
@@ -400,12 +399,12 @@ CREATE TABLE `user_dealrecord` (
   `number` int(10) NOT NULL COMMENT '数量',
   `price` decimal(10,2) NOT NULL COMMENT '价格',
   `userPrice` decimal(10,2) NOT NULL COMMENT '用户余额',
-  `createTime` datetime NOT NULL COMMENT '支付时间'
+  `createTime` datetime NOT NULL COMMENT '支付时间',
+  KEY `FK_user_dealrecord` (`userId`),
+  CONSTRAINT `FK_user_dealrecord` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `user_dealrecord` */
-
-insert  into `user_dealrecord`(`userId`,`productName`,`number`,`price`,`userPrice`,`createTime`) values (1,'啫喱水',1,'-152.00','9848.00','2020-03-09 15:04:37');
 
 /*Table structure for table `user_product_collectible` */
 

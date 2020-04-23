@@ -1,7 +1,9 @@
-package com.shopping.utils.quartz;
+package com.shopping.utils.quartz.Job;
 
+import com.shopping.domain.OrderInfo;
+import com.shopping.service.OrderService;
+import com.shopping.service.UserService;
 import com.shopping.service.VerifyService;
-import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
@@ -13,15 +15,15 @@ import javax.annotation.Resource;
  * @NAME: Verify
  * @DATE: 2020/3/25
  **/
-public class VerifyJob implements Job {
+public class VerifyJob implements org.quartz.Job {
     @Resource
     private VerifyService verifyService;
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        /*int count = verifyService.updateVerifyStatuByvalidTime();
-        if(count>0){
-            System.out.println("已过期的验证码有："+count+"个！");
-        }*/
+        int verifyCount = verifyService.updateVerifyStatuByvalidTime();
+        if(verifyCount>0){
+            System.out.println("已过期的验证码有："+verifyCount+"个！");
+        }
     }
 }

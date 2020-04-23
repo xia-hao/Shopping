@@ -47,4 +47,16 @@ public class ProductSkuServiceImpl implements ProductSkuService {
         }
         return map;
     }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public int addProductSkuNumber(Integer id, Integer productId, Integer productStock) {
+        return productSkuMapper.addProductSkuNumber(id,productId,productStock);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public int minusProductSkuNumber(Integer id, Integer productId, Integer productStock) {
+        return productSkuMapper.minusProductSkuNumber(id,productId,productStock);
+    }
 }

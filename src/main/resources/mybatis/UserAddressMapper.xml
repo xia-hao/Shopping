@@ -17,7 +17,7 @@
     id, userId, ProvinceID, CityID, DistrictID, isDefault, detailed_address, consignee, 
     mobile, createTime
   </sql>
-  <select id="selectByIdAndUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByIdAndUserId" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from user_address

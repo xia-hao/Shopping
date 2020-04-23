@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -80,6 +81,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public int updateUserPwdByMobile(String mobile, String password) {
         return userMapper.updateUserPwdByMobile(mobile,MD5Utils.md5(password));
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public int userConsume(Integer userid, BigDecimal balance) {
+        return userMapper.userConsume(userid,balance);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public int userIncome(Integer userid, BigDecimal balance) {
+        return userMapper.userIncome(userid,balance);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)

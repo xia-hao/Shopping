@@ -1,9 +1,11 @@
 package com.shopping.domain;
 
+import com.shopping.service.UserAddressService;
 import com.shopping.utils.BaseEntity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 public class OrderInfo extends BaseEntity {
     private String orderno;
@@ -21,6 +23,28 @@ public class OrderInfo extends BaseEntity {
     private BigDecimal orderprice;
 
     private String orderstatu;
+
+    private Date deadlinetime;
+
+    private UserAddress userAddress;
+
+    private List<OrderDetail> orderDetailList;
+
+    public UserAddress getUserAddress() {
+        return userAddress;
+    }
+
+    public void setUserAddress(UserAddress userAddress) {
+        this.userAddress = userAddress;
+    }
+
+    public List<OrderDetail> getOrderDetailList() {
+        return orderDetailList;
+    }
+
+    public void setOrderDetailList(List<OrderDetail> orderDetailList) {
+        this.orderDetailList = orderDetailList;
+    }
 
     public String getOrderno() {
         return orderno;
@@ -84,5 +108,13 @@ public class OrderInfo extends BaseEntity {
 
     public void setOrderstatu(String orderstatu) {
         this.orderstatu = orderstatu == null ? null : orderstatu.trim();
+    }
+
+    public Date getDeadlinetime() {
+        return deadlinetime;
+    }
+
+    public void setDeadlinetime(Date deadlinetime) {
+        this.deadlinetime = deadlinetime;
     }
 }

@@ -17,7 +17,6 @@ public interface ShopCartService {
      */
     Map selectShopCart(ShopCart shopCart);
 
-
     /**
      * 查询需要前往结算的商品
      * @return
@@ -46,4 +45,6 @@ public interface ShopCartService {
      * @return
      */
     int updateShopCart(ShopCart shopCart);
+
+    int delShopCart(Integer userId,Integer productId,Integer skuId);
 }

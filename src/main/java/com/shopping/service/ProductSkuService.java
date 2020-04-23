@@ -1,7 +1,6 @@
 package com.shopping.service;
 
 import com.shopping.domain.ProductSku;
-
 import java.util.Map;
 
 /**
@@ -15,4 +14,8 @@ public interface ProductSkuService {
     Map getProductSkuBySpecsAndPid(ProductSku productSku);
 
     Map getProductSkuById(Integer skuid);
+
+    int addProductSkuNumber(Integer id,Integer productId,Integer productStock);
+
+    int minusProductSkuNumber(Integer id,Integer productId,Integer productStock);
 }

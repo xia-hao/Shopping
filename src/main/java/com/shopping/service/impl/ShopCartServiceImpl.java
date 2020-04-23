@@ -70,6 +70,12 @@ public class ShopCartServiceImpl implements ShopCartService {
     }
 
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public int delShopCart(Integer userId, Integer productId, Integer skuId) {
+        return shopCartMapper.delShopCart(userId,productId,skuId);
+    }
+
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public Map selectShopCart(ShopCart shopCart) {

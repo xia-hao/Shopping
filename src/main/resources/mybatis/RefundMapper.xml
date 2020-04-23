@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shopping.mapper.RefundMapper">
+  <resultMap id="BaseResultMap" type="com.shopping.domain.Refund">
+    <id column="refund_No" jdbcType="VARCHAR" property="refundNo" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="orderNo" jdbcType="VARCHAR" property="orderno" />
+    <result column="brefund_money" jdbcType="DECIMAL" property="brefundMoney" />
+    <result column="back_notice" jdbcType="VARCHAR" property="backNotice" />
+    <result column="refund_status" jdbcType="CHAR" property="refundStatus" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    refund_No, user_id, orderNo, brefund_money, back_notice, refund_status, createTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from refund
+    where refund_No = #{refundNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from refund
+    where refund_No = #{refundNo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.shopping.domain.Refund">
+    insert into refund (refund_No, user_id, orderNo, 
+      brefund_money, back_notice, refund_status, 
+      createTime)
+    values (#{refundNo,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{orderno,jdbcType=VARCHAR}, 
+      #{brefundMoney,jdbcType=DECIMAL}, #{backNotice,jdbcType=VARCHAR}, #{refundStatus,jdbcType=CHAR}, 
+      #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shopping.domain.Refund">
+    insert into refund
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="refundNo != null">
+        refund_No,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="orderno != null">
+        orderNo,
+      </if>
+      <if test="brefundMoney != null">
+        brefund_money,
+      </if>
+      <if test="backNotice != null">
+        back_notice,
+      </if>
+      <if test="refundStatus != null">
+        refund_status,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="refundNo != null">
+        #{refundNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="orderno != null">
+        #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="brefundMoney != null">
+        #{brefundMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="backNotice != null">
+        #{backNotice,jdbcType=VARCHAR},
+      </if>
+      <if test="refundStatus != null">
+        #{refundStatus,jdbcType=CHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shopping.domain.Refund">
+    update refund
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="orderno != null">
+        orderNo = #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="brefundMoney != null">
+        brefund_money = #{brefundMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="backNotice != null">
+        back_notice = #{backNotice,jdbcType=VARCHAR},
+      </if>
+      <if test="refundStatus != null">
+        refund_status = #{refundStatus,jdbcType=CHAR},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where refund_No = #{refundNo,jdbcType=VARCHAR}
+  </update>
+</mapper>
