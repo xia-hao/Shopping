@@ -83,6 +83,11 @@ export default new Router({
       component: () => import("@/page/shopCat/index")
     },
     {
+      path: '/order',
+      name: 'order',
+      component: () => import("@/page/order/index")
+    },
+    {
       path: '/fillOrderInfo',
       name: 'fillOrderInfo',
       component: () => import("@/page/shopCat/fillOrderInfo")

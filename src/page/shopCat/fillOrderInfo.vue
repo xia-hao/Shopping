@@ -198,7 +198,7 @@ export default {
         distribution: undefined,
         payway: undefined,
         orderprice: 0,
-        orderDetailsList: []
+        orderDetailList: []
       },
       wayList:[
         {title: '配送方式', items: [{id:1,name:'快递送货(全国范围)',isdefault:true},{id:2,name:'物流送货(全国范围)',isdefault:false},{id:3,name:'自行上门提货',isdefault:false}]},
@@ -217,10 +217,17 @@ export default {
             price:item.price,
             cost:item.cost
           }
-          this.orderInfo.orderDetailsList[i] = shopCart
+          this.orderInfo.orderDetailList[i] = shopCart
           i++
         })
-      addOrder(this.orderInfo)
+      addOrder(this.orderInfo).then(result => {
+        if(result.code == "1000"){
+          this.msgSuccess(result.retMsg)
+          this.$router.push({path: '/pay',query:{orderNo:result.orderNo}})
+        }else{
+          this.msgError(result.retMsg)
+        }
+      })
     },
     clickClass(index,ind,id){
       this.sel[index] = ind; //让数组sel的第index+1的元素的值等于ind
@@ -356,10 +363,6 @@ export default {
     }
   },
   mounted(){
-    /*if(this.shopCartList == '' || this.shopCartList == undefined){
-      this.$router.push({path: '/home'})
-      this.msgError("获取购物车信息失败！")
-    }*/
     for (var i= 0; i<this.wayList.length; i++){
       for (var j= 0; j<this.wayList[i].items.length; j++){
         if(this.wayList[i].items[j].isdefault == true){

@@ -22,6 +22,7 @@
           <router-link to="/shopCat" class="router-link">
             <span class="el-icon-shopping-cart-2 font-color"/> 购物车<span class="font-color">[{{cartlength}}]</span>
           </router-link>&nbsp;&nbsp;
+          <router-link to="/order" class="router-link">我的订单</router-link>&nbsp;&nbsp;
           <router-link to="/login" class="router-link">收藏夹</router-link>&nbsp;&nbsp;
           <router-link to="/help" class="router-link">帮助中心</router-link>
         </div>

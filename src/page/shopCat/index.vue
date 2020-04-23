@@ -159,7 +159,6 @@
             this.msgError("移除购物车失败！")
           }
         })
-        console.info(this.shopCartList)
       },
       collectShop(value){
         this.msgSuccess("已收藏 ‘"+value.name+"’"+value.id)

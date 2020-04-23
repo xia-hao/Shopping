@@ -48,7 +48,7 @@
         </div>
         <div class="des_join">
           <div class="j_nums">
-            数量： <el-input-number v-model="quantity" :min="1" :max="product.stock"/>
+            数量： <el-input-number v-model="quantity" :min="1" :max="200"/>
           </div>
           <div id="fl">
             <img src="static/images/j_car.png" @click="onaddcart"/>
