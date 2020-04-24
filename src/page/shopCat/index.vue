@@ -94,7 +94,8 @@
 </template>
 
 <script>
-  import {delShopCart, selectShopCart, updateShopCart} from "../../api/shopCart";
+  import {addCollectible, delShopCart, selectShopCart, updateShopCart} from "../../api/shopCart";
+  import router from "../../router";
 
   export default {
     name: "index",
@@ -160,11 +161,24 @@
           }
         })
       },
-      collectShop(value){
-        this.msgSuccess("已收藏 ‘"+value.name+"’"+value.id)
+      collectShop(shopCart){
+        this.$confirm('收藏后选中的商品将不在购物车显示！', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          addCollectible(shopCart).then(result => {
+            if(result.code == "1000"){
+              this.msgSuccess("收藏成功！")
+              this.getselectShopCart()
+            }else{
+              this.msgError("收藏失败！")
+            }
+          })
+        });
       },
       batchDel(){
-        var i = 0
+        let i = 0;
         this.shopCartList.forEach(shopCat => {
           if(shopCat.isselected == true){
             delShopCart(shopCat.id)
@@ -173,23 +187,31 @@
         })
         if(i>0){
           this.msgSuccess("批量移除成功！")
-          this.getselectShopCart()
         }else{
-          this.msgSuccess("批量移除失败！")
+          this.msgError("批量移除失败！")
         }
+        this.getselectShopCart()
       },
       batchCollect(){
-        var i = 0
-        this.shopCartList.forEach(shopCat => {
-          if(shopCat.isselected == true){
-            i++;
+        let i = 0;
+        this.$confirm('收藏后选中的商品将不在购物车显示！', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.shopCartList.forEach(shopCat => {
+            if(shopCat.isselected == true){
+              addCollectible(shopCat)
+              i++
+            }
+          })
+          if(i>0){
+            this.msgSuccess("收藏成功！")
+          }else{
+            this.msgError("收藏失败！")
           }
-        })
-        if(i>0){
-          this.msgSuccess("收藏成功！")
-        }else{
-          this.msgError("收藏失败！")
-        }
+          this.getselectShopCart()
+        });
       },
       changeNumber(row){
         this.reset()
@@ -199,9 +221,19 @@
         updateShopCart(this.shopCat)
       },
       getselectShopCart(){
+        this.shopCartList = []
+        this.shopCatCount = 0
         selectShopCart().then(result => {
-          this.shopCartList = result.shopCartList
-          this.shopCatCount = result.shopCatCount
+          console.info(result)
+          if(result.code == "1000"){
+            if(result.shopCatCount>0){
+              this.shopCartList = result.shopCartList
+              this.shopCatCount = result.shopCatCount
+            }else{
+              this.shopCartList = []
+              this.shopCatCount = 0
+            }
+          }
         })
       }
     },

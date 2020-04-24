@@ -86,6 +86,10 @@ export default new Router({
       path: '/order',
       name: 'order',
       component: () => import("@/page/order/index")
+    },{
+      path: '/collectible',
+      name: 'collectible',
+      component: () => import("@/page/collectible/index")
     },
     {
       path: '/fillOrderInfo',

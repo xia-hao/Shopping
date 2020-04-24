@@ -25,6 +25,13 @@ export function addShopCart(shopCart) {
     data: shopCart
   })
 }
+export function addCollectible(shopCart) {
+  return request({
+    url: '/shopCart/addCollectible',
+    method: 'post',
+    data: shopCart
+  })
+}
 export function delShopCart(id) {
   return request({
     url: '/shopCart/del/'+id,

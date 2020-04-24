@@ -52,9 +52,11 @@
           </div>
           <div id="fl">
             <img src="static/images/j_car.png" @click="onaddcart"/>
-            <span class="btn">
-                <el-button @click="collect" size="mini">收藏</el-button>
-                <el-button @click="collect" size="mini">分享</el-button>
+            <span class="btn" v-if="!collectible">
+                <el-button @click="addcollect" size="mini">收藏</el-button>
+            </span>
+            <span class="btn" v-else>
+                <el-button @click="delcollect" size="mini">已收藏</el-button>
             </span>
           </div>
         </div>
@@ -89,6 +91,7 @@
   import {BySpecsAndPid} from "../../api/productSku";
   import {addShopCart, getCount} from "../../api/shopCart";
   import PubSub from 'pubsub-js'
+  import {add, del, get} from "../../api/collectible";
 
   export default {
     name: "productDeatil",
@@ -112,7 +115,8 @@
           productid: undefined,
           productspecs:''
         },
-        shopCat:{}
+        shopCat:{},
+        collectible: undefined
       }
     },
     methods: {
@@ -169,13 +173,29 @@
               this.msgError("添加购物车失败！")
             }
           })
-          console.info(this.shopCat)
         }else{
           this.msgError('请选择规模！')
         }
       },
-      collect(){
-        this.msgSuccess("收藏成功");
+      addcollect(){
+        add(this.id).then(result => {
+          if(result.code == "1000"){
+            this.msgSuccess(result.retMsg)
+            this.getCollectible()
+          }else{
+            this.msgError(result.retMsg)
+          }
+        })
+      },
+      delcollect(){
+        del(this.id).then(result => {
+          if(result.code == "1000"){
+            this.msgSuccess(result.retMsg)
+            this.getCollectible()
+          }else{
+            this.msgError(result.retMsg)
+          }
+        })
       },
       getSlideShow(){
         slideShowlist(this.slideShow).then(response => {
@@ -186,11 +206,21 @@
         this.product.defaultspecs.forEach(item => {
           this.clickClass(item.titleIndex,item.itemsIndex,this.product.attributelist[item.titleIndex])
         })
+      },
+      getCollectible(){
+        get(this.id).then(result => {
+          if(result.code == "1000"){
+            this.collectible = result.collectible
+          }else{
+            this.collectible = undefined
+          }
+        })
       }
     },
     created() {
       this.$router.push({path: '/productDeatilImage',query: {id:this.id}})
       this.getProductById();
+      this.getCollectible();
       this.getSlideShow();
     }
   }
@@ -319,7 +349,7 @@
   .btn{
     margin-top: 10px;
     float: right;
-    margin-right: 80px;
+    margin-right: 120px;
   }
   .btn button{
     margin: auto;
