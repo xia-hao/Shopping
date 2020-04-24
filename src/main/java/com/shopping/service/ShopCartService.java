@@ -33,6 +33,13 @@ public interface ShopCartService {
      * @return
      */
     Map addShopCart(ShopCart shopCart);
+
+    /***
+     * 收藏
+     * @param shopCart
+     * @return
+     */
+    Map addCollectible(ShopCart shopCart);
     /***
      * 移除购物车
      * @return

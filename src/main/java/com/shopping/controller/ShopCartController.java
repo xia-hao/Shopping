@@ -48,4 +48,9 @@ public class ShopCartController {
     public int getCount(){
         return shopCartService.getShopCartCount();
     }
+
+    @PostMapping("/addCollectible")
+    public Map addCollectible(@RequestBody ShopCart shopCart){
+        return shopCartService.addCollectible(shopCart);
+    }
 }

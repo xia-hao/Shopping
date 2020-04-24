@@ -78,8 +78,12 @@ public class ShiroConfig {
         filterMap.put("/loginOut","anon");
         filterMap.put("/discuss/list","anon");
         filterMap.put("/shopCart/getCount","anon");
+        filterMap.put("/collectible/get/*","anon");
         filterMap.put("/discuss/**","authc");
         filterMap.put("/district/**","authc");
+        filterMap.put("/payMent/**","authc");
+        filterMap.put("/refund/**","authc");
+        filterMap.put("/collectible/**","authc");
         filterMap.put("/order/**","authc");
         filterMap.put("/shopCart/**","authc");
         filterMap.put("/userAddress/**","authc");

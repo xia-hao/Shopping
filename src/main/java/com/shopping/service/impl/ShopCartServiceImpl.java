@@ -1,9 +1,12 @@
 package com.shopping.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.shopping.domain.Collectible;
 import com.shopping.domain.ShopCart;
 import com.shopping.domain.User;
+import com.shopping.mapper.CollectibleMapper;
 import com.shopping.mapper.ShopCartMapper;
+import com.shopping.service.CollectibleService;
 import com.shopping.service.ShopCartService;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
@@ -27,26 +30,28 @@ import java.util.Map;
 public class ShopCartServiceImpl implements ShopCartService {
     @Resource
     private ShopCartMapper shopCartMapper;
+    @Resource
+    private CollectibleService collectibleService;
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public Map addShopCart(ShopCart shopCart) {
-        Map<String,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         shopCart.setUserid(user.getUserid());
         shopCart.setCreatetime(new Date());
         ShopCart result = shopCartMapper.getShopCartByUidAndPidAndSkuid(shopCart);
-        map.put("code","901");
-        if(null != result){ // 判断是不是同一个商品，如果商品相同则叠加数量
-            result.setNumber(shopCart.getNumber()+result.getNumber());
+        map.put("code", "901");
+        if (null != result) { // 判断是不是同一个商品，如果商品相同则叠加数量
+            result.setNumber(shopCart.getNumber() + result.getNumber());
             BigDecimal bigDecimal = new BigDecimal(result.getNumber());
             result.setCost(bigDecimal.multiply(result.getPrice()));
-            if(updateShopCart(result)>0){
-                map.put("code","1000");
+            if (updateShopCart(result) > 0) {
+                map.put("code", "1000");
             }
-        }else{
-            if(shopCartMapper.insertSelective(shopCart)>0){
-                map.put("code","1000");
+        } else {
+            if (shopCartMapper.insertSelective(shopCart) > 0) {
+                map.put("code", "1000");
             }
         }
         return map;
@@ -54,11 +59,32 @@ public class ShopCartServiceImpl implements ShopCartService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
+    public Map addCollectible(ShopCart shopCart) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", "901");
+        if (delShopCart(shopCart.getId()).get("code").equals("1000")) {
+            if(collectibleService.getCollectible(shopCart.getProductid()).get("code").equals("1000")){
+                collectibleService.delCollectible(shopCart.getProductid());
+            }
+            Collectible collectible = new Collectible();
+            collectible.setProductid(shopCart.getProductid());
+            if (collectibleService.addCollectible(collectible).get("code").equals("1000")) {
+                map.put("code", "1000");
+            }
+        }
+        if(!map.get("code").equals("1000")){
+            throw new RuntimeException();
+        }
+        return map;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
     public Map delShopCart(Integer id) {
-        Map<String,Object> map = new HashMap<>();
-        map.put("code","901");
-        if(shopCartMapper.deleteByPrimaryKey(id)>0){
-            map.put("code","1000");
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", "901");
+        if (shopCartMapper.deleteByPrimaryKey(id) > 0) {
+            map.put("code", "1000");
         }
         return map;
     }
@@ -73,28 +99,32 @@ public class ShopCartServiceImpl implements ShopCartService {
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public int delShopCart(Integer userId, Integer productId, Integer skuId) {
-        return shopCartMapper.delShopCart(userId,productId,skuId);
+        return shopCartMapper.delShopCart(userId, productId, skuId);
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public Map selectShopCart(ShopCart shopCart) {
-        Map<String,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         //PageHelper.startPage(shopCart.getPageNo(),shopCart.getPageSize());
         List<ShopCart> shopCartList = shopCartMapper.selectShopCartByUid(user.getUserid());
-        map.put("shopCartList",shopCartList);
-        map.put("shopCatCount",shopCartMapper.getShopCartCount(user.getUserid()));
+        map.put("code", "901");
+        if(!shopCartList.isEmpty()){
+            map.put("code", "1000");
+            map.put("shopCartList", shopCartList);
+            map.put("shopCatCount", shopCartMapper.getShopCartCount(user.getUserid()));
+        }
         return map;
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public Map selectShopCartByIsSelected() {
-        Map<String,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         List<ShopCart> shopCartList = shopCartMapper.selectShopCartByIsSelected(user.getUserid());
-        map.put("shopCartList",shopCartList);
+        map.put("shopCartList", shopCartList);
         return map;
     }
 
@@ -103,7 +133,7 @@ public class ShopCartServiceImpl implements ShopCartService {
     public int getShopCartCount() {
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         int count = 0;
-        if(null != user){
+        if (null != user) {
             count = shopCartMapper.getShopCartCount(user.getUserid());
         }
         return count;

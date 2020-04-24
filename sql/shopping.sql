@@ -47,7 +47,7 @@ CREATE TABLE `dictionary` (
   `dict_type` varchar(225) NOT NULL COMMENT '字典类型',
   `status` int(10) NOT NULL DEFAULT '0' COMMENT '字典状态（0.启用 1.禁用）',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 
 /*Data for the table `dictionary` */
 
@@ -152,6 +152,8 @@ CREATE TABLE `order_detail` (
 
 /*Data for the table `order_detail` */
 
+insert  into `order_detail`(`orderNo`,`productId`,`skuId`,`number`,`price`,`cost`,`is_refund`,`createTime`) values ('DD3AD81C533A46FA919FCDC007729D75',744,4,1,'896.00','896.00','1','2020-04-23 20:53:33'),('83838D54A9FC47A4B98D54B1DCCCA553',744,4,1,'896.00','896.00','1','2020-04-23 20:54:10'),('CF245D7E00334F8CBCE861F93FB9FF48',744,4,1,'896.00','896.00','1','2020-04-23 20:55:56');
+
 /*Table structure for table `order_info` */
 
 DROP TABLE IF EXISTS `order_info`;
@@ -170,11 +172,13 @@ CREATE TABLE `order_info` (
   PRIMARY KEY (`orderNo`),
   KEY `FK_order_info` (`user_address_id`),
   KEY `FK_order_info2` (`userId`),
-  CONSTRAINT `FK_order_info2` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`),
-  CONSTRAINT `FK_order_info` FOREIGN KEY (`user_address_id`) REFERENCES `user_address` (`id`)
+  CONSTRAINT `FK_order_info` FOREIGN KEY (`user_address_id`) REFERENCES `user_address` (`id`),
+  CONSTRAINT `FK_order_info2` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `order_info` */
+
+insert  into `order_info`(`orderNo`,`userId`,`loginName`,`user_address_id`,`distribution`,`payWay`,`orderPrice`,`orderStatu`,`deadlineTime`,`createTime`) values ('83838D54A9FC47A4B98D54B1DCCCA553',1,'admin',1,'1','2','896.00','6','2020-04-23 21:09:10','2020-04-23 20:54:10'),('CF245D7E00334F8CBCE861F93FB9FF48',1,'admin',1,'1','2','896.00','6','2020-04-23 21:10:56','2020-04-23 20:55:56'),('DD3AD81C533A46FA919FCDC007729D75',1,'admin',1,'1','2','896.00','6','2020-04-23 21:08:33','2020-04-23 20:53:33');
 
 /*Table structure for table `payment` */
 
@@ -191,6 +195,8 @@ CREATE TABLE `payment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `payment` */
+
+insert  into `payment`(`userId`,`loginName`,`orderNo`,`cost`,`payStatu`,`payType`,`createTime`) values (1,'admin','DD3AD81C533A46FA919FCDC007729D75','896.00','2','1','2020-04-23 20:53:34'),(1,'admin','83838D54A9FC47A4B98D54B1DCCCA553','896.00','2','1','2020-04-23 20:54:11'),(1,'admin','CF245D7E00334F8CBCE861F93FB9FF48','896.00','2','2','2020-04-23 20:57:32');
 
 /*Table structure for table `product` */
 
@@ -277,6 +283,8 @@ CREATE TABLE `refund` (
 
 /*Data for the table `refund` */
 
+insert  into `refund`(`refund_No`,`user_id`,`orderNo`,`brefund_money`,`back_notice`,`refund_status`,`createTime`) values ('2BC7B5493DA349F49D676D08AED8230F',1,'83838D54A9FC47A4B98D54B1DCCCA553','896.00','买错了','2','2020-04-23 20:54:21'),('6FADA3247FE24D8BB329B8807469F966',1,'DD3AD81C533A46FA919FCDC007729D75','896.00','信息填写错误','2','2020-04-23 20:53:40'),('A6B4A69C47FF4EF58CBDBE15B3E0505F',1,'CF245D7E00334F8CBCE861F93FB9FF48','896.00','钱包没钱了','2','2020-04-23 20:58:01');
+
 /*Table structure for table `shop_cart` */
 
 DROP TABLE IF EXISTS `shop_cart`;
@@ -293,7 +301,7 @@ CREATE TABLE `shop_cart` (
   `isSelected` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否前往结算(1代表TRUE,0代表FALSE)',
   `createTime` datetime NOT NULL COMMENT '购物车时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `shop_cart` */
 
@@ -406,6 +414,8 @@ CREATE TABLE `user_dealrecord` (
 
 /*Data for the table `user_dealrecord` */
 
+insert  into `user_dealrecord`(`userId`,`productName`,`number`,`price`,`userPrice`,`createTime`) values (1,'华为2566',1,'-896.00','9104.00','2020-04-23 20:53:34'),(1,'华为2566',1,'896.00','10000.00','2020-04-23 20:53:40'),(1,'华为2566',1,'-896.00','9104.00','2020-04-23 20:54:11'),(1,'华为2566',1,'896.00','10000.00','2020-04-23 20:54:21'),(1,'华为2566',1,'-896.00','9104.00','2020-04-23 20:57:32'),(1,'华为2566',1,'896.00','10000.00','2020-04-23 20:58:01');
+
 /*Table structure for table `user_product_collectible` */
 
 DROP TABLE IF EXISTS `user_product_collectible`;
@@ -414,7 +424,8 @@ CREATE TABLE `user_product_collectible` (
   `userId` int(10) NOT NULL COMMENT '用户ID',
   `loginName` varchar(225) NOT NULL COMMENT '账号名',
   `productId` int(10) NOT NULL COMMENT '商品ID',
-  `createTime` datetime NOT NULL COMMENT '收藏时间'
+  `createTime` datetime NOT NULL COMMENT '收藏时间',
+  UNIQUE KEY `productId` (`productId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `user_product_collectible` */
