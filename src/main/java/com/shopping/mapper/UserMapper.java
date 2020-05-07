@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Param;
 import java.math.BigDecimal;
 
 public interface UserMapper {
-
     int deleteByPrimaryKey(Integer userid);
 
     int insert(User user);
@@ -21,7 +20,7 @@ public interface UserMapper {
 
     int updateUserFreezing();
 
-    int updateUserPwdByMobile(@Param("mobile")String mobile, @Param("password")String PASSWORD);
+    int updateUserPwdByMobile(@Param("mobile")String mobile, @Param("password")String password);
 
     int updateLoginNameByMobile(@Param("loginname")String loginname,@Param("mobile")String mobile);
 
@@ -36,4 +35,8 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User user);
 
     int updateByPrimaryKey(User user);
+
+    int updateMobile(User user);
+
+    int updatePwd(User user);
 }

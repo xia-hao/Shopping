@@ -14,7 +14,9 @@ public class User extends BaseEntity {
 
     private String password;
 
-    private Integer sex;
+    private String sex;
+
+    private String img;
 
     private BigDecimal balance;
 
@@ -34,9 +36,11 @@ public class User extends BaseEntity {
 
     private Date freezingtime;
 
-    private String code;            //验证码
-    private String noteCode;        //短信验证码
+    private String code;
 
+    private String noteCode;
+
+    private String newMobile;
 
     public String getCode() {
         return code;
@@ -52,6 +56,14 @@ public class User extends BaseEntity {
 
     public void setNoteCode(String noteCode) {
         this.noteCode = noteCode;
+    }
+
+    public String getNewMobile() {
+        return newMobile;
+    }
+
+    public void setNewMobile(String newMobile) {
+        this.newMobile = newMobile;
     }
 
     public Integer getUserid() {
@@ -86,12 +98,20 @@ public class User extends BaseEntity {
         this.password = password == null ? null : password.trim();
     }
 
-    public Integer getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(Integer sex) {
-        this.sex = sex;
+    public void setSex(String sex) {
+        this.sex = sex == null ? null : sex.trim();
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img == null ? null : img.trim();
     }
 
     public BigDecimal getBalance() {

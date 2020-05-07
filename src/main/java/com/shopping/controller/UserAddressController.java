@@ -48,4 +48,8 @@ public class UserAddressController {
     public Map updateUserAddressIsDefault(@PathVariable Integer id){
         return userAddressService.updateUserAddressIsDefault(id);
     }
+    @GetMapping("/delUserAddress/{id}")
+    public Map delUserAddress(@PathVariable Integer id){
+        return userAddressService.delUserAddress(id);
+    }
 }

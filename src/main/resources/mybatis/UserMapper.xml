@@ -1,202 +1,213 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shopping.mapper.UserMapper">
-    <resultMap id="BaseResultMap" type="com.shopping.domain.User">
-        <id column="userId" jdbcType="INTEGER" property="userid"/>
-        <result column="loginName" jdbcType="VARCHAR" property="loginname"/>
-        <result column="userName" jdbcType="VARCHAR" property="username"/>
-        <result column="password" jdbcType="VARCHAR" property="password"/>
-        <result column="sex" jdbcType="INTEGER" property="sex"/>
-        <result column="balance" jdbcType="DECIMAL" property="balance"/>
-        <result column="identityType" jdbcType="VARCHAR" property="identitytype"/>
-        <result column="identityCode" jdbcType="VARCHAR" property="identitycode"/>
-        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
-        <result column="type" jdbcType="INTEGER" property="type"/>
-        <result column="pwdErrorCount" jdbcType="INTEGER" property="pwderrorcount"/>
-        <result column="statu" jdbcType="CHAR" property="statu"/>
-        <result column="freezelimit" jdbcType="INTEGER" property="freezelimit"/>
-        <result column="freezingTime" jdbcType="TIMESTAMP" property="freezingtime"/>
-        <result column="createTime" jdbcType="TIMESTAMP" property="createtime"/>
-    </resultMap>
-    <sql id="Base_Column_List">
-    userId, loginName, userName, password, sex, balance, identityType, identityCode,
+  <resultMap id="BaseResultMap" type="com.shopping.domain.User">
+    <id column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="loginName" jdbcType="VARCHAR" property="loginname" />
+    <result column="userName" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="sex" jdbcType="CHAR" property="sex" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
+    <result column="balance" jdbcType="DECIMAL" property="balance" />
+    <result column="identityType" jdbcType="VARCHAR" property="identitytype" />
+    <result column="identityCode" jdbcType="VARCHAR" property="identitycode" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="pwdErrorCount" jdbcType="INTEGER" property="pwderrorcount" />
+    <result column="statu" jdbcType="CHAR" property="statu" />
+    <result column="freezelimit" jdbcType="INTEGER" property="freezelimit" />
+    <result column="freezingTime" jdbcType="TIMESTAMP" property="freezingtime" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    userId, loginName, userName, password, sex, img, balance, identityType, identityCode, 
     mobile, type, pwdErrorCount, statu, freezelimit, freezingTime, createTime
   </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from user
-        where userId = #{userid,jdbcType=INTEGER}
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where userId = #{userid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user
     where userId = #{userid,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="com.shopping.domain.User">
-    insert into user (userId, loginName, userName,
-      password, sex, balance,
-      identityType, identityCode, mobile,
-      type, pwdErrorCount, statu,
+  <insert id="insert" parameterType="com.shopping.domain.User">
+    insert into user (userId, loginName, userName, 
+      password, sex, img, balance, 
+      identityType, identityCode, mobile, 
+      type, pwdErrorCount, statu, 
       freezelimit, freezingTime, createTime
       )
-    values (#{userid,jdbcType=INTEGER}, #{loginname,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
-      #{password,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{balance,jdbcType=DECIMAL},
-      #{identitytype,jdbcType=VARCHAR}, #{identitycode,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR},
-      #{type,jdbcType=INTEGER}, #{pwderrorcount,jdbcType=INTEGER}, #{statu,jdbcType=CHAR},
+    values (#{userid,jdbcType=INTEGER}, #{loginname,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, #{img,jdbcType=VARCHAR}, #{balance,jdbcType=DECIMAL}, 
+      #{identitytype,jdbcType=VARCHAR}, #{identitycode,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{pwderrorcount,jdbcType=INTEGER}, #{statu,jdbcType=CHAR}, 
       #{freezelimit,jdbcType=INTEGER}, #{freezingtime,jdbcType=TIMESTAMP}, #{createtime,jdbcType=TIMESTAMP}
       )
   </insert>
-    <insert id="insertSelective" parameterType="com.shopping.domain.User">
-        insert into user
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="userid != null">
-                userId,
-            </if>
-            <if test="loginname != null">
-                loginName,
-            </if>
-            <if test="username != null">
-                userName,
-            </if>
-            <if test="password != null">
-                password,
-            </if>
-            <if test="sex != null">
-                sex,
-            </if>
-            <if test="balance != null">
-                balance,
-            </if>
-            <if test="identitytype != null">
-                identityType,
-            </if>
-            <if test="identitycode != null">
-                identityCode,
-            </if>
-            <if test="mobile != null">
-                mobile,
-            </if>
-            <if test="type != null">
-                type,
-            </if>
-            <if test="pwderrorcount != null">
-                pwdErrorCount,
-            </if>
-            <if test="statu != null">
-                statu,
-            </if>
-            <if test="freezelimit != null">
-                freezelimit,
-            </if>
-            <if test="freezingtime != null">
-                freezingTime,
-            </if>
-            <if test="createtime != null">
-                createTime,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="userid != null">
-                #{userid,jdbcType=INTEGER},
-            </if>
-            <if test="loginname != null">
-                #{loginname,jdbcType=VARCHAR},
-            </if>
-            <if test="username != null">
-                #{username,jdbcType=VARCHAR},
-            </if>
-            <if test="password != null">
-                #{password,jdbcType=VARCHAR},
-            </if>
-            <if test="sex != null">
-                #{sex,jdbcType=INTEGER},
-            </if>
-            <if test="balance != null">
-                #{balance,jdbcType=DECIMAL},
-            </if>
-            <if test="identitytype != null">
-                #{identitytype,jdbcType=VARCHAR},
-            </if>
-            <if test="identitycode != null">
-                #{identitycode,jdbcType=VARCHAR},
-            </if>
-            <if test="mobile != null">
-                #{mobile,jdbcType=VARCHAR},
-            </if>
-            <if test="type != null">
-                #{type,jdbcType=INTEGER},
-            </if>
-            <if test="pwderrorcount != null">
-                #{pwderrorcount,jdbcType=INTEGER},
-            </if>
-            <if test="statu != null">
-                #{statu,jdbcType=CHAR},
-            </if>
-            <if test="freezelimit != null">
-                #{freezelimit,jdbcType=INTEGER},
-            </if>
-            <if test="freezingtime != null">
-                #{freezingtime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="createtime != null">
-                #{createtime,jdbcType=TIMESTAMP},
-            </if>
-        </trim>
-    </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.shopping.domain.User">
-        update user
-        <set>
-            <if test="loginname != null">
-                loginName = #{loginname,jdbcType=VARCHAR},
-            </if>
-            <if test="username != null">
-                userName = #{username,jdbcType=VARCHAR},
-            </if>
-            <if test="password != null">
-                password = #{password,jdbcType=VARCHAR},
-            </if>
-            <if test="sex != null">
-                sex = #{sex,jdbcType=INTEGER},
-            </if>
-            <if test="balance != null">
-                balance = #{balance,jdbcType=DECIMAL},
-            </if>
-            <if test="identitytype != null">
-                identityType = #{identitytype,jdbcType=VARCHAR},
-            </if>
-            <if test="identitycode != null">
-                identityCode = #{identitycode,jdbcType=VARCHAR},
-            </if>
-            <if test="mobile != null">
-                mobile = #{mobile,jdbcType=VARCHAR},
-            </if>
-            <if test="type != null">
-                type = #{type,jdbcType=INTEGER},
-            </if>
-            <if test="pwderrorcount != null">
-                pwdErrorCount = #{pwderrorcount,jdbcType=INTEGER},
-            </if>
-            <if test="statu != null">
-                statu = #{statu,jdbcType=CHAR},
-            </if>
-            <if test="freezelimit != null">
-                freezelimit = #{freezelimit,jdbcType=INTEGER},
-            </if>
-            <if test="freezingtime != null">
-                freezingTime = #{freezingtime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="createtime != null">
-                createTime = #{createtime,jdbcType=TIMESTAMP},
-            </if>
-        </set>
-        where userId = #{userid,jdbcType=INTEGER}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="com.shopping.domain.User">
+  <insert id="insertSelective" parameterType="com.shopping.domain.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="loginname != null">
+        loginName,
+      </if>
+      <if test="username != null">
+        userName,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="img != null">
+        img,
+      </if>
+      <if test="balance != null">
+        balance,
+      </if>
+      <if test="identitytype != null">
+        identityType,
+      </if>
+      <if test="identitycode != null">
+        identityCode,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="pwderrorcount != null">
+        pwdErrorCount,
+      </if>
+      <if test="statu != null">
+        statu,
+      </if>
+      <if test="freezelimit != null">
+        freezelimit,
+      </if>
+      <if test="freezingtime != null">
+        freezingTime,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="loginname != null">
+        #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=CHAR},
+      </if>
+      <if test="img != null">
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="identitytype != null">
+        #{identitytype,jdbcType=VARCHAR},
+      </if>
+      <if test="identitycode != null">
+        #{identitycode,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="pwderrorcount != null">
+        #{pwderrorcount,jdbcType=INTEGER},
+      </if>
+      <if test="statu != null">
+        #{statu,jdbcType=CHAR},
+      </if>
+      <if test="freezelimit != null">
+        #{freezelimit,jdbcType=INTEGER},
+      </if>
+      <if test="freezingtime != null">
+        #{freezingtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shopping.domain.User">
+    update user
+    <set>
+      <if test="loginname != null">
+        loginName = #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        userName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=CHAR},
+      </if>
+      <if test="img != null">
+        img = #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        balance = #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="identitytype != null">
+        identityType = #{identitytype,jdbcType=VARCHAR},
+      </if>
+      <if test="identitycode != null">
+        identityCode = #{identitycode,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="pwderrorcount != null">
+        pwdErrorCount = #{pwderrorcount,jdbcType=INTEGER},
+      </if>
+      <if test="statu != null">
+        statu = #{statu,jdbcType=CHAR},
+      </if>
+      <if test="freezelimit != null">
+        freezelimit = #{freezelimit,jdbcType=INTEGER},
+      </if>
+      <if test="freezingtime != null">
+        freezingTime = #{freezingtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where userId = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shopping.domain.User">
     update user
     set loginName = #{loginname,jdbcType=VARCHAR},
       userName = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=INTEGER},
+      sex = #{sex,jdbcType=CHAR},
+      img = #{img,jdbcType=VARCHAR},
       balance = #{balance,jdbcType=DECIMAL},
       identityType = #{identitytype,jdbcType=VARCHAR},
       identityCode = #{identitycode,jdbcType=VARCHAR},
@@ -209,9 +220,19 @@
       createTime = #{createtime,jdbcType=TIMESTAMP}
     where userId = #{userid,jdbcType=INTEGER}
   </update>
+  <update id="updateMobile" parameterType="com.shopping.domain.User">
+    update user
+    set mobile = #{mobile,jdbcType=VARCHAR}
+    where userId = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updatePwd" parameterType="com.shopping.domain.User">
+    update user
+    set password = #{password,jdbcType=VARCHAR}
+    where userId = #{userid,jdbcType=INTEGER}
+  </update>
     <select id="getUserByLoginNameOrMobile" parameterType="string" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List" />
         from user
         where loginname = #{loginname}
         or mobile=#{loginname}

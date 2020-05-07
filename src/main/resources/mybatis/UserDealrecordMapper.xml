@@ -9,6 +9,16 @@
     <result column="userPrice" jdbcType="DECIMAL" property="userprice" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
   </resultMap>
+  <select id="selectUserDealrecord" resultMap="BaseResultMap">
+    select * from user_dealrecord
+    where userId = #{userid}
+    order by createTime desc
+  </select>
+  <select id="getUserDealrecordCount" resultType="integer">
+    select count(1) from user_dealrecord
+    where userId = #{userid}
+    order by createTime desc
+  </select>
   <insert id="insert" parameterType="com.shopping.domain.UserDealrecord">
     insert into user_dealrecord (userId, productName, number, 
       price, userPrice, createTime

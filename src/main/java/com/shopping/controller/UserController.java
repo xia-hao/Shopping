@@ -5,11 +5,15 @@ import com.shopping.domain.Verify;
 import com.shopping.service.UserService;
 import com.shopping.service.VerifyService;
 import com.shopping.utils.Constant;
+import com.shopping.utils.utils.MD5Utils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.*;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,11 +26,68 @@ public class UserController {
     @Resource
     private VerifyService verifyService;
 
-    @PostMapping("/userinfo")
-    public Map userinfo() {
+    @PostMapping("/getUser")
+    public Map getUser() {
         Map<String, Object> map = new HashMap<>();
         map.put("user", (User) SecurityUtils.getSubject().getPrincipal());
         return map;
+    }
+
+    @PostMapping("/getUserInfo")
+    public Map getUserInfo() {
+        Map<String, Object> map = new HashMap<>();
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        map.put("user", userService.getUserById(user.getUserid()));
+        return map;    }
+
+    @GetMapping("/ifPassword/{password}")
+    public Map ifPassword(@PathVariable String password) {
+        Map<String, Object> map = new HashMap<>();
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        map.put("code", "901");
+        if (user.getPassword().equals(MD5Utils.md5(password))) {
+            map.put("code", "1000");
+        }
+        return map;
+    }
+
+    @PostMapping("/update")
+    public Map update(@RequestBody User user) {
+        return userService.update(user);
+    }
+
+    @PostMapping("/updatePwd")
+    public Map updatePwd(@RequestBody User user) {
+        return userService.updatePwd(user);
+    }
+
+    @PostMapping("/updateMobile")
+    public Map updateMobile(@RequestBody User user, HttpServletRequest request) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", "901");
+        if (null != user.getMobile()) {
+            Verify verify = new Verify();
+            verify.setSessionid(request.getSession().getId());
+            verify.setNotecode(user.getNoteCode());
+            verify.setMobile(user.getMobile());
+            if (null == verifyService.getVerifyByNoteCode(verify)) {
+                map.put("retMsg", "短信验证码错误！");
+            } else {
+                verify.setStatu(Constant.VERIFY_STATU_END);
+                if (verifyService.updateVerifyStatu(verify) > 0) {
+                    map.put("code", "1000");
+                }
+            }
+        }
+        if (map.get("code").equals("901")) {
+            return map;
+        }
+        return userService.updateMobile(user);
+    }
+
+    @PostMapping("/updateUserImage")
+    public Map updateUserImage(@RequestBody MultipartFile file) {
+        return userService.updateUserImage(file);
     }
 
     @PostMapping("/ifLoginNameExist")
@@ -66,47 +127,39 @@ public class UserController {
     @PostMapping("/findLoginNameOrPwd")
     public Map findLoginName(@RequestBody User user, HttpServletRequest request) {
         Map<String, Object> map = new HashMap<>();
-        map.put("retCode","906");
+        map.put("retCode", "906");
         Verify verify = new Verify();
         verify.setSessionid(request.getSession().getId());
         verify.setNotecode(user.getNoteCode());
         verify.setMobile(user.getMobile());
-        if(null == verifyService.getVerifyByNoteCode(verify)){
-            map.put("retMsg","短信验证码错误！");
+        if (null == verifyService.getVerifyByNoteCode(verify)) {
+            map.put("retMsg", "短信验证码错误！");
             return map;
         }
-        if(!user.getCode().equals(request.getSession().getAttribute("rightCode"))){
-            map.put("retMsg","验证码错误！");
+        if (!user.getCode().equals(request.getSession().getAttribute("rightCode"))) {
+            map.put("retMsg", "验证码错误！");
             return map;
         }
-        map.put("url","/login");
-        if(null != user.getLoginname()){
-            if(userService.updateLoginNameByMobile(user.getLoginname(),user.getMobile())>0){
-                Verify verify1 = new Verify();
-                verify1.setStatu(Constant.VERIFY_STATU_END);
-                verify1.setNotecode(user.getNoteCode());
-                verify1.setSessionid(request.getSession().getId());
-                verify1.setMobile(user.getMobile());
-                verifyService.updateVerifyStatu(verify1);
+        map.put("url", "/login");
+        if (null != user.getLoginname()) {
+            if (userService.updateLoginNameByMobile(user.getLoginname(), user.getMobile()) > 0) {
+                verify.setStatu(Constant.VERIFY_STATU_END);
+                verifyService.updateVerifyStatu(verify);
                 map.put("retCode", "1000");
-                map.put("retMsg","找回账号成功！新的账号为："+user.getLoginname());
+                map.put("retMsg", "找回账号成功！新的账号为：" + user.getLoginname());
                 return map;
             }
-            map.put("retMsg","找回账号失败！");
+            map.put("retMsg", "找回账号失败！");
         }
-        if(null != user.getPassword()){
-            if(userService.updateUserPwdByMobile(user.getMobile(),user.getPassword())>0){
-                Verify verify1 = new Verify();
-                verify1.setStatu(Constant.VERIFY_STATU_END);
-                verify1.setNotecode(user.getNoteCode());
-                verify1.setSessionid(request.getSession().getId());
-                verify1.setMobile(user.getMobile());
-                verifyService.updateVerifyStatu(verify1);
+        if (null != user.getPassword()) {
+            if (userService.updateUserPwdByMobile(user.getMobile(), user.getPassword()) > 0) {
+                verify.setStatu(Constant.VERIFY_STATU_END);
+                verifyService.updateVerifyStatu(verify);
                 map.put("retCode", "1000");
-                map.put("retMsg","找回密码成功！新的密码为："+user.getPassword());
+                map.put("retMsg", "找回密码成功！新的密码为：" + user.getPassword());
                 return map;
             }
-            map.put("retMsg","找回密码失败！");
+            map.put("retMsg", "找回密码失败！");
         }
         return map;
     }

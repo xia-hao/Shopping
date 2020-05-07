@@ -1,6 +1,9 @@
 package com.shopping.service;
 
+import com.shopping.domain.User;
 import com.shopping.domain.UserDealrecord;
+
+import java.util.Map;
 
 /**
  * @PACKAGE_NAME: com.shopping.service
@@ -10,4 +13,6 @@ import com.shopping.domain.UserDealrecord;
  **/
 public interface UserDealrecordService {
     int adduserDealrecord(UserDealrecord userDealrecord);
+
+    Map selectUserDealrecord(UserDealrecord userDealrecord);
 }

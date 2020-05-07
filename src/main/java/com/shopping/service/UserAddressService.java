@@ -22,6 +22,8 @@ public interface UserAddressService {
 
     Map updateUserAddressIsDefault(Integer id);
 
+    Map delUserAddress(Integer id);
+
     int updateUserAddressIsDefaultByUserid(Integer userid);
 
     int updateUserAddressIsDefaultById(Integer id);

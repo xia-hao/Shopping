@@ -119,6 +119,19 @@ public class UserAddressServiceImpl implements UserAddressService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
+    public Map delUserAddress(Integer id) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("code","901");
+        map.put("retMsg","删除失败！");
+        if(userAddressMapper.deleteByPrimaryKey(id)>0){
+            map.put("code","1000");
+            map.put("retMsg","删除成功！");
+        }
+        return map;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
     public int updateUserAddressIsDefaultByUserid(Integer userid) {
         return userAddressMapper.updateUserAddressIsDefaultByUserid(userid);
     }
