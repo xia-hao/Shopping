@@ -1,8 +1,8 @@
 import request from '@/util/request'
 
-export function userinfo() {
+export function getUser() {
   return request({
-    url: '/user/userinfo',
+    url: '/user/getUser',
     method: 'post'
   })
 }
@@ -25,5 +25,38 @@ export function findLoginNameOrPwd(object) {
     url: '/user/findLoginNameOrPwd',
     method: 'post',
     data: object
+  })
+}
+export function getUserInfo() {
+  return request({
+    url: '/user/getUserInfo',
+    method: 'post'
+  })
+}
+export function update(user) {
+  return request({
+    url: '/user/update',
+    method: 'post',
+    data: user
+  })
+}
+export function ifPassword(password) {
+  return request({
+    url: '/user/ifPassword/'+password,
+    method: 'get'
+  })
+}
+export function updatePwd(user) {
+  return request({
+    url: '/user/updatePwd',
+    method: 'post',
+    data: user
+  })
+}
+export function updateMobile(user) {
+  return request({
+    url: '/user/updateMobile',
+    method: 'post',
+    data: user
   })
 }

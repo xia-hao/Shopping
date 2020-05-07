@@ -83,18 +83,59 @@ export default new Router({
       component: () => import("@/page/shopCat/index")
     },
     {
-      path: '/order',
-      name: 'order',
-      component: () => import("@/page/order/index")
-    },{
-      path: '/collectible',
-      name: 'collectible',
-      component: () => import("@/page/collectible/index")
-    },
-    {
       path: '/fillOrderInfo',
       name: 'fillOrderInfo',
       component: () => import("@/page/shopCat/fillOrderInfo")
+    },
+    {
+      path: '/personal',
+      name: 'personal',
+      component: () => import("@/page/personal/index"),
+      children: [
+        {
+          path: '/',
+          redirect: '/userInfo'
+        },
+        {
+          path: '/order',
+          component: () => import("@/page/order/index")
+        },{
+          path: '/collectible',
+          name: 'collectible',
+          component: () => import("@/page/collectible/index")
+        },{
+          path: '/userAddress',
+          name: 'userAddress',
+          component: () => import("@/page/user/userAddress")
+        },{
+          path: '/userInfo',
+          name: 'userInfo',
+          component: () => import("@/page/user/userInfo")
+        },{
+          path: '/userDealrecord',
+          name: 'userDealrecord',
+          component: () => import("@/page/user/userDealrecord")
+        },{
+          path: '/accountSecurity',
+          name: 'accountSecurity',
+          component: () => import("@/page/user/accountSecurity"),
+          children: [
+            {
+              path: '/',
+              redirect: '/updateMobile'
+            },
+            {
+              path: '/updateMobile',
+              name : 'updateMobile',
+              component: () => import("@/page/user/updateMobile")
+            },{
+              path: '/updatePwd',
+              name : 'updatePwd',
+              component: () => import("@/page/user/updatePwd")
+            }
+          ]
+        }
+      ]
     },
     {
       path: '/help',

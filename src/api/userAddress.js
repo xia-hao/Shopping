@@ -35,3 +35,9 @@ export function updateUserAddressIsDefault(id) {
     method: 'get'
   })
 }
+export function delUserAddress(id) {
+  return request({
+    url: '/userAddress/delUserAddress/'+id,
+    method: 'get'
+  })
+}

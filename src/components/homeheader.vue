@@ -9,9 +9,9 @@
           </div>
           <div v-else>
             欢迎您，
-            <router-link to="/login" class="router-link">{{user.username}}</router-link>
+            <router-link to="/personal" class="router-link">{{user.username}}</router-link>
             &nbsp;&nbsp;
-            <router-link to="/login" class="router-link">个人中心</router-link>
+            <router-link to="/personal" class="router-link">个人中心</router-link>
             &nbsp;&nbsp;
             <a href="javaScript:;" class="router-link" @click="onLoginOut()">注销</a>
           </div>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import {userinfo} from "../api/user";
+import {getUser} from "../api/user";
 import {loginout} from "../api/login";
 import {getCount, selectShopCart} from "../api/shopCart";
 import PubSub from 'pubsub-js'
@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     getuserinfo(){
-      userinfo().then(response => {
+      getUser().then(response => {
         this.user = response.user
       })
     },

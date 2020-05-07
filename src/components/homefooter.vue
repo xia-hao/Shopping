@@ -209,7 +209,7 @@
     height: 35px;
     line-height: 35px;
     overflow: hidden;
-    background: url('static/images/b_sh_1.png') no-repeat left center;
+    background: url('../../static/images/b_sh_1.png') no-repeat left center;
     color: #888888;
     font-size: 14px;
     text-indent: 32px;
@@ -225,7 +225,7 @@
     height: 35px;
     line-height: 35px;
     overflow: hidden;
-    background: url(static/images/b_sh_2.png) no-repeat left center;
+    background: url(../../static/images/b_sh_2.png) no-repeat left center;
 
     color: #888888;
     font-size: 14px;

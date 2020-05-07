@@ -1,12 +1,6 @@
 <template>
   <div class="content">
-    <div class="text">
-      <h1>我的收藏</h1>
-    </div>
     <div class="table">
-      <div>
-        <el-button class="back-home" @click="$router.push({path: '/home'})">返回首页</el-button>
-      </div>
       <div class="mar_20">
         <div class="l_list">
           <div class="list_c">
@@ -84,9 +78,6 @@
   .content{
      width: 100%
    }
-  .back-home{
-    margin-bottom: 2%;
-  }
   .a,a{
     text-decoration: none;
     color: black;
@@ -96,10 +87,6 @@
   }
   .tab tr td:nth-child(1){
     width: 100px;
-  }
-  .text{
-    width: 100%;
-    text-align: center;
   }
   .table{
     width: 900px;

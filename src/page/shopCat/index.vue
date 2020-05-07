@@ -221,10 +221,9 @@
         updateShopCart(this.shopCat)
       },
       getselectShopCart(){
-        this.shopCartList = []
-        this.shopCatCount = 0
         selectShopCart().then(result => {
-          console.info(result)
+          this.shopCartList = []
+          this.shopCatCount = 0
           if(result.code == "1000"){
             if(result.shopCatCount>0){
               this.shopCartList = result.shopCartList

@@ -1,10 +1,6 @@
 <template>
   <div class="content">
-
     <div class="table">
-      <div>
-        <el-button class="back-home" @click="$router.push({path: '/home'})">返回首页</el-button>
-      </div>
       <el-menu :default-active="order.orderstatu" class="el-menu-demo" mode="horizontal" @select="handleSelect">
         <el-menu-item index="">全部</el-menu-item>
         <el-menu-item index="1">待付款</el-menu-item>
@@ -64,7 +60,6 @@
             </table>
           </template>
         </el-table-column>
-
         <el-table-column label="订单号" align="center" prop="orderno" width="305px"/>
         <el-table-column label="收货地址" align="center" width="240x">
           <template slot-scope="scope">
@@ -264,6 +259,7 @@
         this.order.orderno = row.orderno
         this.order.userAddressId = row.userAddressId
         this.isShow = true
+        this.getUserAddressList()
       },
       cancelOrder(row){
         let orderInfo = {
@@ -303,6 +299,8 @@
         userAddressList().then(result => {
           if(result.code == "1000"){
             this.userAddressList = result.userAddressList
+          }else{
+            this.userAddressList = []
           }
         })
       }
@@ -324,7 +322,6 @@
         }
       })
       this.getOrder()
-      this.getUserAddressList()
     }
   }
 </script>
@@ -358,9 +355,6 @@
   }.content{
     width: 100%
   }
-  .back-home{
-    margin-bottom: 2%;
-  }
   .a,a{
     text-decoration: none;
     color: black;
@@ -380,6 +374,5 @@
   .table{
     width: 1300px;
     margin: auto;
-    margin-top: 100px
   }
 </style>
