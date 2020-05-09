@@ -14,6 +14,7 @@
             type="primary"
             icon="el-icon-search"
             style="width: 80px;height: 30px"
+            :disabled="productname== ''"
             @click="search"
           >搜索</el-button>
         </el-form-item>
@@ -68,7 +69,7 @@
     name: "homemain",
     data(){
       return{
-        productname: undefined,
+        productname: '',
         categorylist: undefined
       }
     },
