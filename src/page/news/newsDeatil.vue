@@ -21,7 +21,7 @@ export default {
   data(){
     return{
       id:this.$route.query.newsId,
-      news:undefined
+      news:{}
     }
   },
   methods: {

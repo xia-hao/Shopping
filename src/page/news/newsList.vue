@@ -32,7 +32,7 @@
         name: "newsList",
       data(){
           return{
-            newsList: undefined,
+            newsList: [],
             newsCount: 0,
             news: {
               pageNo: 1,
