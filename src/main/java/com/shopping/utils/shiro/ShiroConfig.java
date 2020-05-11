@@ -77,6 +77,9 @@ public class ShiroConfig {
         filterMap.put("/register","anon");
         filterMap.put("/loginOut","anon");
         filterMap.put("/user/getUser","anon");
+        filterMap.put("/user/ifMobileExist","anon");
+        filterMap.put("/user/ifLoginNameExist","anon");
+        filterMap.put("/user/findLoginNameOrPwd","anon");
         filterMap.put("/discuss/list","anon");
         filterMap.put("/shopCart/getCount","anon");
         filterMap.put("/collectible/get/*","anon");
