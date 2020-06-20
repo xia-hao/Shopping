@@ -1,11 +1,14 @@
 package com.shopping.controller;
 
 import com.shopping.service.DictionaryService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -14,14 +17,19 @@ import java.util.Map;
  * @NAME: DictionaryController
  * @DATE: 2020/4/21
  **/
+@Api(tags = "字典模块")
 @RestController
 @RequestMapping("/dictionary")
 public class DictionaryController {
     @Resource
     private DictionaryService dictionaryService;
 
-    @GetMapping("/list")
-    public Map list(String type){
+    @ApiOperation(value = "根据字典类型查询",httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "type",value = "字典类型",required = true,paramType = "form")
+    })
+    @RequestMapping("/list")
+    public Map list(HttpServletRequest request,String type){
         return dictionaryService.selectDictionaryByType(type);
     }
 }
