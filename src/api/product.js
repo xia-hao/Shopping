@@ -7,6 +7,14 @@ export function selectproductlist(object) {
     params: object
   })
 }
+export function exportProduct(object) {
+  return request({
+    url: '/product/export_product',
+    method: 'post',
+    responseType: 'blob',
+    data: object
+  })
+}
 
 export function productById(id) {
   return request({

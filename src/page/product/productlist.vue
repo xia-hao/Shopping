@@ -6,6 +6,9 @@
       <el-input v-model="product.price2" @change="getselectproductlist" style="width: 100px;"/>&nbsp;￥
       之间的金额
     </div>
+    <div>
+      <el-button @click="exportProduct">导出Excel</el-button>
+    </div>
     <div class="content mar_20">
       <div class="l_list">
         <div class="list_t">
@@ -48,7 +51,7 @@
 </template>
 
 <script>
-  import {selectproductlist} from "../../api/product";
+  import {exportProduct, getexport_product, selectproductlist} from "../../api/product";
 
   export default {
     name: "productlist",
@@ -74,7 +77,21 @@
         }).catch(error => {
           this.msgError("异常："+error)
         })
-      }
+      },
+      exportProduct(){
+        // 导出 Excel
+        exportProduct(this.product).then(result => {
+          let url = window.URL.createObjectURL(result); //表示一个指定的file对象或Blob对象
+          console.log(url,"看一下这是啥")
+          let a = document.createElement("a");
+          document.body.appendChild(a);
+          let fileName= '商品信息.xls'
+          a.href = url;
+          a.download = fileName; //命名下载名称
+          a.click(); //点击触发下载
+          window.URL.revokeObjectURL(url);
+        })
+      },
     },
     created() {
       this.getselectproductlist();
