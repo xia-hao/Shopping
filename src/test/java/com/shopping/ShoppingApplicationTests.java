@@ -92,6 +92,7 @@ class ShoppingApplicationTests {
 
             FileInputStream input = new FileInputStream(file);
             MultipartFile multipartFile = new MockMultipartFile(file.getName(), file.getName(), ContentType.IMAGE_JPEG.toString(), input);
+            //压缩图片路径
             String abbreviationPath = ImageUtil.resFilePath(multipartFile);
             File file1 = new File(abbreviationPath);
             fileOutputStream.close();
