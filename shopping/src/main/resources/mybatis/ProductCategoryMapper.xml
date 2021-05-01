@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shopping.mapper.ProductCategoryMapper">
+  <resultMap id="BaseResultMap" type="com.shopping.domain.ProductCategory">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="parentId" jdbcType="INTEGER" property="parentid" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="iconClass" jdbcType="VARCHAR" property="iconclass" />
+    <result column="isDelete" jdbcType="CHAR" property="isdelete" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, parentId, type, iconClass, isDelete, createTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from product_category
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByParentId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from product_category
+    where parentid = #{parentid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from product_category
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.shopping.domain.ProductCategory">
+    insert into product_category (id, name, parentId, 
+      type, iconClass, isDelete, 
+      createTime)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{parentid,jdbcType=INTEGER}, 
+      #{type,jdbcType=INTEGER}, #{iconclass,jdbcType=VARCHAR}, #{isdelete,jdbcType=CHAR}, 
+      #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shopping.domain.ProductCategory">
+    insert into product_category
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="parentid != null">
+        parentId,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="iconclass != null">
+        iconClass,
+      </if>
+      <if test="isdelete != null">
+        isDelete,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null">
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="iconclass != null">
+        #{iconclass,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null">
+        #{isdelete,jdbcType=CHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shopping.domain.ProductCategory">
+    update product_category
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null">
+        parentId = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="iconclass != null">
+        iconClass = #{iconclass,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null">
+        isDelete = #{isdelete,jdbcType=CHAR},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shopping.domain.ProductCategory">
+    update product_category
+    set name = #{name,jdbcType=VARCHAR},
+      parentId = #{parentid,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      iconClass = #{iconclass,jdbcType=VARCHAR},
+      isDelete = #{isdelete,jdbcType=CHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

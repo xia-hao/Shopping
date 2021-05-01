@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shopping.mapper.VerifyMapper">
+    <resultMap id="BaseResultMap" type="com.shopping.domain.Verify">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="sessionId" jdbcType="VARCHAR" property="sessionid"/>
+        <result column="NoteCode" jdbcType="VARCHAR" property="notecode"/>
+        <result column="statu" jdbcType="VARCHAR" property="statu"/>
+        <result column="describes" jdbcType="CHAR" property="describes"/>
+        <result column="createTime" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="validTime" jdbcType="INTEGER" property="validtime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, mobile, sessionId, NoteCode, statu, describes, createTime, validTime
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from verify
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="getVerifyByNoteCode" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from verify
+        where sessionId = #{sessionid,jdbcType=VARCHAR} and NoteCode = #{notecode,jdbcType=VARCHAR}
+        and mobile = #{mobile,jdbcType=VARCHAR} and statu = 1
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from verify
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.shopping.domain.Verify">
+    insert into verify (id, mobile, sessionId, 
+      NoteCode, statu, describes, 
+      createTime, validTime)
+    values (#{id,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, #{sessionid,jdbcType=VARCHAR}, 
+      #{notecode,jdbcType=VARCHAR}, #{statu,jdbcType=VARCHAR}, #{describes,jdbcType=CHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{validtime,jdbcType=INTEGER})
+  </insert>
+    <insert id="insertSelective" parameterType="com.shopping.domain.Verify">
+        insert into verify
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="sessionid != null">
+                sessionId,
+            </if>
+            <if test="notecode != null">
+                NoteCode,
+            </if>
+            <if test="statu != null">
+                statu,
+            </if>
+            <if test="describes != null">
+                describes,
+            </if>
+            <if test="createtime != null">
+                createTime,
+            </if>
+            <if test="validtime != null">
+                validTime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="sessionid != null">
+                #{sessionid,jdbcType=VARCHAR},
+            </if>
+            <if test="notecode != null">
+                #{notecode,jdbcType=VARCHAR},
+            </if>
+            <if test="statu != null">
+                #{statu,jdbcType=VARCHAR},
+            </if>
+            <if test="describes != null">
+                #{describes,jdbcType=CHAR},
+            </if>
+            <if test="createtime != null">
+                #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="validtime != null">
+                #{validtime,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.shopping.domain.Verify">
+        update verify
+        <set>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="sessionid != null">
+                sessionId = #{sessionid,jdbcType=VARCHAR},
+            </if>
+            <if test="notecode != null">
+                NoteCode = #{notecode,jdbcType=VARCHAR},
+            </if>
+            <if test="statu != null">
+                statu = #{statu,jdbcType=VARCHAR},
+            </if>
+            <if test="describes != null">
+                describes = #{describes,jdbcType=CHAR},
+            </if>
+            <if test="createtime != null">
+                createTime = #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="validtime != null">
+                validTime = #{validtime,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.shopping.domain.Verify">
+    update verify
+    set mobile = #{mobile,jdbcType=VARCHAR},
+      sessionId = #{sessionid,jdbcType=VARCHAR},
+      NoteCode = #{notecode,jdbcType=VARCHAR},
+      statu = #{statu,jdbcType=VARCHAR},
+      describes = #{describes,jdbcType=CHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      validTime = #{validtime,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <update id="updateVerifyStatu" parameterType="com.shopping.domain.Verify">
+    update verify
+    set statu = #{statu,jdbcType=VARCHAR}
+    where sessionId = #{sessionid,jdbcType=VARCHAR} and NoteCode = #{notecode,jdbcType=VARCHAR} and mobile = #{mobile,jdbcType=VARCHAR}
+  </update>
+  <update id="updateVerifyStatuByvalidTime">
+    UPDATE verify SET statu = 3
+    WHERE statu = 1 and TIMESTAMPDIFF(SECOND,createTime,NOW())>=validTime
+  </update>
+</mapper>
